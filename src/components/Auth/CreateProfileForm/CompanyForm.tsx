@@ -2,14 +2,13 @@ import { Briefcase24Filled } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
 import { FC } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { createOrganisation } from '../../../store/current/actions';
-import { companyInfoSchema } from '../../../schemas/company-info-schema';
 import { ScreenOrientation } from '../../../constants';
-import { Input, Button } from '../../UI';
-
-import { CompanyFormProps, CompanyFormValues } from './types';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { companyInfoSchema } from '../../../schemas/company-info-schema';
+import { createOrganisation } from '../../../store/current/actions';
+import { Button, Input } from '../../UI';
 import styles from './CreateProfileForm.module.scss';
+import { CompanyFormProps, CompanyFormValues } from './types';
 
 export const CompanyForm: FC<CompanyFormProps> = ({ onNext, orientation }) => {
   const dispatch = useAppDispatch();

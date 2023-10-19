@@ -1,21 +1,19 @@
-import { useNavigate, Routes, Route } from 'react-router-dom';
 import { FC } from 'react';
-
 import { useEffect } from 'react';
-
-import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
-import { SELECTED_ORGANISATION_ID } from './constants';
-import { Button, MessageBox } from './components/UI';
-import { WelcomePage, HomePage } from './components/Home';
-import { currentActions } from './store/current/slice';
-import { VacanciesPage } from './components/Vacancies';
-import { NewsPage } from './components/News';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import styles from './App.module.scss';
-import { SchedulePage } from './components/Schedule';
 // import { VotesPage } from './components/Votes';
 import { SideBar } from './components';
 import { AuthPage } from './components/Auth';
+import { HomePage, WelcomePage } from './components/Home';
+import { NewsPage } from './components/News';
+import { SchedulePage } from './components/Schedule';
+import { Button, MessageBox } from './components/UI';
+import { VacanciesPage } from './components/Vacancies';
+import { SELECTED_ORGANISATION_ID } from './constants';
+import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
+import { currentActions } from './store/current/slice';
 
 const Home: FC = () => {
   const { user, isUserLoading } = useUser();

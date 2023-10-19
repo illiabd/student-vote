@@ -1,15 +1,12 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react/no-array-index-key */
 import { FC, useState } from 'react';
 
-import { useWindowWidth } from '../../../hooks';
-
-import { CompanyForm } from './CompanyForm';
-import { FinalWindow } from './FinalWindow';
-import { UserForm } from './UserForm';
-import { Step } from './Step';
-import styles from './CreateProfileForm.module.scss';
 import { ScreenOrientation } from '../../../constants';
+import { useWindowWidth } from '../../../hooks';
+import { CompanyForm } from './CompanyForm';
+import styles from './CreateProfileForm.module.scss';
+import { FinalWindow } from './FinalWindow';
+import { Step } from './Step';
+import { UserForm } from './UserForm';
 
 const stepsData = [
   {
