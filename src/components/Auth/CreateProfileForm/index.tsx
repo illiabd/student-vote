@@ -1,0 +1,100 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/no-array-index-key */
+import { FC, useState } from 'react';
+
+import { useWindowWidth } from '../../../hooks';
+
+import { CompanyForm } from './CompanyForm';
+import { FinalWindow } from './FinalWindow';
+import { UserForm } from './UserForm';
+import { Step } from './Step';
+import styles from './CreateProfileForm.module.scss';
+import { ScreenOrientation } from '../../../constants';
+
+const stepsData = [
+  {
+    title: 'Особисті дані',
+    description: "Заповніть поля, що включають ваше ім 'я та контакти",
+  },
+  {
+    title: 'Про компанію ',
+    description: 'Заповніть поля, що включають інформацію про вашу компанію',
+  },
+  {
+    title: 'Завершення реєстрації',
+    description: '',
+  },
+];
+
+export const CreateProfileForm: FC = () => {
+  const [selectedStep, setSelectedStep] = useState<number>(1);
+  const windowWidth = useWindowWidth();
+
+  const orientation = windowWidth > 855 ? ScreenOrientation.landscape : ScreenOrientation.portrait;
+
+  const handleNextStep = () => {
+    setSelectedStep((prev) => prev + 1);
+  };
+
+  const renderForm = (selected: number) => {
+    switch (selected) {
+      case 1:
+        return <UserForm onNext={handleNextStep} orientation={orientation} />;
+      case 2:
+        return <CompanyForm onNext={handleNextStep} orientation={orientation} />;
+      case 3:
+        return <FinalWindow />;
+      default:
+        return 'Something went wrong :(';
+    }
+  };
+
+  const steps = stepsData.map((stepData, index, array) => {
+    const number = index + 1;
+    const isLast = number === array?.length;
+
+    const handleStepClick = () => {
+      const isNotVisited = number > selectedStep;
+      if (isNotVisited) {
+        return;
+      }
+
+      setSelectedStep(number);
+    };
+
+    return (
+      <Step
+        onClick={handleStepClick}
+        orientation={orientation}
+        key={`step-${index}`}
+        title={stepData.title}
+        number={number}
+        selectedNumber={selectedStep}
+        isLast={isLast}
+      />
+    );
+  });
+
+  return (
+    <div className={styles.container}>
+      <div className={styles['progress-container']}>
+        <div className={styles['image-container']}>
+          <a href="/">
+            <img alt="univera-logo" src="/images/univera-logo-full.svg" />
+          </a>
+        </div>
+        <div className={styles['progressbar-container']}>
+          <div className={styles['progressbar-wrapper']}>
+            <p className={styles.title}>{`Крок ${selectedStep}`}</p>
+            <p className={styles.description}>{stepsData[selectedStep - 1].description}</p>
+            <div className={styles.progressbar}>{steps}</div>
+            {orientation === ScreenOrientation.portrait && (
+              <p>{stepsData[selectedStep - 1].title}</p>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className={styles['form-wrapper']}>{renderForm(selectedStep)}</div>
+    </div>
+  );
+};

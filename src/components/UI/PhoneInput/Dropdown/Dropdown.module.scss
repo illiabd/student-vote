@@ -1,0 +1,76 @@
+@import "../../../../styles/color.scss";
+
+.dropdown {
+  position: relative;
+
+  &.focused {
+    p {
+      color: $gray-800;
+    }
+  }
+}
+
+.dropdown-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.dropdown-body {
+  display: none;
+  position: absolute;
+
+  box-sizing: border-box;
+  min-width: 340px;
+  left: -20px;
+  margin-top: 0.25rem;
+  padding: 12px 0;
+  z-index: 2;
+
+  background-color: #fff;
+  box-shadow: 15px 15px 30px rgba(105, 140, 163, 0.15);
+  border-radius: 4px;
+
+  &.open {
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+  padding: 8px 16px 3px 16px;
+  gap: 0.5rem;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  &.selected {
+    background-color: $background-01;
+    color: $blue-700;
+  }
+}
+
+.icon {
+  transform: rotate(0deg);
+  transition: all 0.2s ease-in-out;
+
+  &.open {
+    transform: rotate(90deg);
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.selected-icon {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

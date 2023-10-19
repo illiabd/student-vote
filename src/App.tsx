@@ -1,35 +1,117 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useNavigate, Routes, Route } from 'react-router-dom';
+import { FC } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useEffect } from 'react';
+
+import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
+import { SELECTED_ORGANISATION_ID } from './constants';
+import { Button, MessageBox } from './components/UI';
+import { WelcomePage, HomePage } from './components/Home';
+import { currentActions } from './store/current/slice';
+import { VacanciesPage } from './components/Vacancies';
+import { NewsPage } from './components/News';
+
+import styles from './App.module.scss';
+import { SchedulePage } from './components/Schedule';
+// import { VotesPage } from './components/Votes';
+import { SideBar } from './components';
+import { AuthPage } from './components/Auth';
+
+const Home: FC = () => {
+  const { user, isUserLoading } = useUser();
+  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
+
+  const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const organisationId = localStorage.getItem(SELECTED_ORGANISATION_ID);
+    if (!organisationId) {
+      const newOrganisationId = organisationsData?.docs[0]?.id;
+
+      if (!newOrganisationId) {
+        return;
+      }
+
+      dispatch(currentActions.setSelectedOrganisationId(newOrganisationId));
+      localStorage.setItem(SELECTED_ORGANISATION_ID, newOrganisationId);
+      return;
+    }
+    dispatch(currentActions.setSelectedOrganisationId(organisationId));
+  }, [dispatch, organisationsData]);
+
+  const handleDropdownChange = (option: string) => {
+    dispatch(currentActions.setSelectedOrganisationId(option));
+    localStorage.setItem(SELECTED_ORGANISATION_ID, option);
+  };
+
+  const handleTabNavigation = (path: string) => {
+    navigate(path);
+  };
+
+  const isLoading = isOrganisationsLoading || isUserLoading;
+
+  if (isLoading) {
+    return (
+      <MessageBox>
+        <p>Loading</p>
+      </MessageBox>
+    );
+  }
+
+  if (!user && !isLoading) {
+    return <WelcomePage />;
+  }
+
+  const hasOrganisations = organisationsData?.docs?.length > 0;
+  if (!hasOrganisations) {
+    const handleButtonClick = () => {
+      navigate('/create-profile');
+    };
+    return (
+      <MessageBox>
+        <span style={{ marginBottom: '12px' }}>
+          Вітаємо в Univera, для продовження завершіть процес реєстрації компанії
+        </span>
+        <Button onClick={handleButtonClick}>Продовжити</Button>
+      </MessageBox>
+    );
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={styles.container}>
+        <SideBar
+          selectedOrganisationId={selectedOrganisationId}
+          organisations={organisationsData.docs}
+          onTabSelect={handleTabNavigation}
+          onChange={handleDropdownChange}
+        />
+        <div className={styles.main}>
+          <Routes>
+            <Route path="/" index Component={HomePage} />
+            <Route path="/*" index Component={HomePage} />
+            <Route path="/news" Component={NewsPage} />
+            <Route path="/vacancies" Component={VacanciesPage} />
+            <Route path="/vacancies/*" Component={VacanciesPage} />
+            <Route path="/timetable" Component={SchedulePage} />
+          </Routes>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
-}
+  );
+};
 
-export default App
+const App: FC = () => {
+  return (
+    <Routes>
+      <Route path="/auth" Component={AuthPage} />
+      <Route path="/" Component={Home} />
+      <Route path="*" Component={Home} />
+    </Routes>
+  );
+};
+
+export default App;

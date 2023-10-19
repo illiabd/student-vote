@@ -1,0 +1,46 @@
+@import "../../../styles/color.scss";
+
+$secondaryColor: $background-03;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  height: 100%;
+}
+
+.message {
+  margin-bottom: 148px;
+}
+
+@media (max-width: 768px) {
+  .message {
+    margin-bottom: 0;
+  }
+}
+
+.button {
+  margin-bottom: 59px;
+  width: 348px;
+  height: 72px;
+}
+
+@media (max-width: 768px) {
+  .button {
+    margin-top: 59px;
+    margin-bottom: 0;
+    box-sizing: border-box;
+  }
+}
+
+.image {
+  margin: 100px;
+}
+
+@media (max-width: 768px) {
+  .image {
+    margin: 59px;
+  }
+}

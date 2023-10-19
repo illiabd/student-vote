@@ -1,0 +1,81 @@
+'use client';
+
+import { ErrorCircle20Regular } from '@fluentui/react-icons';
+import { FC, useState } from 'react';
+import clsx from 'clsx';
+
+import { InputProps } from './types';
+import styles from './Input.module.scss';
+
+export const Input: FC<InputProps> = ({
+  startIcon,
+  className,
+  endIcon,
+  touched,
+  rounded,
+  errors,
+  label,
+  id,
+  noLabel = false,
+  onChange,
+  ...props
+}) => {
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
+  const hasErrors = errors && touched;
+
+  const labelClasses = clsx(styles.label, hasErrors && styles.error);
+  const hintsClasses = clsx(styles.hints, hasErrors && styles.error);
+  const iconsClasses = clsx(styles.icon, hasErrors && styles.error);
+
+  const inputContainerClasses = clsx(
+    styles.container,
+    rounded && styles.rounded,
+    isFocused && styles.focused,
+    hasErrors && styles.error,
+    className,
+  );
+
+  const hintsIsShown = isFocused || hasErrors;
+
+  const input = (
+    <>
+      <div className={inputContainerClasses}>
+        {startIcon && <div className={styles.icon}>{startIcon}</div>}
+        <input id={id} onChange={onChange} onFocus={handleFocus} onBlur={handleBlur} {...props} />
+        {hasErrors && (
+          <div className={iconsClasses}>
+            <ErrorCircle20Regular />
+          </div>
+        )}
+        {endIcon && !hasErrors && <div className={iconsClasses}>{endIcon}</div>}
+      </div>
+
+      {hintsIsShown && (
+        <div className={hintsClasses}>
+          <p>{errors}</p>
+        </div>
+      )}
+    </>
+  );
+
+  if (noLabel) {
+    return input;
+  }
+
+  return (
+    <label className={styles.input} htmlFor={id}>
+      <div className={labelClasses}>
+        <h4>{label}</h4>
+      </div>
+      {input}
+    </label>
+  );
+};

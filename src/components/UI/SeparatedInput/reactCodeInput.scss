@@ -1,0 +1,35 @@
+@import "../../../styles/color.scss";
+
+.react-code-input {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  input {
+    all: unset;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 51px;
+    height: 51px;
+
+    background-color: $background-02;
+    border-radius: 4px;
+    border: 1px solid $accent-color;
+
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .react-code-input {
+    justify-content: space-between;
+    gap: 0px;
+  }
+}

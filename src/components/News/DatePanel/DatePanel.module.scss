@@ -1,0 +1,37 @@
+@import "../../../styles/color.scss";
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+
+  width: 100%;
+  padding: 24px 28px;
+
+  border-radius: 4px;
+  background-color: $background-02;
+
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin-right: 24px;
+  width: 94px;
+  height: 94px;
+
+  background-color: $accent-color;
+  color: $background-02;
+
+  border-radius: 4px;
+
+  p {
+    font-weight: 600;
+    font-size: 48px;
+  }
+}

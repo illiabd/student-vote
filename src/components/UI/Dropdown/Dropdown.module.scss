@@ -1,0 +1,33 @@
+@import "../../../styles/color.scss";
+
+.container {
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.hints {
+  position: absolute;
+  box-sizing: border-box;
+
+  margin-top: 18px;
+  color: $gray-700;
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  &.error {
+    color: $error-text;
+  }
+}
+
+.label {
+  margin-bottom: 12px;
+  color: $gray-800;
+
+  h4 {
+    font-weight: 500;
+    font-size: 16px;
+  }
+}

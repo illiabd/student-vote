@@ -1,0 +1,74 @@
+@import "../../../styles/color.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+
+  max-width: 753px;
+  width: 100%;
+  height: 100vh;
+  min-height: 100%;
+  z-index: 3;
+  overflow-y: auto;
+
+  gap: 22px;
+  padding-right: 10px;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .container {
+    overflow: visible;
+    height: 100%;
+    padding-right: 0;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  gap: 22px;
+  padding-bottom: 22px;
+}
+
+.tools-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  p {
+    font-size: 24px;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 13px;
+}
+
+.news-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+}

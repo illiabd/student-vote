@@ -1,0 +1,29 @@
+.form {
+  width: 100%;
+  margin-top: 124px;
+}
+
+@media (max-width: 768px) {
+  .form {
+    margin-top: 59px;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.button {
+  width: 348px;
+  height: 72px;
+}
+
+@media (max-width: 768px) {
+  .button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

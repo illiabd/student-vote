@@ -1,0 +1,48 @@
+@import "../../../styles/color.scss";
+
+.dropzone-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+  margin-bottom: 30px;
+  padding: 22px;
+  gap: 8px;
+
+  border: 2px dashed $accent-color;
+  border-radius: 4px;
+
+  color: $accent-color;
+}
+
+.uploaded-container {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  margin-bottom: 30px;
+  padding: 22px;
+  gap: 8px;
+
+  border: 2px dashed $accent-color;
+  border-radius: 4px;
+
+  color: $accent-color;
+}
+
+.image-container {
+  width: 100%;
+  max-width: 100px;
+
+  > div {
+    position: unset !important;
+  }
+
+  .image {
+    object-fit: contain;
+    width: 100% !important;
+    position: relative !important;
+    height: unset !important;
+  }
+}

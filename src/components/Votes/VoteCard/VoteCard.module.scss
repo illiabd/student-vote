@@ -1,0 +1,88 @@
+@import "../../../styles/color.scss";
+
+.card {
+  padding: 22px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  .card {
+    padding: 12px;
+  }
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.link {
+  text-decoration: none;
+  color: $accent-color;
+  font-size: 18px;
+}
+
+.isActive {
+  color: $gray-400;
+}
+
+.tools-container {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  .tools-container {
+    gap: 0 !important;
+  }
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.delete-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  gap: 22px;
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+  }
+}
+
+.company-info {
+}
+
+.image-container {
+}

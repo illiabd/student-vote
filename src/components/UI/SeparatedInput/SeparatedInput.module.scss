@@ -1,0 +1,28 @@
+@import "../../../styles/color.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+}
+
+.hints {
+  position: absolute;
+  box-sizing: border-box;
+  margin-top: 70px;
+  color: $gray-700;
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  &.error {
+    p {
+      color: $error-text;
+    }
+  }
+}
