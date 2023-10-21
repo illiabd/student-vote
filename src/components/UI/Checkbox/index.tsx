@@ -1,4 +1,5 @@
 import { FC } from 'react';
+
 import { CheckboxProps } from './types';
 
 export const Checkbox: FC<CheckboxProps> = () => <input type="checkbox" />;

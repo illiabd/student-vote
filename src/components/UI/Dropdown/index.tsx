@@ -1,9 +1,9 @@
-import { FC } from 'react';
 import clsx from 'clsx';
-
+import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
-import { DropdownProps } from './types';
+
 import styles from './Dropdown.module.scss';
+import { DropdownProps } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({
   options,

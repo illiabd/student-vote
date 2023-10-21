@@ -1,7 +1,7 @@
-import { ToastContainer } from 'react-toastify';
-import { FC } from 'react';
-
 import 'react-toastify/dist/ReactToastify.css';
+
+import { FC } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 export const Snackbar: FC = () => (
   <ToastContainer

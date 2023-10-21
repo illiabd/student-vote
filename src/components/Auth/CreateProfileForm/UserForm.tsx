@@ -2,14 +2,13 @@ import { PersonInfo20Filled } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
 import { FC } from 'react';
 
-import { Input, Button, LinksInput } from '../../UI';
-import { userInfoSchema } from '../../../schemas';
-import { useAppDispatch } from '../../../hooks';
-import { patchUser } from '../../../store/current/actions';
-
-import { UserFormProps, UserFormValues } from './types';
-import styles from './CreateProfileForm.module.scss';
 import { ScreenOrientation } from '../../../constants';
+import { useAppDispatch } from '../../../hooks';
+import { userInfoSchema } from '../../../schemas';
+import { patchUser } from '../../../store/current/actions';
+import { Button, Input, LinksInput } from '../../UI';
+import styles from './CreateProfileForm.module.scss';
+import { UserFormProps, UserFormValues } from './types';
 
 export const UserForm: FC<UserFormProps> = ({ onNext, orientation }) => {
   const dispatch = useAppDispatch();

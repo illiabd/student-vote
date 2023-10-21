@@ -1,16 +1,14 @@
-/* eslint-disable operator-linebreak */
-import { useEffect, useState, FC } from 'react';
 import { Add24Regular, Delete24Regular } from '@fluentui/react-icons';
+import { FC, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findStudents, loadStudents } from '../../../store/current/actions';
 import { Card, IconButton, Modal } from '../../UI';
-
 import { AddStudentModal } from './AddStudentModal';
-import { StudentTabProps } from './types';
-import styles from './StudentsTab.module.scss';
 import { DeleteStudentModal } from './DeleteStudentModal';
+import styles from './StudentsTab.module.scss';
+import { StudentTabProps } from './types';
 
 export const StudentsTab: FC<StudentTabProps> = ({ selectedOrganisationId, hasOrganisations }) => {
   const [showDeleteStudentModal, setShowDeleteStudentModal] = useState(false);
@@ -136,9 +134,9 @@ export const StudentsTab: FC<StudentTabProps> = ({ selectedOrganisationId, hasOr
         </div>
       </div>
       <InfiniteScroll
-        dataLength={studentsData?.docs?.length ?? 0}
+        dataLength={studentsData.docs.length ?? 0}
         next={handleInfiniteScrollLoader}
-        hasMore={studentsData?.hasNextPage}
+        hasMore={studentsData.hasNextPage ?? false}
         loader={<h4>Loading...</h4>}
         scrollableTarget="scrollableDiv"
       >

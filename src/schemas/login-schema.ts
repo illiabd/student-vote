@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import * as constants from '../constants';
 
 export const loginSchema = Yup.object().shape({

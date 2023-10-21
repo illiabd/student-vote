@@ -1,8 +1,6 @@
-/* eslint-disable no-param-reassign */
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import * as constants from '../constants';
-
 import { ICustomRequestConfig, RefreshTokensResponse } from './types';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
@@ -13,7 +11,7 @@ const api = axios.create({
 });
 
 const responseErrorHandler = async (error: AxiosError) => {
-  const originalRequest: ICustomRequestConfig = error.config;
+  const originalRequest = error.config as ICustomRequestConfig;
 
   const isUnauthorized = error.response?.status === constants.UNAUTHORIZED_STATUS_CODE;
   const isFirstTry = !originalRequest.isRetried;
@@ -40,7 +38,7 @@ const responseErrorHandler = async (error: AxiosError) => {
   return error;
 };
 
-api.interceptors.request.use((config: AxiosRequestConfig) => {
+api.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) {
     return config;

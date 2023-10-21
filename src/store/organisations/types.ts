@@ -46,7 +46,7 @@ export type FindOrganisationResponse = {
 };
 
 export type State = {
-  organisationsData: OrganisationsData;
+  organisationsData: OrganisationsData | undefined;
   isLoading: boolean;
   error: string[];
 };

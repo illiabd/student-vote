@@ -1,19 +1,17 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import {
   Archive24Regular,
   Checkmark24Filled,
   Delete24Regular,
   Edit24Regular,
 } from '@fluentui/react-icons';
-import { useNavigate } from 'react-router-dom';
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Card, IconButton, Modal } from '../../UI';
-import { archiveVacancy, findVacancies, publishVacancy } from '../../../store/vacancies/actions';
 import { useAppDispatch } from '../../../hooks';
-
-import { VacancyCardProps } from './types';
+import { archiveVacancy, findVacancies, publishVacancy } from '../../../store/vacancies/actions';
+import { Card, IconButton, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
+import { VacancyCardProps } from './types';
 import styles from './Vacancy.module.scss';
 
 export const VacancyCard: FC<VacancyCardProps> = ({ data }) => {

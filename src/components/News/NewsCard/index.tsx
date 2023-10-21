@@ -4,18 +4,17 @@ import {
   Delete24Regular,
   Edit24Regular,
 } from '@fluentui/react-icons';
-import { FC, useState } from 'react';
 import clsx from 'clsx';
+import { FC, useState } from 'react';
 
-import { Button, Card, IconButton, Modal } from '../../UI';
-import { EditArticleModal } from './EditArticleModal';
-import { DeleteArticleModal } from './DeleteArticleModal';
 import { useAppDispatch } from '../../../hooks';
 import { findNews, publishArticle } from '../../../store/news/actions';
-
-import { NewsCardProps } from './types';
-import styles from './NewsCard.module.scss';
+import { Button, Card, IconButton, Modal } from '../../UI';
 import { TextEditor } from '../../UI/TextEditor';
+import { DeleteArticleModal } from './DeleteArticleModal';
+import { EditArticleModal } from './EditArticleModal';
+import styles from './NewsCard.module.scss';
+import { NewsCardProps } from './types';
 
 export const NewsCard: FC<NewsCardProps> = ({ className, data }) => {
   const dispatch = useAppDispatch();

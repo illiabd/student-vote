@@ -1,37 +1,40 @@
-/* eslint-disable operator-linebreak */
 import { useFormik } from 'formik';
 import { FC, useState } from 'react';
 
-import { companyInfoPatchSchema, companyInfoSchema } from '../../../schemas/company-info-schema';
 import { useAppDispatch } from '../../../hooks';
-import { Button, ImageUpload, Input, ProfilePicture } from '../../UI';
-
-import { CompanyFormValues, EditModalProps } from './types';
-import styles from './OrganisationCard.module.scss';
+import { companyInfoPatchSchema } from '../../../schemas/company-info-schema';
 import { patchOrganisation, uploadProfilePicture } from '../../../store/current/actions';
 import { findOrganisations } from '../../../store/organisations/actions';
 import { Organisation } from '../../../store/organisations/types';
+import { Button, ImageUpload, Input, ProfilePicture } from '../../UI';
+import styles from './OrganisationCard.module.scss';
+import { CompanyFormValues, EditModalProps } from './types';
 
 export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => {
-  const [profilePictureFile, setProfilePictureFile] = useState<File>(null);
+  const [profilePictureFile, setProfilePictureFile] = useState<File>();
   const dispatch = useAppDispatch();
 
   const initialValues: CompanyFormValues = {
-    name: '' || organisationData?.name,
-    link: '' || organisationData?.link,
-    email: '' || organisationData?.email,
-    douLink: '' || organisationData?.douLink,
+    name: organisationData.name ?? '',
+    link: organisationData.link ?? '',
+    email: organisationData.email ?? '',
+    douLink: organisationData.douLink ?? '',
   };
 
   const onSubmit = async (values: CompanyFormValues) => {
-    let newProfilePictureData: { url: string; id: string };
-    if (profilePictureFile) {
-      newProfilePictureData = await dispatch(uploadProfilePicture({ file: profilePictureFile }));
+    if (!profilePictureFile) {
+      return;
     }
 
+    const response = await dispatch(uploadProfilePicture({ file: profilePictureFile }));
+    if (!response) {
+      return;
+    }
+
+    const newProfilePictureData = response;
     const patchBody: Organisation = {
       id: organisationData.id,
-      profilePictureLink: newProfilePictureData?.url,
+      profilePictureLink: newProfilePictureData.url,
       ...values,
     };
 
@@ -115,9 +118,9 @@ export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => 
       <span style={{ marginBottom: '20px', marginTop: '40px' }}>Завантажте нове фото профілю</span>
       <div style={{ marginBottom: '20px', display: 'flex', alignItems: 'center', gap: '8px' }}>
         <span>Попередній перегляд:</span>
-        <ProfilePicture source={pictureSrc} alternative={organisationData.name} />
+        <ProfilePicture source={pictureSrc} alternative={organisationData.name ?? ''} />
       </div>
-      <ImageUpload value={profilePictureFile} onChange={handleProfilePictureFileChange} />
+      <ImageUpload value={profilePictureFile as File} onChange={handleProfilePictureFileChange} />
 
       <div className={styles['modal-buttons']}>
         <Button variant="outlined" onClick={onClose}>

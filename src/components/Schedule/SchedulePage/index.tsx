@@ -1,8 +1,7 @@
 import { FC } from 'react';
 
-import { MessageBox, Button } from '../../UI';
 import { useAppSelector } from '../../../hooks';
-
+import { Button, MessageBox } from '../../UI';
 import { ScheduleView } from '../ScheduleView';
 
 export const SchedulePage: FC = () => {

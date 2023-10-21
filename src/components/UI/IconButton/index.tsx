@@ -1,10 +1,8 @@
-/* eslint-disable react/button-has-type */
+import clsx from 'clsx';
 import { FC } from 'react';
 
-import clsx from 'clsx';
-
-import { IconButtonProps } from './types';
 import styles from './IconButton.module.scss';
+import { IconButtonProps } from './types';
 
 export const IconButton: FC<IconButtonProps> = ({
   type = 'button',

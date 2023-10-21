@@ -1,13 +1,11 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Checkmark24Regular, Edit24Regular, ErrorCircle20Regular } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FC, useState } from 'react';
 
-import clsx from 'clsx';
 import { Button, Card, Modal } from '../../UI';
-
-import { OrganisationCardProps } from './types';
 import { EditModal } from './EditModal';
 import styles from './OrganisationCard.module.scss';
+import { OrganisationCardProps } from './types';
 
 export const OrganisationCard: FC<OrganisationCardProps> = ({ organisationData }) => {
   const [showEditModal, setShowEditModal] = useState(false);

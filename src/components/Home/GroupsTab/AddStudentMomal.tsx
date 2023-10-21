@@ -4,9 +4,8 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findGroups, findStudents, putStudentIntoGroup } from '../../../store/current/actions';
 import { Button, Dropdown } from '../../UI';
 import { Option } from '../../UI/Dropdown/types';
-
-import { AddUserModalProps } from './types';
 import styles from './GroupTab.module.scss';
+import { AddUserModalProps } from './types';
 
 export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId, onClose }) => {
   const [selectedStudentId, setSelectedStudentId] = useState<string>('');
@@ -20,16 +19,26 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
     onClose();
   };
 
-  const handleDropdownChange = (option: Option) => {
+  const handleDropdownChange = (option: Option | Option[]) => {
+    const isOption = option instanceof Option;
+    if (!isOption) {
+      return;
+    }
+
     setSelectedStudentId(option?.value);
   };
 
-  const options = studentsData?.docs?.map((student) => {
+  const options = studentsData.docs.reduce<Option[]>((result, student) => {
     const { user } = student;
-    const fullName = `${user?.firstName || ''} ${user?.lastName || ''} ${user?.patronymic || ''}`;
+    if (!user) {
+      return result;
+    }
+
+    const fullName = `${user.firstName || ''} ${user.lastName || ''} ${user.patronymic || ''}`;
     const hasName = fullName.trim()?.length > 0;
-    return { value: user.id, label: hasName ? fullName : user.phoneNumber };
-  });
+    result.push({ value: user.id, label: hasName ? fullName : user.phoneNumber });
+    return result;
+  }, []);
 
   return (
     <div className={styles['create-modal']}>

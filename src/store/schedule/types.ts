@@ -28,10 +28,10 @@ type RepeatGroup = {
 };
 
 export type ScheduleEvent = {
-  id?: string;
+  id: string;
   title?: string;
   link?: string;
-  kind?: string;
+  kind: string;
   classroomName?: string;
   mainLecturerFullName?: string;
   lecturersFullNames?: string[];

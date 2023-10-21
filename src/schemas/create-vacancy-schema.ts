@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import * as constants from '../constants';
 
 const remoteType = Yup.string().required(constants.VACANCY_REMOTE_TYPE_NOT_PROVIDED);

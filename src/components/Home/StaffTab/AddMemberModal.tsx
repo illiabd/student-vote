@@ -4,9 +4,8 @@ import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { addMember, findStaff } from '../../../store/current/actions';
 import { Button, PhoneInput } from '../../UI';
-
-import { AddMemberFormValues, AddMemberModalProps } from './types';
 import styles from './StaffTab.module.scss';
+import { AddMemberFormValues, AddMemberModalProps } from './types';
 
 export const AddMemberModal: FC<AddMemberModalProps> = ({ organisationId, onClose }) => {
   const { isLoading } = useAppSelector((state) => state.current);

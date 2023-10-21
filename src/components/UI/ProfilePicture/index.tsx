@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
-import { ProfilePictureProps } from './types';
 import styles from './ProfilePicture.module.scss';
+import { ProfilePictureProps } from './types';
 
 export const ProfilePicture: FC<ProfilePictureProps> = ({
   source,

@@ -17,7 +17,7 @@ export const DropdownOption: FC<DropdownOptionProps> = ({ option, selected, onOp
   return (
     <div
       className={clsx(styles['dropdown-item'], selected && styles.selected)}
-      onClick={onOptionClick.bind(null, option)}
+      onClick={onOptionClick.bind(undefined, option)}
       aria-hidden="true"
     >
       {optionContent}

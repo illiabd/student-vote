@@ -1,12 +1,11 @@
 import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
 
-import { Card, IconButton, Modal } from '../../UI';
-import { archiveVacancy, findVacancies, publishVacancy } from '../../../store/vacancies/actions';
 import { useAppDispatch } from '../../../hooks';
-
-import { VoteCardProps } from './types';
+import { archiveVacancy, findVacancies, publishVacancy } from '../../../store/vacancies/actions';
+import { Card, IconButton, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
+import { VoteCardProps } from './types';
 import styles from './VoteCard.module.scss';
 
 export const VoteCard: FC<VoteCardProps> = ({ data }) => {

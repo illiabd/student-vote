@@ -1,14 +1,12 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Add24Regular, ArrowSort24Regular, ErrorCircle20Regular } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
 
-import { Button, Card, IconButton, MessageBox } from '../../UI';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { AllowedFeatures } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { VoteCard } from '../VoteCard';
-
 import styles from './VotesPage.module.scss';
 
 export const VotesPage: FC = () => {

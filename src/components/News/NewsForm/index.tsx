@@ -1,16 +1,15 @@
 import { Attach24Regular } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FormikProps, useFormik } from 'formik';
 import { FC } from 'react';
-import clsx from 'clsx';
 
-import { NewsFormProps, NewsFormValues } from './types';
+import { newsSchema } from '../../../schemas';
 import { CreateArticleRequest } from '../../../store/news/types';
 import { Button, Card, Input } from '../../UI';
-import { newsSchema } from '../../../schemas';
-
+import { TextEditor } from '../../UI/TextEditor';
 // import { newsSchema } from '../../../schemas/news-schema';
 import styles from './NewsForm.module.scss';
-import { TextEditor } from '../../UI/TextEditor';
+import { NewsFormProps, NewsFormValues } from './types';
 
 export const NewsForm: FC<NewsFormProps> = ({ organisationId, onSubmit }) => {
   const initialValues = {

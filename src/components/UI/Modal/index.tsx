@@ -4,11 +4,10 @@ import { Dismiss24Regular } from '@fluentui/react-icons';
 import { FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-import { IconButton } from '../IconButton';
-
-import { ModalProps } from './types';
-import styles from './Modal.module.scss';
 import { Card } from '../Card';
+import { IconButton } from '../IconButton';
+import styles from './Modal.module.scss';
+import { ModalProps } from './types';
 
 export const Modal: FC<ModalProps> = ({ isShown, onClose, children, title }) => {
   const [isBrowser, setIsBrowser] = useState(false);
@@ -26,7 +25,7 @@ export const Modal: FC<ModalProps> = ({ isShown, onClose, children, title }) => 
   }, [isShown]);
 
   if (!isBrowser) {
-    return null;
+    return undefined;
   }
 
   const modalHeader = title && (

@@ -1,20 +1,18 @@
-/* eslint-disable @typescript-eslint/indent */
-import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
-import { FormikProps, useFormik } from 'formik';
-import { Frequency } from 'rrule';
 import dayjs from 'dayjs';
+import { FormikProps, useFormik } from 'formik';
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
+import { Frequency } from 'rrule';
 
-import { FindGroupsResponse, Group } from '../../../store/current/types';
-import { Button, Dropdown, Input } from '../../UI';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { EventFrequencyLabels, EventKind, EventKindNames } from '../../../constants';
-import { Option } from '../../UI/Dropdown/types';
-
-import { EventFormProps, EventFormValues } from './types';
-import styles from './EventForm.module.scss';
 import api from '../../../axios';
-import { deleteEvent, findEvents } from '../../../store/schedule/actions';
+import { EventFrequencyLabels, EventKind, EventKindNames } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createEventSchema } from '../../../schemas/create-event-schema';
+import { FindGroupsResponse, Group } from '../../../store/current/types';
+import { deleteEvent, findEvents } from '../../../store/schedule/actions';
+import { Button, Dropdown, Input } from '../../UI';
+import { Option } from '../../UI/Dropdown/types';
+import styles from './EventForm.module.scss';
+import { EventFormProps, EventFormValues } from './types';
 
 export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
@@ -55,8 +53,8 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     findGroups(groupNameFilter);
   }, [findGroups, groupNameFilter]);
 
-  const defaultDivisions: string[] = defaultValues?.divisions?.reduce((array, divisions) => {
-    if (divisions) {
+  const defaultDivisions = defaultValues?.divisions?.reduce<string[]>((array, divisions) => {
+    if (divisions.id) {
       array.push(divisions.id);
     }
     return array;
@@ -74,7 +72,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     interval: defaultValues?.repeatGroup?.rrule?.interval,
     count: defaultValues?.repeatGroup?.rrule?.count,
     frequency: defaultValues?.repeatGroup?.rrule?.freq,
-    divisions: defaultDivisions?.length > 0 ? defaultDivisions : [],
+    divisions: defaultDivisions && defaultDivisions.length > 0 ? defaultDivisions : [],
   };
 
   const formik: FormikProps<EventFormValues> = useFormik<EventFormValues>({
@@ -95,14 +93,13 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
         count,
         frequency,
       } = values;
-      const [startHours, startMinutes] = start.split(':');
+      const [startHours, startMinutes] = start?.split(':') ?? ['0', '0'];
       const startDate = dayjs(date).set('hour', +startHours).set('minute', +startMinutes);
 
-      const [endHours, endMinutes] = end.split(':');
+      const [endHours, endMinutes] = end?.split(':') ?? ['0', '0'];
       const endDate = dayjs(date).set('hour', +endHours).set('minute', +endMinutes);
 
-      const body = defaultValues
-        ? {
+      const body =  {
             divisions: values.divisions,
 
             ...(defaultValues?.title !== title && { title }),
@@ -118,15 +115,18 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             ...(defaultValues?.classroomName !== classroomName && { classroomName }),
 
             repeat: {
-              ...(defaultValues?.repeatGroup.rrule.interval !== Number(interval) && {
-                interval: Number(interval),
-              }),
-              ...(defaultValues?.repeatGroup.rrule.count !== Number(count) && {
-                count: Number(count),
-              }),
-              ...(defaultValues?.repeatGroup.rrule.freq !== Number(frequency) && {
-                frequency: Number(frequency),
-              }),
+              ...(defaultValues.repeatGroup?.rrule &&
+                defaultValues.repeatGroup.rrule.interval !== Number(interval) && {
+                  interval: Number(interval),
+                }),
+              ...(defaultValues.repeatGroup?.rrule &&
+                defaultValues?.repeatGroup.rrule.count !== Number(count) && {
+                  count: Number(count),
+                }),
+              ...(defaultValues.repeatGroup?.rrule &&
+                defaultValues?.repeatGroup.rrule.freq !== Number(frequency) && {
+                  frequency: Number(frequency),
+                }),
             },
           }
         : {

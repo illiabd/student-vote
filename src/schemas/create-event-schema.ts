@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import {
   EVENT_DATE_NOT_PROVIDED,
   EVENT_DIVISIONS_NOT_PROVIDED,

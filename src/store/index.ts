@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { organisationsSlice } from './organisations/slice';
-import { currentSlice } from './current/slice';
 import { authSlice } from './auth/slice';
+import { currentSlice } from './current/slice';
 import { newsSlice } from './news/slice';
-import { vacanciesSlice } from './vacancies/slice';
+import { organisationsSlice } from './organisations/slice';
 import { scheduleSlice } from './schedule/slice';
+import { vacanciesSlice } from './vacancies/slice';
 
 const reducer = {
   auth: authSlice.reducer,

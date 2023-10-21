@@ -1,11 +1,10 @@
 'use client';
 
-/* eslint-disable react/no-array-index-key */
-import { FC, useState } from 'react';
 import clsx from 'clsx';
+import { FC, useState } from 'react';
 
-import { TabsProps } from './types';
 import styles from './Tabs.module.scss';
+import { TabsProps } from './types';
 
 export const Tabs: FC<TabsProps> = ({ data }) => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);

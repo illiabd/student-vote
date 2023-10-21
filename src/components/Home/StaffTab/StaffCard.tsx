@@ -1,13 +1,12 @@
 import { Delete24Regular, Edit24Regular } from '@fluentui/react-icons';
-import { FC, useState } from 'react';
 import clsx from 'clsx';
+import { FC, useState } from 'react';
 
 import { Card, IconButton, Modal } from '../../UI';
-
-import { StaffCardProps } from './types';
 import { DeleteModal } from './DeleteModal';
 import { EditModal } from './EditModal';
 import styles from './StaffTab.module.scss';
+import { StaffCardProps } from './types';
 
 export const StaffCard: FC<StaffCardProps> = ({ member, isCurrentUser, organisationId }) => {
   const [showEditModal, setShowEditModal] = useState(false);

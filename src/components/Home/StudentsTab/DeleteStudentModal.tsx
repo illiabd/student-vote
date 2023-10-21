@@ -1,12 +1,9 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
 import { FC } from 'react';
 
+import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findStudents } from '../../../store/current/actions';
 import { Button } from '../../UI';
-import api from '../../../axios';
-
 import styles from './StudentsTab.module.scss';
 import { DeleteModalProps } from './types';
 

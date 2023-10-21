@@ -1,13 +1,13 @@
 import { FC, useCallback, useEffect, useState } from 'react';
 
-import { useAppDispatch } from '../../../hooks';
-import { ScheduleEvent } from '../../../store/schedule/types';
-import { patchEvent } from '../../../store/schedule/actions';
-import { EventForm } from '../EventForm';
-
-import { EditEventModalProps, EventFormValues } from './types';
-import styles from './EventCard.module.scss';
 import api from '../../../axios';
+import { useAppDispatch } from '../../../hooks';
+import { patchEvent } from '../../../store/schedule/actions';
+import { ScheduleEvent } from '../../../store/schedule/types';
+import { EventForm } from '../EventForm';
+import { EventFormValues } from '../EventForm/types';
+import styles from './EventCard.module.scss';
+import { EditEventModalProps } from './types';
 
 export const EditEventModal: FC<EditEventModalProps> = ({
   organisationId,
@@ -20,9 +20,9 @@ export const EditEventModal: FC<EditEventModalProps> = ({
 
   const handleFormSubmission = async (values: EventFormValues) => {
     const repeat = {
-      ...(values?.frequency && { frequency: values?.frequency }),
-      ...(values?.interval && { interval: values?.interval }),
-      ...(values?.count && { count: values?.count }),
+      ...(values.frequency && { frequency: values.frequency }),
+      ...(values.interval && { interval: values.interval }),
+      ...(values.count && { count: values.count }),
     };
     const body = {
       ...values,

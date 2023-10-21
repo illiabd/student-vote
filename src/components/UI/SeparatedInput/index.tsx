@@ -1,9 +1,9 @@
-import ReactCodeInput from 'react-code-input';
-import { FC } from 'react';
 import clsx from 'clsx';
+import { FC } from 'react';
+import ReactCodeInput from 'react-code-input';
 
-import { SeparatedInputProps } from './types';
 import styles from './SeparatedInput.module.scss';
+import { SeparatedInputProps } from './types';
 
 export const SeparatedInput: FC<SeparatedInputProps> = ({
   value,

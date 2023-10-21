@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import * as constants from '../constants';
 
 const firstName = Yup.string().required(constants.FIRSTNAME_NOT_PROVIDED);

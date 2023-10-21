@@ -1,14 +1,11 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
 import { FC } from 'react';
 
-import { Button } from '../../UI';
-
-import { DeleteSelectedModalProps } from './types';
-import styles from './GroupTab.module.scss';
 import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findGroups } from '../../../store/current/actions';
+import { Button } from '../../UI';
+import styles from './GroupTab.module.scss';
+import { DeleteSelectedModalProps } from './types';
 
 export const DeleteSelectedModal: FC<DeleteSelectedModalProps> = ({
   organisationId,

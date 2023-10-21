@@ -1,9 +1,8 @@
 import { FC } from 'react';
 
-import { deleteVacancy, findVacancies } from '../../../store/vacancies/actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { deleteVacancy, findVacancies } from '../../../store/vacancies/actions';
 import { Button } from '../../UI';
-
 import { DeleteModalProps } from './types';
 import styles from './Vacancy.module.scss';
 

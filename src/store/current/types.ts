@@ -15,8 +15,8 @@ export type RequestParams = {
 };
 
 export type Member = {
-  user?: UserData;
-  role?: string;
+  user: UserData;
+  role: string;
 };
 
 export type FindMembersResponse = {

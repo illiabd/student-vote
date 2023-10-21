@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { DropzoneOptions, useDropzone, FileRejection, ErrorCode } from 'react-dropzone';
 import { Dismiss24Regular, ImageAdd24Regular } from '@fluentui/react-icons';
 import { FC, useCallback, useState } from 'react';
+import { DropzoneOptions, ErrorCode, FileRejection, useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 
 import {
@@ -10,9 +10,8 @@ import {
   SOMETHING_WENT_WRONG_MESSAGE,
 } from '../../../constants';
 import { IconButton } from '../IconButton';
-
-import { ImageUploadProps } from './types';
 import styles from './ImageUpload.module.scss';
+import { ImageUploadProps } from './types';
 
 export const ImageUpload: FC<ImageUploadProps> = ({ value, onChange }) => {
   const onDrop = useCallback(
@@ -43,7 +42,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({ value, onChange }) => {
   }, []);
 
   const onDeleteFile = () => {
-    onChange(null);
+    onChange(undefined);
   };
 
   const dropzoneOptions: DropzoneOptions = {

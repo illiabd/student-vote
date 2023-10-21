@@ -1,14 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { FC, useState } from 'react';
 import { IMaskInput } from 'react-imask';
-import clsx from 'clsx';
-
-import { Dropdown } from './Dropdown';
 
 import { COUNTRIES, PHONE_NUMBER_MASK } from '../../../constants';
-import { Country, PhoneInputProps } from './types';
+import { Dropdown } from './Dropdown';
 import styles from './PhoneInput.module.scss';
+import { Country, PhoneInputProps } from './types';
 
 export const PhoneInput: FC<PhoneInputProps> = ({
   label,

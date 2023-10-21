@@ -1,12 +1,8 @@
-/* eslint-disable operator-linebreak */
-import axios, { AxiosError } from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
 
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-
+import api from '../../axios';
 import {
   CREATE_EVENT_SUCCESS_MESSAGE,
   DELETE_EVENT_SUCCESS_MESSAGE,
@@ -14,12 +10,10 @@ import {
   PATCH_EVENT_SUCCESS_MESSAGE,
 } from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
-import { vacanciesActions } from '../vacancies/slice';
-import api from '../../axios';
-
-import { scheduleActions } from './slice';
-import { CreateEventBody, FindEventsResponse, FindParams, ScheduleEvent } from './types';
 import store from '..';
+import { vacanciesActions } from '../vacancies/slice';
+import { scheduleActions } from './slice';
+import { CreateEventBody, FindEventsResponse, FindParams } from './types';
 
 export const createEvent = (createEventBody: CreateEventBody) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -91,7 +85,7 @@ export const findEvents = (params?: FindParams) => async (dispatch: Dispatch) =>
   }
 };
 
-export const deleteEvent = (eventId) => async (dispatch: Dispatch) => {
+export const deleteEvent = (eventId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(scheduleActions.setIsLoading(true));
     return api.delete(`/schedule/v1/events/${eventId}`);
@@ -181,6 +175,10 @@ export const loadEvents = (params?: FindParams) => async (dispatch: Dispatch) =>
 
   try {
     const response = await fetchData();
+
+    if (!response) {
+      return;
+    }
 
     if (axios.isAxiosError(response)) {
       const error = response as AxiosError;

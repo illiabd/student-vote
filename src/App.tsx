@@ -63,7 +63,7 @@ const Home: FC = () => {
     return <WelcomePage />;
   }
 
-  const hasOrganisations = organisationsData?.docs?.length > 0;
+  const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
   if (!hasOrganisations) {
     const handleButtonClick = () => {
       navigate('/create-profile');

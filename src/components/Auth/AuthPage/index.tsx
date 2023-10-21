@@ -1,13 +1,11 @@
 import { FC, useState } from 'react';
 
-import { LoginForm, SuccessWindow, VerificationForm } from '../';
-import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { loginUser, verifyCode } from '../../../store/auth/actions';
 import { Card } from '../../UI';
-
-import type { VerificationFormValues } from '../VerificationForm/types';
+import { LoginForm, SuccessWindow, VerificationForm } from '../';
 import type { LoginFormValues } from '../LoginForm/types';
-
+import type { VerificationFormValues } from '../VerificationForm/types';
 import styles from './AuthPage.module.scss';
 
 export const AuthPage: FC = () => {

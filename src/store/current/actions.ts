@@ -1,12 +1,12 @@
-/* eslint-disable operator-linebreak */
 import { Dispatch } from '@reduxjs/toolkit';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import * as constants from '../../constants';
 import api from '../../axios';
-
+import * as constants from '../../constants';
+import { handleResponseError } from '../../tools/api-error-handler';
+import store from '..';
+import { currentActions } from './slice';
 import {
   CreateOrganisationRequest,
   FindGroupFilters,
@@ -20,9 +20,6 @@ import {
   UploadProfilePictureRequest,
   UploadProfilePictureResponse,
 } from './types';
-import { currentActions } from './slice';
-import { handleResponseError } from '../../tools/api-error-handler';
-import store from '..';
 
 export const createOrganisation =
   (requestData: CreateOrganisationRequest) => async (dispatch: Dispatch) => {

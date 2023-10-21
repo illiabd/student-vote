@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import styles from './SuccessWindow.module.scss';
 import { Button } from '../../UI';
+import styles from './SuccessWindow.module.scss';
 
 export const SuccessWindow: FC = () => {
   const navigate = useNavigate();

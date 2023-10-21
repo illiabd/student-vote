@@ -1,11 +1,9 @@
 import { FC, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Button, MessageBox } from '../../UI';
 import { findNews } from '../../../store/news/actions';
-
+import { Button, MessageBox } from '../../UI';
 import { NewsFeed } from '../NewsFeed';
-
 import styles from './NewsPage.module.scss';
 
 export const NewsPage: FC = () => {
@@ -20,7 +18,8 @@ export const NewsPage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  const isNewsAllowed = organisationsData?.docs[0]?.allowedFeatures.includes('news');
+  const allowedFeatures = organisationsData && organisationsData.docs[0].allowedFeatures;
+  const isNewsAllowed = allowedFeatures && allowedFeatures.includes('news');
   if (!isNewsAllowed) {
     return (
       <MessageBox>

@@ -1,17 +1,14 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Add24Regular, Search24Regular } from '@fluentui/react-icons';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findGroups, findStudents, loadGroups } from '../../../store/current/actions';
-import { GroupCard } from './GroupCard';
 import { Button, Input, Modal } from '../../UI';
-
 import { CreateGroupModal } from './CreateGroupModal';
-import { GroupsTabProps } from './types';
+import { GroupCard } from './GroupCard';
 import styles from './GroupTab.module.scss';
+import { GroupsTabProps } from './types';
 
 export const GroupTab: FC<GroupsTabProps> = ({ selectedOrganisationId, hasOrganisations }) => {
   const [showCreateGroupModal, setShowCreateGroupModal] = useState<boolean>(false);
@@ -101,7 +98,7 @@ export const GroupTab: FC<GroupsTabProps> = ({ selectedOrganisationId, hasOrgani
         <InfiniteScroll
           dataLength={groupsData?.docs?.length ?? 0}
           next={handleInfiniteScrollLoader}
-          hasMore={groupsData?.hasNextPage}
+          hasMore={groupsData.hasNextPage ?? false}
           loader={<>Loading...</>}
           scrollableTarget="scrollableDiv"
         >

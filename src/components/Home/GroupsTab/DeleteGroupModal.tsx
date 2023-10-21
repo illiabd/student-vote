@@ -1,12 +1,11 @@
 import { FC } from 'react';
 
-import { Button } from '../../UI';
-
-import { DeleteGroupModalProps } from './types';
-import styles from './GroupTab.module.scss';
 import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findGroups } from '../../../store/current/actions';
+import { Button } from '../../UI';
+import styles from './GroupTab.module.scss';
+import { DeleteGroupModalProps } from './types';
 
 export const DeleteGroupModal: FC<DeleteGroupModalProps> = ({ organisationId, group, onClose }) => {
   const dispatch = useAppDispatch();

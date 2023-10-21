@@ -1,15 +1,13 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Add24Regular, ArrowSort24Regular, ErrorCircle20Regular } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import clsx from 'clsx';
 
-import { Button, Card, IconButton, MessageBox } from '../../UI';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { AllowedFeatures } from '../../../constants';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findVacancies } from '../../../store/vacancies/actions';
+import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { VacancyCard } from '../VacancyCard';
-
 import styles from './VacanciesPage.module.scss';
 
 export const VacanciesPage: FC = () => {

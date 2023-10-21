@@ -1,16 +1,15 @@
-import { FormikProps, useFormik } from 'formik';
 import { ChevronLeft24Filled } from '@fluentui/react-icons';
-import { useNavigate } from 'react-router-dom';
-import { FC } from 'react';
 import clsx from 'clsx';
+import { FormikProps, useFormik } from 'formik';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Card, Dropdown, IconButton, Input } from '../../UI';
 import { vacancySchema } from '../../../schemas/create-vacancy-schema';
-
+import { Button, Card, Dropdown, IconButton, Input } from '../../UI';
+import type { Option } from '../../UI/Dropdown/types';
+import { TextEditor } from '../../UI/TextEditor';
 import { VacancyFormProps, VacancyFormValues } from './types';
 import styles from './VacancyForm.module.scss';
-import { TextEditor } from '../../UI/TextEditor';
-import type { Option } from '../../UI/Dropdown/types';
 
 export const VacancyForm: FC<VacancyFormProps> = ({ defaultValues, onSubmit }) => {
   const navigate = useNavigate();

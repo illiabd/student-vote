@@ -1,11 +1,9 @@
-/* eslint-disable operator-linebreak */
 import { Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { organisationsActions } from './slice';
-import { handleResponseError } from '../../tools/api-error-handler';
 import api from '../../axios';
-
+import { handleResponseError } from '../../tools/api-error-handler';
+import { organisationsActions } from './slice';
 import { FindOrganisationRequest, FindOrganisationResponse } from './types';
 
 export const findOrganisations =

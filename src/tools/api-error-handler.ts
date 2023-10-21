@@ -1,5 +1,5 @@
-import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 import * as constants from '../constants';
 

@@ -1,11 +1,10 @@
+import clsx from 'clsx';
 import { FormikProps, useFormik } from 'formik';
 import { FC, useEffect, useState } from 'react';
-import clsx from 'clsx';
 
-import { Button, SeparatedInput } from '../../UI';
-import { verificationSchema } from '../../../schemas/verification-schema';
 import { useAppSelector } from '../../../hooks';
-
+import { verificationSchema } from '../../../schemas/verification-schema';
+import { Button, SeparatedInput } from '../../UI';
 import { VerificationFormProps, VerificationFormValues } from './types';
 import styles from './VerificationForm.module.scss';
 
@@ -49,6 +48,10 @@ export const VerificationForm: FC<VerificationFormProps> = ({
   };
 
   const handleResendButtonClick = () => {
+    if (!onResendCode) {
+      return;
+    }
+
     setSeconds(60);
     onResendCode();
   };

@@ -1,6 +1,4 @@
 /* eslint-disable no-useless-escape */
-/* eslint-disable operator-linebreak */
-
 /* Axios */
 export const UNAUTHORIZED_STATUS_CODE = 401;
 

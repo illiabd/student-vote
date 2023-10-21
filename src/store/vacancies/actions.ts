@@ -1,17 +1,19 @@
-/* eslint-disable operator-linebreak */
-import axios, { AxiosError } from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { handleResponseError } from '../../tools/api-error-handler';
-import { vacanciesActions } from './slice';
 import api from '../../axios';
 import * as constants from '../../constants';
-
+import { handleResponseError } from '../../tools/api-error-handler';
+import { vacanciesActions } from './slice';
 import { CreateVacancyRequest, FindParams, FindVacanciesResponse, Vacancy } from './types';
 
 export const findVacancies = (params?: FindParams) => async (dispatch: Dispatch) => {
   const fetchData = () => {
+    if (!params) {
+      return;
+    }
+
     dispatch(vacanciesActions.setIsLoading(true));
     const body = {
       filters: {
@@ -28,6 +30,10 @@ export const findVacancies = (params?: FindParams) => async (dispatch: Dispatch)
 
   try {
     const response = await fetchData();
+
+    if (!response) {
+      return;
+    }
 
     if (axios.isAxiosError(response)) {
       const error = response as AxiosError;
@@ -82,43 +88,44 @@ export const deleteVacancy = (vacancyId?: string) => async (dispatch: Dispatch) 
   return false;
 };
 
-export const createVacancy = (vacancy: Vacancy, organisationId) => async (dispatch: Dispatch) => {
-  const fetchData = () => {
-    dispatch(vacanciesActions.setIsLoading(true));
+export const createVacancy =
+  (vacancy: Vacancy, organisationId: string) => async (dispatch: Dispatch) => {
+    const fetchData = () => {
+      dispatch(vacanciesActions.setIsLoading(true));
 
-    const body: CreateVacancyRequest = {
-      ...vacancy,
-      organisation: organisationId,
+      const body: CreateVacancyRequest = {
+        ...vacancy,
+        organisation: organisationId,
+      };
+
+      return api.post('vacancy/v1', body);
     };
 
-    return api.post('vacancy/v1', body);
-  };
+    try {
+      const response = await fetchData();
 
-  try {
-    const response = await fetchData();
+      if (axios.isAxiosError(response)) {
+        const error = response as AxiosError;
+        const statusCode = error?.response?.status;
 
-    if (axios.isAxiosError(response)) {
-      const error = response as AxiosError;
-      const statusCode = error?.response?.status;
+        switch (statusCode) {
+          default:
+            handleResponseError(error);
+            break;
+        }
 
-      switch (statusCode) {
-        default:
-          handleResponseError(error);
-          break;
+        return false;
       }
 
-      return false;
+      toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
+      return true;
+    } catch (e) {
+      console.log(e);
+    } finally {
+      dispatch(vacanciesActions.setIsLoading(false));
     }
-
-    toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
-    return true;
-  } catch (e) {
-    console.log(e);
-  } finally {
-    dispatch(vacanciesActions.setIsLoading(false));
-  }
-  return false;
-};
+    return false;
+  };
 
 export const patchVacancy = (vacancy: Vacancy, vacancyId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {

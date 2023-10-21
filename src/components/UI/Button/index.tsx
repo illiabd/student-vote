@@ -1,9 +1,8 @@
-/* eslint-disable react/button-has-type */
-import { FC } from 'react';
 import clsx from 'clsx';
+import { FC } from 'react';
 
-import { ButtonProps } from './types';
 import styles from './Button.module.scss';
+import { ButtonProps } from './types';
 
 export const Button: FC<ButtonProps> = ({
   className,

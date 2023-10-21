@@ -1,13 +1,12 @@
-import { FC, useState } from 'react';
 import { useFormik } from 'formik';
+import { FC, useState } from 'react';
 
-import { Button, PhoneInput } from '../../UI';
+import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findStudents } from '../../../store/current/actions';
-import api from '../../../axios';
-
-import { AddStudentFormValues, AddStudentModalProps } from './types';
+import { Button, PhoneInput } from '../../UI';
 import styles from './StudentsTab.module.scss';
+import { AddStudentFormValues, AddStudentModalProps } from './types';
 
 export const AddStudentModal: FC<AddStudentModalProps> = ({ organisationId, onClose }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);

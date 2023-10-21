@@ -1,26 +1,23 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable operator-linebreak */
 import {
-  ChevronRight20Filled,
-  ChevronDown20Filled,
-  News24Regular,
-  Briefcase24Regular,
   Add24Regular,
+  Briefcase24Regular,
+  ChevronDown20Filled,
+  ChevronRight20Filled,
   Home24Regular,
+  News24Regular,
   Timeline24Regular,
   Vote24Regular,
 } from '@fluentui/react-icons';
+import { FC } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
 import { useNavigate } from 'react-router-dom';
-import { FC } from 'react';
 
 import { AllowedFeatures, AllowedFeaturesLinks, UserTypes } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { Button, ProfilePicture } from '../UI';
-import { SideBarProps } from './types';
 import { logout } from '../../store/auth/actions';
-
+import { Button, ProfilePicture } from '../UI';
 import styles from './SideBar.module.scss';
+import { SideBarProps } from './types';
 
 export const SideBar: FC<SideBarProps> = ({
   organisations,

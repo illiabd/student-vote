@@ -1,11 +1,10 @@
 import { FC } from 'react';
 
-import { Button } from '../../UI';
-
-import { DeleteArticleModalProps } from './types';
-import styles from './NewsCard.module.scss';
-import { deleteArticle, findNews } from '../../../store/news/actions';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { deleteArticle, findNews } from '../../../store/news/actions';
+import { Button } from '../../UI';
+import styles from './NewsCard.module.scss';
+import { DeleteArticleModalProps } from './types';
 
 export const DeleteArticleModal: FC<DeleteArticleModalProps> = ({ data, onClose }) => {
   const { isLoading } = useAppSelector((state) => state.news);

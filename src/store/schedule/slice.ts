@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { ScheduleData, State } from './types';
 
 export const initialState: State = {
-  scheduleData: null,
-  selectedDivision: null,
+  scheduleData: undefined,
+  selectedDivision: undefined,
   isLoading: false,
   error: [],
 };

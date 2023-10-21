@@ -1,14 +1,12 @@
-import { ChevronDown20Filled, ChevronRight20Filled } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
 
+import { ROLES } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findStaff, setMemberRole } from '../../../store/current/actions';
 import { Button, Dropdown } from '../../UI';
 import { Option } from '../../UI/Dropdown/types';
-import { ROLES } from '../../../constants';
-
-import { EditModalProps } from './types';
 import styles from './StaffTab.module.scss';
+import { EditModalProps } from './types';
 
 export const EditModal: FC<EditModalProps> = ({ currentRole, userId, organisationId, onClose }) => {
   const [selectedRole, setSelectedRole] = useState(currentRole);
@@ -16,7 +14,12 @@ export const EditModal: FC<EditModalProps> = ({ currentRole, userId, organisatio
   const { isLoading } = useAppSelector((state) => state.current);
   const dispatch = useAppDispatch();
 
-  const handleDropdown = (option: Option) => {
+  const handleDropdown = (option: Option | Option[]) => {
+    const isOption = option instanceof Option;
+    if (!isOption) {
+      return;
+    }
+
     setSelectedRole(option?.value);
   };
 

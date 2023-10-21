@@ -1,13 +1,12 @@
-import { FC } from 'react';
 import dayjs from 'dayjs';
+import { FC } from 'react';
 
-import { EventForm } from '../EventForm';
-import { AddEventModalProps } from './types';
 import { useAppDispatch } from '../../../hooks';
 import { createEvent } from '../../../store/schedule/actions';
-
-import styles from './ScheduleView.module.scss';
+import { EventForm } from '../EventForm';
 import { EventFormValues } from '../EventForm/types';
+import styles from './ScheduleView.module.scss';
+import { AddEventModalProps } from './types';
 
 export const AddEventModal: FC<AddEventModalProps> = ({ organisationId, onClose, onSubmit }) => {
   const dispatch = useAppDispatch();

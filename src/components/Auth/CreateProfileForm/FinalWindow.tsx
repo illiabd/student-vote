@@ -1,12 +1,11 @@
 import { ThumbLike24Filled } from '@fluentui/react-icons';
 import { FC } from 'react';
-
-import { Button } from '../../UI';
-import { findOrganisations } from '../../../store/organisations/actions';
-
-import styles from './CreateProfileForm.module.scss';
-import { useAppDispatch } from '../../../hooks';
 import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch } from '../../../hooks';
+import { findOrganisations } from '../../../store/organisations/actions';
+import { Button } from '../../UI';
+import styles from './CreateProfileForm.module.scss';
 
 export const FinalWindow: FC = () => {
   const dispatch = useAppDispatch();

@@ -1,14 +1,12 @@
-/* eslint-disable operator-linebreak */
+import { Add24Regular, Delete24Regular } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
-import { Delete24Regular, Add24Regular } from '@fluentui/react-icons';
 
 import { Card, IconButton, Modal } from '../../UI';
-
-import { DeleteSelectedModal } from './DeleteSelectedModal';
-import { DeleteGroupModal } from './DeleteGroupModal';
-import { GroupCardProps } from './types';
-import styles from './GroupTab.module.scss';
 import { AddStudentModal } from './AddStudentMomal';
+import { DeleteGroupModal } from './DeleteGroupModal';
+import { DeleteSelectedModal } from './DeleteSelectedModal';
+import styles from './GroupTab.module.scss';
+import { GroupCardProps } from './types';
 
 export const GroupCard: FC<GroupCardProps> = ({ groupData, studentsData, organisationId }) => {
   const [showDeleteSelectedModal, setShowDeleteSelectedModal] = useState(false);
@@ -83,7 +81,7 @@ export const GroupCard: FC<GroupCardProps> = ({ groupData, studentsData, organis
       );
     }
 
-    return null;
+    return undefined;
   };
 
   const students =

@@ -1,15 +1,14 @@
-/* eslint-disable operator-linebreak */
+import '@blocknote/core/style.css';
 
-import { FC } from 'react';
 import { BlockNoteEditor } from '@blocknote/core';
 import {
-  ToggledStyleButton,
-  Toolbar,
   BlockTypeDropdown,
   CreateLinkButton,
   defaultBlockTypeDropdownItems,
+  ToggledStyleButton,
+  Toolbar,
 } from '@blocknote/react';
-import '@blocknote/core/style.css';
+import { FC } from 'react';
 
 type CustomFormattingToolbarProps = {
   editor: BlockNoteEditor;

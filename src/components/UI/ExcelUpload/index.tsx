@@ -1,6 +1,6 @@
-import { DropzoneOptions, ErrorCode, FileRejection, useDropzone } from 'react-dropzone';
 import { Dismiss24Regular, Document24Regular, DocumentAdd24Regular } from '@fluentui/react-icons';
 import { FC, useCallback } from 'react';
+import { DropzoneOptions, ErrorCode, FileRejection, useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 
 import {
@@ -8,10 +8,9 @@ import {
   IMAGE_MAX_SIZE,
   SOMETHING_WENT_WRONG_MESSAGE,
 } from '../../../constants';
-
-import { ExcelUploadProps } from './types';
-import styles from './ExcelUpload.module.scss';
 import { IconButton } from '../IconButton';
+import styles from './ExcelUpload.module.scss';
+import { ExcelUploadProps } from './types';
 
 export const ExcelUpload: FC<ExcelUploadProps> = ({ value, onChange }) => {
   const onDrop = useCallback(
@@ -42,7 +41,7 @@ export const ExcelUpload: FC<ExcelUploadProps> = ({ value, onChange }) => {
   }, []);
 
   const onDeleteFile = () => {
-    onChange(null);
+    onChange(undefined);
   };
 
   const dropzoneOptions: DropzoneOptions = {

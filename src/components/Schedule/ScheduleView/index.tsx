@@ -1,5 +1,5 @@
-/* eslint-disable react/no-array-index-key */
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import 'dayjs/plugin/isToday';
+
 import {
   Add24Regular,
   CalendarToday24Regular,
@@ -7,23 +7,22 @@ import {
   ChevronRight24Regular,
   DocumentAdd24Regular,
 } from '@fluentui/react-icons';
-import 'dayjs/plugin/isToday';
-import dayjs from 'dayjs';
 import clsx from 'clsx';
+import dayjs from 'dayjs';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Button, Card, Dropdown, IconButton, Modal } from '../../UI';
-
-import styles from './ScheduleView.module.scss';
+import api from '../../../axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { FindGroupsResponse, Group } from '../../../store/current/types';
+import { findEvents } from '../../../store/schedule/actions';
+import { scheduleActions } from '../../../store/schedule/slice';
 import { ScheduleEvent } from '../../../store/schedule/types';
+import { Button, Card, Dropdown, IconButton, Modal } from '../../UI';
+import { Option } from '../../UI/Dropdown/types';
 import { EventCard } from '../EventCard';
 import { AddEventModal } from './AddEventModal';
-import { findEvents } from '../../../store/schedule/actions';
-import { FindGroupsResponse, Group } from '../../../store/current/types';
-import api from '../../../axios';
-import { Option } from '../../UI/Dropdown/types';
+import styles from './ScheduleView.module.scss';
 import { UploadFileModal } from './UploadFileModal';
-import { scheduleActions } from '../../../store/schedule/slice';
 
 const getTransformedEvents = (events: ScheduleEvent[]) => {
   const transformedDocs = {};

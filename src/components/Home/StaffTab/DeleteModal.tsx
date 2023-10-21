@@ -1,9 +1,10 @@
 import { FC } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { deleteStaff, findStaff } from '../../../store/current/actions';
 import { Button } from '../../UI';
 import styles from './StaffTab.module.scss';
 import { DeleteModalProps } from './types';
-import { deleteStaff, findStaff } from '../../../store/current/actions';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 
 export const DeleteModal: FC<DeleteModalProps> = ({ onClose, userId, organisationId }) => {
   const dispatch = useAppDispatch();

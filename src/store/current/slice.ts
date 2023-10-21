@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { GroupsData, Member, State, StudentsData } from './types';
 
 export const initialState: State = {
-  groupsData: null,
-  studentsData: null,
+  groupsData: undefined,
+  studentsData: undefined,
   staff: [],
-  selectedOrganisationId: null,
+  selectedOrganisationId: undefined,
   isLoading: false,
   isNextPageLoading: false,
 };

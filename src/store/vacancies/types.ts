@@ -47,6 +47,6 @@ export type CreateVacancyRequest = Vacancy & {
 };
 
 export type State = {
-  vacanciesData: VacanciesData;
+  vacanciesData: VacanciesData | undefined;
   isLoading: boolean;
 };

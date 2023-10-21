@@ -1,16 +1,15 @@
 import { FormikProps, useFormik } from 'formik';
 import { FC } from 'react';
 
-import { EditArticleModalProps } from './types';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { newsSchema } from '../../../schemas';
+import { findNews, patchArticle } from '../../../store/news/actions';
 import { CreateArticleRequest } from '../../../store/news/types';
 import { Button, Input } from '../../UI';
-
-import styles from './NewsCard.module.scss';
-import { NewsFormValues } from '../NewsForm/types';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { findNews, patchArticle } from '../../../store/news/actions';
-import { newsSchema } from '../../../schemas';
 import { TextEditor } from '../../UI/TextEditor';
+import { NewsFormValues } from '../NewsForm/types';
+import styles from './NewsCard.module.scss';
+import { EditArticleModalProps } from './types';
 
 export const EditArticleModal: FC<EditArticleModalProps> = ({ data, onClose }) => {
   const { isLoading } = useAppSelector((state) => state.current);

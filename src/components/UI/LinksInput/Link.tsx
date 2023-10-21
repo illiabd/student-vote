@@ -1,18 +1,16 @@
-/* eslint-disable operator-linebreak */
 import { Dismiss12Regular } from '@fluentui/react-icons';
 import clsx from 'clsx';
 import { FC } from 'react';
 
-import { IconButton } from '../IconButton';
-
-import styles from './LinksInput.module.scss';
-import { LinksProps } from './types';
 import {
   INSTAGRAM_LINK_REGEX,
   LINKEDIN_LINK_REGEX,
   TELEGRAM_LINK_REGEX,
   UserLinks,
 } from '../../../constants';
+import { IconButton } from '../IconButton';
+import styles from './LinksInput.module.scss';
+import { LinksProps } from './types';
 
 const detectLinkType = (link: string) => {
   if (link.match(TELEGRAM_LINK_REGEX)) {

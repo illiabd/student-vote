@@ -1,13 +1,12 @@
-import { FC, useState } from 'react';
 import dayjs from 'dayjs';
+import { FC, useState } from 'react';
 
+import { EventKindNames } from '../../../constants';
 import { useAppSelector } from '../../../hooks';
 import { Card, Modal } from '../../UI';
-import { EventKindNames } from '../../../constants';
-import { EventCardProps } from './types';
-
 import { EditEventModal } from './EditEventModal';
 import styles from './EventCard.module.scss';
+import { EventCardProps } from './types';
 
 export const EventCard: FC<EventCardProps> = ({ scheduleEvent, onSubmit }) => {
   const [showEditEventModal, setShowEditEventModal] = useState(false);
@@ -48,7 +47,7 @@ export const EventCard: FC<EventCardProps> = ({ scheduleEvent, onSubmit }) => {
           </div>
           <span>{scheduleEvent?.mainLecturerFullName}</span>
 
-          <span>{EventKindNames[scheduleEvent?.kind]}</span>
+          <span>{EventKindNames[scheduleEvent.kind as keyof typeof EventKindNames]}</span>
           <span>{cardStartEndTime}</span>
         </div>
       </Card>

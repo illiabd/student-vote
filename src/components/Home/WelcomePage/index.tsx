@@ -1,10 +1,7 @@
-/* eslint-disable operator-linebreak */
-
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../UI';
-
 import styles from './WelcomePage.module.scss';
 
 export const WelcomePage: FC = () => {

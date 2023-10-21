@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-param-reassign */
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { NewsData, State } from './types';
 
 export const initialState: State = {
-  newsData: null,
+  newsData: undefined,
   isLoading: false,
 };
 

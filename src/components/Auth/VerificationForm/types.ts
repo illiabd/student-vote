@@ -4,6 +4,6 @@ export type VerificationFormValues = {
 
 export type VerificationFormProps = {
   className?: string;
-  onSubmit?: (values: VerificationFormValues) => void;
+  onSubmit: (values: VerificationFormValues) => void;
   onResendCode?: () => void;
 };

@@ -6,7 +6,7 @@ export type EventFormProps = {
   onSubmit?: (
     body: EventFormValues & {
       organisation?: string;
-      repeat?: { interval?: number; count?: number; frequency?: number };
+      repeat: { interval: number; count: number; frequency: number };
     },
   ) => void;
 };
@@ -22,6 +22,6 @@ export type EventFormValues = {
   divisions?: string[];
   classroomName?: string;
   interval?: number;
-  count?: number;
+  count?: number | null;
   frequency?: number;
 };

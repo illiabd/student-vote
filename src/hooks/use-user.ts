@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
+import { getUser } from '../store/auth/actions';
 import { useAppDispatch } from './use-app-dispatch';
 import { useAppSelector } from './use-app-selector';
-import { getUser } from '../store/auth/actions';
 
 export const useUser = () => {
   const { userData, isLoading } = useAppSelector((state) => state.auth);

@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import styles from './CreateProfileForm.module.scss';
 import { StepProps } from './types';
@@ -18,7 +18,7 @@ export const Step: FC<StepProps> = ({ number, selectedNumber, title, orientation
       role="button"
       className={styles['step-container']}
       onClick={onClick}
-      onKeyDown={null}
+      onKeyDown={undefined}
       tabIndex={0}
     >
       {!isFirst && (

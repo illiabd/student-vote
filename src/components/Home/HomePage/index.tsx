@@ -1,27 +1,23 @@
-/* eslint-disable operator-linebreak */
 import { FC } from 'react';
 
 import { OrganisationType } from '../../../constants';
-import { OrganisationCard } from '../OrganisationCard';
 import { useAppSelector } from '../../../hooks';
-import { StudentsTab } from '../StudentsTab';
-import { StaffTab } from '../StaffTab';
-import { GroupTab } from '../GroupsTab';
 import { Tabs } from '../../UI';
-
+import { GroupTab } from '../GroupsTab';
+import { OrganisationCard } from '../OrganisationCard';
+import { StaffTab } from '../StaffTab';
+import { StudentsTab } from '../StudentsTab';
 import styles from './HomePage.module.scss';
 
 export const HomePage: FC = () => {
-  const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
-    (state) => state.organisations,
-  );
+  const { organisationsData } = useAppSelector((state) => state.organisations);
 
   const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
-  const selectedOrganisation = organisationsData.docs.find(
-    (organisation) => organisation.id === selectedOrganisationId,
-  );
+  const selectedOrganisation =
+    organisationsData &&
+    organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);
 
-  const hasOrganisations = organisationsData?.docs?.length > 0;
+  const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
 
   const tabsData = [
     {
@@ -53,14 +49,14 @@ export const HomePage: FC = () => {
     },
   ];
 
-  const isCompany = selectedOrganisation?.type === OrganisationType.company;
-  const selectedOrganisationData = organisationsData?.docs?.find(
-    (organisation) => organisation.id === selectedOrganisationId,
-  );
+  const isCompany = selectedOrganisation && selectedOrganisation.type === OrganisationType.company;
+  const selectedOrganisationData =
+    organisationsData &&
+    organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);
 
   return (
     <div id="scrollableDiv" className={styles['content-container']}>
-      <OrganisationCard organisationData={selectedOrganisationData} />
+      {selectedOrganisationData && <OrganisationCard organisationData={selectedOrganisationData} />}{' '}
       <Tabs data={isCompany ? [tabsData[0]] : tabsData} />
     </div>
   );

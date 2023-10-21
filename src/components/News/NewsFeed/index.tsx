@@ -1,16 +1,15 @@
 import { ArrowSort24Regular, Options24Regular } from '@fluentui/react-icons';
 import React, { FC } from 'react';
 
-import { NewsFeedProps } from './types';
-import { IconButton, MessageBox } from '../../UI';
-import { NewsForm } from '../NewsForm';
-import { NewsCard } from '../NewsCard';
-
-import styles from './NewsFeed.module.scss';
+import { AllowedFeatures } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createArticle, findNews } from '../../../store/news/actions';
 import { CreateArticleRequest } from '../../../store/news/types';
-import { AllowedFeatures } from '../../../constants';
+import { IconButton, MessageBox } from '../../UI';
+import { NewsCard } from '../NewsCard';
+import { NewsForm } from '../NewsForm';
+import styles from './NewsFeed.module.scss';
+import { NewsFeedProps } from './types';
 
 export const NewsFeed: FC<NewsFeedProps> = ({ organisationId }) => {
   const dispatch = useAppDispatch();
@@ -22,10 +21,12 @@ export const NewsFeed: FC<NewsFeedProps> = ({ organisationId }) => {
     dispatch(findNews({ organisation: organisationId }));
   };
 
-  const selectedOrganisation = organisationsData?.docs.find((value) => value.id === organisationId);
-  const isNewsAllowed = selectedOrganisation?.allowedFeatures.find(
-    (feature) => feature === AllowedFeatures.news,
-  );
+  const selectedOrganisation =
+    organisationsData && organisationsData.docs.find((value) => value.id === organisationId);
+  const isNewsAllowed =
+    selectedOrganisation &&
+    selectedOrganisation.allowedFeatures &&
+    selectedOrganisation.allowedFeatures.find((feature) => feature === AllowedFeatures.news);
 
   const hasNews = newsData?.docs?.length > 0;
   const newsComponents = hasNews

@@ -1,14 +1,12 @@
-/* eslint-disable operator-linebreak */
-import axios, { AxiosError } from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { newsActions } from './slice';
 import api from '../../axios';
 import * as constants from '../../constants';
-
-import { Article, CreateArticleRequest, FindArticleResponse, FindParams } from './types';
 import { handleResponseError } from '../../tools/api-error-handler';
+import { newsActions } from './slice';
+import { Article, CreateArticleRequest, FindArticleResponse, FindParams } from './types';
 
 export const findNews = (params?: FindParams) => async (dispatch: Dispatch) => {
   const fetchData = () => {

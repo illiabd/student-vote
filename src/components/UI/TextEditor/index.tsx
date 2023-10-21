@@ -1,26 +1,24 @@
-/* eslint-disable no-param-reassign */
-
 'use client';
 
-import {
-  getDefaultReactSlashMenuItems,
-  HyperlinkToolbarPositioner,
-  FormattingToolbarPositioner,
-  SlashMenuPositioner,
-  SideMenuPositioner,
-  BlockNoteView,
-  useBlockNote,
-  DefaultSideMenu,
-} from '@blocknote/react';
 import '@blocknote/core/style.css';
 
-import { FC } from 'react';
+import {
+  BlockNoteView,
+  DefaultSideMenu,
+  FormattingToolbarPositioner,
+  getDefaultReactSlashMenuItems,
+  HyperlinkToolbarPositioner,
+  SideMenuPositioner,
+  SlashMenuPositioner,
+  useBlockNote,
+} from '@blocknote/react';
 import clsx from 'clsx';
+import { FC } from 'react';
 
 import { CustomDragHandleMenu } from './CustomDragHandleMenu';
 import { CustomFormattingToolbar } from './CustomFormattingToolbar';
-import { TextEditorProps } from './types';
 import styles from './TextEditor.module.scss';
+import { TextEditorProps } from './types';
 
 const customSlashMenuItemList = [...getDefaultReactSlashMenuItems()].slice(0, -1);
 
@@ -82,7 +80,6 @@ export const TextEditor: FC<TextEditorProps> = ({
           <SlashMenuPositioner editor={editor} />
           <SideMenuPositioner
             editor={editor}
-            // eslint-disable-next-line react/no-unstable-nested-components
             sideMenu={(props) => (
               <DefaultSideMenu {...props} dragHandleMenu={CustomDragHandleMenu} />
             )}

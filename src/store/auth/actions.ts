@@ -1,17 +1,16 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import axios, { AxiosError } from 'axios';
 import { Dispatch } from '@reduxjs/toolkit';
+import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
-import { GetUserResponse, LoginResponse, VerifyResponse } from './types';
-import { authActions } from './slice';
 import api from '../../axios';
 import * as constants from '../../constants';
+import { handleResponseError } from '../../tools/api-error-handler';
 import { currentActions } from '../current/slice';
 import { newsActions } from '../news/slice';
 import { organisationsActions } from '../organisations/slice';
-import { handleResponseError } from '../../tools/api-error-handler';
 import { scheduleActions } from '../schedule/slice';
+import { authActions } from './slice';
+import { GetUserResponse, LoginResponse, VerifyResponse } from './types';
 
 export const loginUser = (phoneNumber: string, password: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {

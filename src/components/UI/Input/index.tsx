@@ -1,11 +1,11 @@
 'use client';
 
 import { ErrorCircle20Regular } from '@fluentui/react-icons';
-import { FC, useState } from 'react';
 import clsx from 'clsx';
+import { FC, useState } from 'react';
 
-import { InputProps } from './types';
 import styles from './Input.module.scss';
+import { InputProps } from './types';
 
 export const Input: FC<InputProps> = ({
   startIcon,

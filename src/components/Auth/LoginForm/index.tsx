@@ -1,13 +1,12 @@
+import clsx from 'clsx';
 import { FormikProps, useFormik } from 'formik';
 import { FC } from 'react';
-import clsx from 'clsx';
 
-import { Button, PhoneInput } from '../../UI';
-import { loginSchema } from '../../../schemas';
-
-import { LoginFormProps, LoginFormValues } from './types';
-import styles from './LoginForm.module.scss';
 import { useAppSelector } from '../../../hooks';
+import { loginSchema } from '../../../schemas';
+import { Button, PhoneInput } from '../../UI';
+import styles from './LoginForm.module.scss';
+import { LoginFormProps, LoginFormValues } from './types';
 
 export const LoginForm: FC<LoginFormProps> = ({ className, onSubmit }) => {
   const isLoading = useAppSelector((state) => state.auth.isLoading);

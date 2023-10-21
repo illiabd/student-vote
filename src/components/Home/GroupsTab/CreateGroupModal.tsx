@@ -1,17 +1,16 @@
-import { FC, useState } from 'react';
 import { useFormik } from 'formik';
+import { FC, useState } from 'react';
 
-import { Button, Input, Dropdown } from '../../UI';
+import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findGroups } from '../../../store/current/actions';
+import { Button, Dropdown, Input } from '../../UI';
 import { Option } from '../../UI/Dropdown/types';
-import api from '../../../axios';
-
-import { CreateGroupFormValues, CreateGroupModalProps } from './types';
 import styles from './GroupTab.module.scss';
+import { CreateGroupFormValues, CreateGroupModalProps } from './types';
 
 export const CreateGroupModal: FC<CreateGroupModalProps> = ({ organisationId, onClose }) => {
-  const [selectedCourse, setSelectedCourse] = useState<string>(null);
+  const [selectedCourse, setSelectedCourse] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
@@ -19,11 +18,20 @@ export const CreateGroupModal: FC<CreateGroupModalProps> = ({ organisationId, on
     name: '',
   };
 
-  const handleDropdown = (option: Option) => {
+  const handleDropdown = (option: Option | Option[]) => {
+    const isOption = option instanceof Option;
+    if (!isOption) {
+      return;
+    }
+
     setSelectedCourse(option?.value);
   };
 
   const handleCreateButtonClick = async (values: CreateGroupFormValues) => {
+    if (!selectedCourse) {
+      return;
+    }
+
     const body = {
       ...values,
       type: 'division',
@@ -44,7 +52,7 @@ export const CreateGroupModal: FC<CreateGroupModalProps> = ({ organisationId, on
   });
 
   const options = ['1', '2', '3', '4', '5', '6'].map(
-    (course) => ({ label: course, value: course } as Option),
+    (course) => ({ label: course, value: course }) as Option,
   );
 
   return (

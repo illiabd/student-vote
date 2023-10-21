@@ -1,13 +1,11 @@
-/* eslint-disable operator-linebreak */
-import { useEffect, useState, FC } from 'react';
 import { Add24Regular } from '@fluentui/react-icons';
+import { FC, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findStaff } from '../../../store/current/actions';
 import { Button, Card, Modal } from '../../UI';
 import { AddMemberModal } from './AddMemberModal';
 import { StaffCard } from './StaffCard';
-
 import styles from './StaffTab.module.scss';
 import { StaffTabProps } from './types';
 

@@ -1,15 +1,12 @@
 'use client';
 
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { FC, useState } from 'react';
 
 import { Button } from '../Button';
 import { Input } from '../Input';
-
-import { LinksInputProps } from './types';
-import styles from './LinksInput.module.scss';
 import { Link } from './Link';
+import styles from './LinksInput.module.scss';
+import { LinksInputProps } from './types';
 
 export const LinksInput: FC<LinksInputProps> = ({ value, onChange, ...props }) => {
   const [inputValue, setInputValue] = useState<string>('');

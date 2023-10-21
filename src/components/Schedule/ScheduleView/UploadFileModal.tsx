@@ -2,18 +2,18 @@ import axios, { AxiosError } from 'axios';
 import { FC, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { UploadFileModalProps } from './types';
-import { handleResponseError } from '../../../tools/api-error-handler';
-import { ExcelUpload } from '../../UI/ExcelUpload';
-import { Button } from '../../UI';
 import api from '../../../axios';
+import { handleResponseError } from '../../../tools/api-error-handler';
+import { Button } from '../../UI';
+import { ExcelUpload } from '../../UI/ExcelUpload';
+import { UploadFileModalProps } from './types';
 
 export const UploadFileModal: FC<UploadFileModalProps> = ({
   organisationId,
   weekDate,
   onClose,
 }) => {
-  const [scheduleFile, setScheduleFile] = useState<File>(null);
+  const [scheduleFile, setScheduleFile] = useState<File>(undefined);
 
   const handleProfilePictureFileChange = (value: File) => {
     setScheduleFile(value);

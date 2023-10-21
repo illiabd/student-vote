@@ -1,18 +1,17 @@
 import { ChevronRight16Filled } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FC, useRef, useState } from 'react';
 import Flag from 'react-world-flags';
-import clsx from 'clsx';
 
-import { DropdownOption } from './DropdownOption';
-
-import { DropdownProps } from './types';
+import { useOutsideClick } from '../../../../hooks';
 import { Country } from '../types';
 import styles from './Dropdown.module.scss';
-import { useOutsideClick } from '../../../../hooks';
+import { DropdownOption } from './DropdownOption';
+import { DropdownProps } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({ value, isFocused, setValue, optionsData }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef(undefined);
 
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
