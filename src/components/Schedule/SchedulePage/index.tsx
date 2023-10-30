@@ -7,7 +7,7 @@ import { ScheduleView } from '../ScheduleView';
 export const SchedulePage: FC = () => {
   const { organisationsData } = useAppSelector((state) => state.organisations);
 
-  const isNewsAllowed = organisationsData?.docs[0]?.allowedFeatures.includes('news');
+  const isNewsAllowed = organisationsData?.docs[0]?.allowedFeatures?.includes('news');
   if (!isNewsAllowed) {
     return (
       <MessageBox>

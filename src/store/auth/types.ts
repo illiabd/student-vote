@@ -23,7 +23,7 @@ export type UserData = {
 };
 
 export type State = {
-  userData: UserData;
+  userData: UserData | undefined;
   needVerification: boolean;
   isLoading: boolean;
 };

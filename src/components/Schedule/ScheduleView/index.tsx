@@ -18,14 +18,15 @@ import { findEvents } from '../../../store/schedule/actions';
 import { scheduleActions } from '../../../store/schedule/slice';
 import { ScheduleEvent } from '../../../store/schedule/types';
 import { Button, Card, Dropdown, IconButton, Modal } from '../../UI';
-import { Option } from '../../UI/Dropdown/types';
+import type { Option } from '../../UI/Dropdown/types';
 import { EventCard } from '../EventCard';
 import { AddEventModal } from './AddEventModal';
 import styles from './ScheduleView.module.scss';
 import { UploadFileModal } from './UploadFileModal';
 
-const getTransformedEvents = (events: ScheduleEvent[]) => {
-  const transformedDocs = {};
+const getTransformedEvents = (events: ScheduleEvent[] | undefined) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const transformedDocs: any = {};
 
   if (!events) {
     return undefined;
@@ -70,7 +71,7 @@ export const ScheduleView: FC = () => {
   const findEventsWithParams = useCallback(() => {
     const fromDate = weekStartDate?.subtract(1, 'week').toISOString();
     const tillDate = weekStartDate?.add(1, 'week').toISOString();
-    const isDivisionSelected = selectedDivision?.length > 0;
+    const isDivisionSelected = selectedDivision && selectedDivision?.length > 0;
 
     dispatch(
       findEvents({
@@ -158,7 +159,12 @@ export const ScheduleView: FC = () => {
     setShowUploadFileModal(true);
   };
 
-  const handleDivisionDropdownChange = (division: Option) => {
+  const handleDivisionDropdownChange = (division: Option | Option[]) => {
+    const isOption = division instanceof Option;
+    if (!isOption) {
+      return;
+    }
+
     if (!division) {
       dispatch(scheduleActions.setSelectedDivision(''));
       return;
@@ -167,7 +173,7 @@ export const ScheduleView: FC = () => {
     dispatch(scheduleActions.setSelectedDivision(division.value));
   };
 
-  const handleDivisionDropdownInputChange = (value) => {
+  const handleDivisionDropdownInputChange = (value: string) => {
     setGroupNameFilter(value);
   };
 
@@ -205,7 +211,7 @@ export const ScheduleView: FC = () => {
       return <div key={dayDateString}>{label}</div>;
     }
 
-    const eventCards = dayEvents.map((item) => {
+    const eventCards = dayEvents.map((item: ScheduleEvent) => {
       if (!item) {
         return undefined;
       }
@@ -230,14 +236,14 @@ export const ScheduleView: FC = () => {
   const modalTitle = showAddEventModal ? 'Нова подія' : 'Завантажуємо розклад';
   const modalContent = showAddEventModal ? (
     <AddEventModal
-      organisationId={selectedOrganisationId}
+      organisationId={selectedOrganisationId as string}
       onClose={handleModalClose}
       onSubmit={findEventsWithParams}
     />
   ) : (
     <UploadFileModal
+      organisationId={selectedOrganisationId as string}
       weekDate={weekStartDate.add(3, 'days').toISOString()}
-      organisationId={selectedOrganisationId}
       onClose={handleModalClose}
     />
   );
@@ -283,7 +289,7 @@ export const ScheduleView: FC = () => {
           <div className={styles['tools-container']}>
             <Dropdown
               placeholder="Введіть назву групи"
-              options={divisionsOptions}
+              options={divisionsOptions ?? []}
               defaultValue={[]}
               onChange={handleDivisionDropdownChange}
               onInputChange={handleDivisionDropdownInputChange}

@@ -102,9 +102,9 @@ export type StudentsData = RequestParams & {
 
 export type State = {
   staff: Member[];
-  groupsData: GroupsData;
-  studentsData: StudentsData;
-  selectedOrganisationId: string;
+  groupsData: GroupsData | undefined;
+  studentsData: StudentsData | undefined;
+  selectedOrganisationId: string | undefined;
   isLoading: boolean;
   isNextPageLoading: boolean;
 };

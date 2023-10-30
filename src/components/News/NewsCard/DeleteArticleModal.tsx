@@ -11,6 +11,10 @@ export const DeleteArticleModal: FC<DeleteArticleModalProps> = ({ data, onClose 
   const dispatch = useAppDispatch();
 
   const handleAcceptButtonClick = async () => {
+    if (!data.id) {
+      return;
+    }
+
     await dispatch(deleteArticle(data.id));
     await dispatch(findNews({ organisation: data.organisation }));
     onClose();

@@ -89,8 +89,7 @@ const Home: FC = () => {
         />
         <div className={styles.main}>
           <Routes>
-            <Route path="/" index Component={HomePage} />
-            <Route path="/*" index Component={HomePage} />
+            <Route path="*" index Component={HomePage} />
             <Route path="/news" Component={NewsPage} />
             <Route path="/vacancies" Component={VacanciesPage} />
             <Route path="/vacancies/*" Component={VacanciesPage} />
@@ -106,7 +105,6 @@ const App: FC = () => {
   return (
     <Routes>
       <Route path="/auth" Component={AuthPage} />
-      <Route path="/" Component={Home} />
       <Route path="*" Component={Home} />
     </Routes>
   );

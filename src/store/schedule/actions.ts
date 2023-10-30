@@ -159,7 +159,7 @@ export const loadEvents = (params?: FindParams) => async (dispatch: Dispatch) =>
     const state = store.getState();
     const { scheduleData } = state.schedule;
 
-    if (!scheduleData.hasNextPage) {
+    if (!scheduleData?.hasNextPage) {
       return undefined;
     }
 

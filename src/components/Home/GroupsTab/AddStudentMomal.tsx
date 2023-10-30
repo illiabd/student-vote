@@ -28,7 +28,7 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
     setSelectedStudentId(option?.value);
   };
 
-  const options = studentsData.docs.reduce<Option[]>((result, student) => {
+  const options = studentsData?.docs.reduce<Option[]>((result, student) => {
     const { user } = student;
     if (!user) {
       return result;
@@ -45,7 +45,7 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
       <Dropdown
         label="Оберіть студента"
         onChange={handleDropdownChange}
-        options={options}
+        options={options ?? []}
         placeholder="Надія Дія Володимирівна"
       />
       <div className={styles['buttons-container']}>

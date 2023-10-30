@@ -29,7 +29,8 @@ export const SideBar: FC<SideBarProps> = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const selectedOrganisation = organisations.find((value) => value.id === selectedOrganisationId);
+  const selectedOrganisation =
+    organisations.find((value) => value.id === selectedOrganisationId) ?? organisations[0];
 
   const handleDropdownChange = (option: Option) => {
     onChange(option?.value);
@@ -40,10 +41,15 @@ export const SideBar: FC<SideBarProps> = ({
     navigate('/');
   };
 
-  const options: Option[] = organisations.map((organisation) => {
+  const options = organisations.reduce<Option[]>((result, organisation) => {
+    if (!organisation) {
+      return result;
+    }
+
     const content = <div className={styles.option}>{organisation?.name}</div>;
-    return { label: content, value: organisation.id };
-  });
+    result.push({ label: content, value: organisation.id ?? '' });
+    return result;
+  }, []);
 
   const arrowOpen = (
     <div className={styles.arrow}>
@@ -77,8 +83,8 @@ export const SideBar: FC<SideBarProps> = ({
       </a>
     );
 
-  const links = selectedOrganisation?.allowedFeatures.map((feature) => {
-    if (!AllowedFeaturesLinks[feature]) {
+  const links = selectedOrganisation.allowedFeatures?.map((feature) => {
+    if (!AllowedFeaturesLinks[feature as keyof typeof AllowedFeatures]) {
       return undefined;
     }
 
@@ -89,7 +95,7 @@ export const SideBar: FC<SideBarProps> = ({
       [AllowedFeatures.votes, Vote24Regular],
     ]);
 
-    const Icon = iconsMap.get(AllowedFeatures[feature]);
+    const Icon = iconsMap.get(AllowedFeatures[feature as keyof typeof AllowedFeatures]);
     const handleButtonClick = () => {
       onTabSelect(`/${feature}`);
     };
@@ -99,15 +105,15 @@ export const SideBar: FC<SideBarProps> = ({
         key={feature}
         variant="text"
         size="md"
-        startIcon={<Icon />}
+        startIcon={Icon && <Icon />}
         onClick={handleButtonClick}
       >
-        {AllowedFeaturesLinks[feature]}
+        {AllowedFeaturesLinks[feature as keyof typeof AllowedFeatures]}
       </Button>
     );
   });
 
-  const isSuperadmin = userData.type === UserTypes.superadmin;
+  const isSuperadmin = userData?.type === UserTypes.superadmin;
 
   const handleCreateOrganisationButton = () => {
     navigate('/create-profile');
@@ -133,7 +139,7 @@ export const SideBar: FC<SideBarProps> = ({
       <img alt="univera-logo" src="/images/univera-logo-full.svg" width={177} height={60} />
       <ProfilePicture
         source={selectedOrganisation?.profilePictureLink}
-        alternative={selectedOrganisation?.name}
+        alternative={selectedOrganisation?.name ?? ''}
         width={120}
         height={120}
       />

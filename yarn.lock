@@ -970,6 +970,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-world-flags@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/react-world-flags/-/react-world-flags-1.4.4.tgz#3d33445a212838be4ce9f354a5cc0835cf9ad616"
+  integrity sha512-Zb6Efj13EqfYwC2gY3ko19/9aqJUCmIoxlOjTbVQC1f+NPGqGR3O/7TowRSdHJ8elEvZfVOwbT44ihNcbWpYVA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*":
   version "18.2.29"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.29.tgz#88b48a287e00f6fdcd6f95662878fb701ae18b27"

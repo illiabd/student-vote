@@ -1,5 +1,3 @@
-'use client';
-
 import '@blocknote/core/style.css';
 
 import {
@@ -38,6 +36,10 @@ export const TextEditor: FC<TextEditorProps> = ({
         return;
       }
 
+      if (!onChange) {
+        return;
+      }
+
       const blocks = currentEditor.topLevelBlocks;
       const html = await currentEditor.blocksToHTML(blocks);
       onChange(html, 500); // FIXME: find a way to count plain text length
@@ -59,18 +61,18 @@ export const TextEditor: FC<TextEditorProps> = ({
 
   const editorContainerClasses = clsx(
     styles['editor-wrapper'],
-    editor.isFocused && styles.focused,
+    editor.isFocused() && styles.focused,
     hasErrors && styles.error,
   );
 
-  const isHintsShown = editor.isFocused || hasErrors;
+  const isHintsShown = editor.isFocused() || hasErrors;
 
   return (
     <div className={styles.container}>
       <div className={labelClasses}>
         <h4>{label}</h4>
       </div>
-      <div className={editable && editorContainerClasses}>
+      <div className={editable ? editorContainerClasses : ''}>
         <BlockNoteView editor={editor} theme="light">
           <FormattingToolbarPositioner
             editor={editor}

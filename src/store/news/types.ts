@@ -34,7 +34,7 @@ export type NewsData = {
 
 export type State = {
   isLoading: boolean;
-  newsData: NewsData;
+  newsData: NewsData | undefined;
 };
 
 export type FindArticleResponse = {

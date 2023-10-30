@@ -1,5 +1,3 @@
-'use client';
-
 import { Dismiss24Regular } from '@fluentui/react-icons';
 import { FC, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
@@ -47,6 +45,10 @@ export const Modal: FC<ModalProps> = ({ isShown, onClose, children, title }) => 
   );
 
   const modalRoot = document.getElementById('modal-root');
+
+  if (!modalRoot) {
+    throw Error('No modal root element!');
+  }
 
   return ReactDOM.createPortal(isShown && modalContent, modalRoot);
 };

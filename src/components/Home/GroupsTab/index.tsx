@@ -25,7 +25,7 @@ export const GroupTab: FC<GroupsTabProps> = ({ selectedOrganisationId, hasOrgani
     }
   }, [dispatch, hasOrganisations, selectedOrganisationId]);
 
-  const hasGroups = groupsData?.docs?.length > 0;
+  const hasGroups = groupsData && groupsData.docs?.length > 0;
 
   useEffect(() => {
     if (hasGroups) {
@@ -69,7 +69,7 @@ export const GroupTab: FC<GroupsTabProps> = ({ selectedOrganisationId, hasOrgani
       <GroupCard
         key={group.id}
         groupData={group}
-        studentsData={currentGroupStudents}
+        studentsData={currentGroupStudents ?? []}
         organisationId={selectedOrganisationId}
       />
     );

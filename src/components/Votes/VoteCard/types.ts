@@ -1,7 +1,3 @@
-// import { Vote } from '../../../store/vacancies/types';
-
-import { string } from 'yup';
-
 type Vote = {
   id: string;
   organisation: string;

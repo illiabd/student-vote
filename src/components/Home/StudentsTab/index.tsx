@@ -46,7 +46,7 @@ export const StudentsTab: FC<StudentTabProps> = ({ selectedOrganisationId, hasOr
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelected = studentsData?.docs?.map((student) => student.user.id);
-      setSelected(newSelected);
+      setSelected(newSelected ?? []);
       return;
     }
     setSelected([]);
@@ -134,9 +134,9 @@ export const StudentsTab: FC<StudentTabProps> = ({ selectedOrganisationId, hasOr
         </div>
       </div>
       <InfiniteScroll
-        dataLength={studentsData.docs.length ?? 0}
+        dataLength={studentsData?.docs.length ?? 0}
         next={handleInfiniteScrollLoader}
-        hasMore={studentsData.hasNextPage ?? false}
+        hasMore={studentsData?.hasNextPage ?? false}
         loader={<h4>Loading...</h4>}
         scrollableTarget="scrollableDiv"
       >

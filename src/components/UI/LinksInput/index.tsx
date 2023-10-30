@@ -1,5 +1,3 @@
-'use client';
-
 import { FC, useState } from 'react';
 
 import { Button } from '../Button';
@@ -18,6 +16,7 @@ export const LinksInput: FC<LinksInputProps> = ({ value, onChange, ...props }) =
       return prev;
     });
     setInputValue('');
+
     onChange(links);
   };
 
@@ -29,8 +28,12 @@ export const LinksInput: FC<LinksInputProps> = ({ value, onChange, ...props }) =
     onChange(links);
   };
 
-  const linksComponents = value.map((link, index) => (
-    <a key={index} id={index} link={link} onDelete={handleDeleteButtonClick} />
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const linksComponents = value?.map((link, index) => (
+    <Link key={index} id={index} link={link} onDelete={handleDeleteButtonClick} />
   ));
 
   const isButtonDisabled = inputValue.trim()?.length === 0;
@@ -38,11 +41,7 @@ export const LinksInput: FC<LinksInputProps> = ({ value, onChange, ...props }) =
   return (
     <div className={styles.container}>
       <div className={styles['input-wrapper']}>
-        <Input
-          {...props}
-          value={inputValue}
-          onChange={(event) => setInputValue(event.target.value)}
-        />
+        <Input {...props} value={inputValue} onChange={handleInput} />
         <div className={styles['links-wrapper']}>{linksComponents}</div>
       </div>
       <Button onClick={handleAddButtonClick} size="sm" disabled={isButtonDisabled}>

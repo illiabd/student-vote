@@ -3,16 +3,14 @@ import clsx from 'clsx';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { AllowedFeatures } from '../../../constants';
+// import { AllowedFeatures } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { Button, Card, IconButton, MessageBox } from '../../UI';
+import { Button, Card, IconButton } from '../../UI';
 import { VoteCard } from '../VoteCard';
 import styles from './VotesPage.module.scss';
 
 export const VotesPage: FC = () => {
-  const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
-    (state) => state.organisations,
-  );
+  const { organisationsData } = useAppSelector((state) => state.organisations);
 
   // const { vacanciesData, isLoading: isVacanciesLoading } = useAppSelector(
   //   (state) => state.vacancies,
@@ -38,11 +36,11 @@ export const VotesPage: FC = () => {
     (organisation) => organisation.id === selectedOrganisationId,
   );
 
-  const isVotesAllowed = selectedOrganisation?.allowedFeatures.find(
-    (feature) => feature === AllowedFeatures.votes,
-  );
+  // const isVotesAllowed = selectedOrganisation?.allowedFeatures?.find(
+  //   (feature) => feature === AllowedFeatures.votes,
+  // );
 
-  const votesNotAllowedContent = <MessageBox>Голосування не дозволені</MessageBox>;
+  // const votesNotAllowedContent = <MessageBox>Голосування не дозволені</MessageBox>;
 
   // const isLoading = isOrganisationsLoading || isVotesLoading;
   // const data = vacanciesData?.docs;

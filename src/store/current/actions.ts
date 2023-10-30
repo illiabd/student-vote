@@ -168,7 +168,7 @@ export const loadGroups = (filters?: FindGroupFilters) => async (dispatch: Dispa
     const state = store.getState();
     const { groupsData } = state.current;
 
-    if (!groupsData.hasNextPage) {
+    if (!groupsData?.hasNextPage) {
       return undefined;
     }
 
@@ -184,6 +184,10 @@ export const loadGroups = (filters?: FindGroupFilters) => async (dispatch: Dispa
 
   try {
     const response = await fetchData();
+
+    if (!response) {
+      return;
+    }
 
     if (axios.isAxiosError(response)) {
       const error = response as AxiosError;
@@ -251,7 +255,7 @@ export const loadStudents =
       const state = store.getState();
       const { studentsData } = state.current;
 
-      if (!studentsData.hasNextPage) {
+      if (!studentsData?.hasNextPage) {
         return undefined;
       }
 
@@ -270,6 +274,10 @@ export const loadStudents =
 
     try {
       const response = await fetchData();
+
+      if (!response) {
+        return;
+      }
 
       if (axios.isAxiosError(response)) {
         const error = response as AxiosError;

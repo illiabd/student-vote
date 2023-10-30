@@ -1,5 +1,3 @@
-'use client';
-
 import { ErrorCircle20Regular } from '@fluentui/react-icons';
 import clsx from 'clsx';
 import { FC, useState } from 'react';

@@ -1,5 +1,5 @@
 import { ArrowSort24Regular, Options24Regular } from '@fluentui/react-icons';
-import React, { FC } from 'react';
+import { FC } from 'react';
 
 import { AllowedFeatures } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -28,7 +28,7 @@ export const NewsFeed: FC<NewsFeedProps> = ({ organisationId }) => {
     selectedOrganisation.allowedFeatures &&
     selectedOrganisation.allowedFeatures.find((feature) => feature === AllowedFeatures.news);
 
-  const hasNews = newsData?.docs?.length > 0;
+  const hasNews = newsData && newsData.docs?.length > 0;
   const newsComponents = hasNews
     ? newsData?.docs?.map((news) => <NewsCard key={news.id} data={news} />)
     : 'Новин немає';

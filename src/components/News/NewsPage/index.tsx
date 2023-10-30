@@ -18,13 +18,21 @@ export const NewsPage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  const allowedFeatures = organisationsData && organisationsData.docs[0].allowedFeatures;
-  const isNewsAllowed = allowedFeatures && allowedFeatures.includes('news');
+  const allowedFeatures = organisationsData?.docs[0].allowedFeatures;
+  const isNewsAllowed = allowedFeatures?.includes('news');
   if (!isNewsAllowed) {
     return (
       <MessageBox>
         <span>Новини не дозволені для вашої організації, чат-бот підтримки -</span>
         <Button href="https://t.me/univera_bot">@univera_bot</Button>
+      </MessageBox>
+    );
+  }
+
+  if (!selectedOrganisationId) {
+    return (
+      <MessageBox>
+        <span>Оберіть організацію</span>
       </MessageBox>
     );
   }

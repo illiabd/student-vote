@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import { Dismiss24Regular, ImageAdd24Regular } from '@fluentui/react-icons';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback } from 'react';
 import { DropzoneOptions, ErrorCode, FileRejection, useDropzone } from 'react-dropzone';
 import { toast } from 'react-toastify';
 
@@ -41,9 +40,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({ value, onChange }) => {
     }
   }, []);
 
-  const onDeleteFile = () => {
-    onChange(undefined);
-  };
+  const onDeleteFile = () => {};
 
   const dropzoneOptions: DropzoneOptions = {
     maxFiles: 1,

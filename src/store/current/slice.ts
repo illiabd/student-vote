@@ -31,6 +31,11 @@ export const currentSlice = createSlice({
       state.groupsData = action.payload;
     },
     pushGroups(state, action: PayloadAction<GroupsData>) {
+      if (!state.groupsData) {
+        state.groupsData = action.payload;
+        return;
+      }
+
       const prevDocs = state.groupsData.docs;
       state.groupsData = action.payload;
       state.groupsData.docs.unshift(...prevDocs);
@@ -39,6 +44,11 @@ export const currentSlice = createSlice({
       state.studentsData = action.payload;
     },
     pushStudents(state, action: PayloadAction<StudentsData>) {
+      if (!state.studentsData) {
+        state.studentsData = action.payload;
+        return;
+      }
+
       const prevDocs = state.studentsData.docs;
       state.studentsData = action.payload;
       state.studentsData.docs.unshift(...prevDocs);

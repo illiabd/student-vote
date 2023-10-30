@@ -8,7 +8,7 @@ import { handleResponseError } from '../../tools/api-error-handler';
 import { newsActions } from './slice';
 import { Article, CreateArticleRequest, FindArticleResponse, FindParams } from './types';
 
-export const findNews = (params?: FindParams) => async (dispatch: Dispatch) => {
+export const findNews = (params: FindParams) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(newsActions.setIsLoading(true));
     const body = {
@@ -148,7 +148,7 @@ export const patchArticle =
     return false;
   };
 
-export const deleteArticle = (articleId) => async (dispatch: Dispatch) => {
+export const deleteArticle = (articleId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(newsActions.setIsLoading(true));
     return api.delete(`/news/v1/article/${articleId}`);

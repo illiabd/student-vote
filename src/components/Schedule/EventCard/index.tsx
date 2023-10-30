@@ -30,7 +30,7 @@ export const EventCard: FC<EventCardProps> = ({ scheduleEvent, onSubmit }) => {
       <Modal onClose={handleModalClose} isShown={showEditEventModal} title="Додати подію">
         {showEditEventModal && (
           <EditEventModal
-            organisationId={selectedOrganisationId}
+            organisationId={selectedOrganisationId as string}
             onClose={handleModalClose}
             eventId={scheduleEvent.id}
             onSubmit={onSubmit}

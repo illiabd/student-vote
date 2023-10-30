@@ -8,7 +8,7 @@ export type LinksInputProps = {
   type?: string;
   id?: string;
   value?: string[];
-  onChange?: (value: string[]) => void;
+  onChange: (value: string[]) => void;
 };
 
 export type LinksProps = {

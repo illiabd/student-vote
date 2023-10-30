@@ -13,9 +13,9 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
   weekDate,
   onClose,
 }) => {
-  const [scheduleFile, setScheduleFile] = useState<File>(undefined);
+  const [scheduleFile, setScheduleFile] = useState<File>();
 
-  const handleProfilePictureFileChange = (value: File) => {
+  const handleProfilePictureFileChange = (value: File | undefined) => {
     setScheduleFile(value);
   };
 

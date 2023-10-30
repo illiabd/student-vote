@@ -23,6 +23,10 @@ export const CompanyForm: FC<CompanyFormProps> = ({ onNext, orientation }) => {
   };
 
   const onSubmit = async (values: CompanyFormValues) => {
+    if (!userData) {
+      return;
+    }
+
     const body = {
       shortName: values.name,
       owner: userData.id,

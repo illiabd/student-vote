@@ -38,7 +38,7 @@ export const VacanciesPage: FC = () => {
     (organisation) => organisation.id === selectedOrganisationId,
   );
 
-  const isVacanciesAllowed = selectedOrganisation?.allowedFeatures.find(
+  const isVacanciesAllowed = selectedOrganisation?.allowedFeatures?.find(
     (feature) => feature === AllowedFeatures.vacancies,
   );
 
@@ -48,7 +48,7 @@ export const VacanciesPage: FC = () => {
 
   const isLoading = isOrganisationsLoading || isVacanciesLoading;
   const data = vacanciesData?.docs;
-  const hasVacancies = data?.length > 0;
+  const hasVacancies = data && data?.length > 0;
 
   const publishedVacanciesAmount = data?.filter((vacancy) => vacancy.isPublished)?.length ?? 0;
   const createdVacanciesAmount = data?.length ?? 0;

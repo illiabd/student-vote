@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { OrganisationType } from '../../../constants';
 import { useAppSelector } from '../../../hooks';
-import { Tabs } from '../../UI';
+import { MessageBox, Tabs } from '../../UI';
 import { GroupTab } from '../GroupsTab';
 import { OrganisationCard } from '../OrganisationCard';
 import { StaffTab } from '../StaffTab';
@@ -18,6 +18,14 @@ export const HomePage: FC = () => {
     organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);
 
   const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
+
+  if (!selectedOrganisationId) {
+    return (
+      <MessageBox>
+        <span>Оберіть організацію</span>
+      </MessageBox>
+    );
+  }
 
   const tabsData = [
     {
@@ -49,7 +57,7 @@ export const HomePage: FC = () => {
     },
   ];
 
-  const isCompany = selectedOrganisation && selectedOrganisation.type === OrganisationType.company;
+  const isCompany = selectedOrganisation?.type === OrganisationType.company;
   const selectedOrganisationData =
     organisationsData &&
     organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);

@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
 
 import styles from './Dropdown.module.scss';
-import { DropdownProps } from './types';
+import { DropdownProps, Option } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({
   options,
@@ -31,7 +31,7 @@ export const Dropdown: FC<DropdownProps> = ({
         border: '1px solid #8a8a8a',
         borderRadius: '4px',
         borderColor: hasErrors ? '#9a0000 !important' : borderColor,
-        backgroundColor: hasErrors && '#f5e1e1',
+        backgroundColor: hasErrors ? '#f5e1e1' : baseStyles.backgroundColor,
         color: '#666767;',
         fontWeight: '500',
         fontSize: '14px',
@@ -53,7 +53,7 @@ export const Dropdown: FC<DropdownProps> = ({
 
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected && '#f0f5f9 !important',
+      backgroundColor: state.isSelected ? '#f0f5f9 !important' : provided.backgroundColor,
       color: state.isSelected ? '#05568c !important' : '#323333 !important',
       fontSize: '14px',
       '&:hover': {
@@ -62,12 +62,16 @@ export const Dropdown: FC<DropdownProps> = ({
     }),
   };
 
+  const handleChange = (newValue: unknown) => {
+    onChange(newValue as Option);
+  };
+
   if (noLabel) {
     return (
       <Select
         styles={dropdownStyles}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
         isMulti={multi}
         isClearable
         {...props}
@@ -84,7 +88,7 @@ export const Dropdown: FC<DropdownProps> = ({
       <Select
         styles={dropdownStyles}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
         isMulti={multi}
         isClearable
         {...props}

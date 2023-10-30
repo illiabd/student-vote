@@ -55,6 +55,9 @@ export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => 
   });
 
   const handleProfilePictureFileChange = (value: File) => {
+    if (!value) {
+      return;
+    }
     setProfilePictureFile(value);
   };
 

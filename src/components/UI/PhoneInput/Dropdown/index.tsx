@@ -11,7 +11,7 @@ import { DropdownProps } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({ value, isFocused, setValue, optionsData }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dropdownRef = useRef(undefined);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);

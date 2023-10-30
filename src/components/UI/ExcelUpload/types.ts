@@ -1,4 +1,4 @@
 export type ExcelUploadProps = {
-  value: File;
-  onChange: (value: File) => void;
+  value: File | undefined;
+  onChange: (value: File | undefined) => void;
 };

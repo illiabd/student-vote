@@ -26,6 +26,11 @@ export const scheduleSlice = createSlice({
     },
 
     pushEvents(state, action: PayloadAction<ScheduleData>) {
+      if (!state.scheduleData) {
+        state.scheduleData = action.payload;
+        return;
+      }
+
       const prevDocs = state.scheduleData.docs;
       state.scheduleData = action.payload;
       state.scheduleData.docs.unshift(...prevDocs);

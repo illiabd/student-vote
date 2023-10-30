@@ -57,8 +57,8 @@ export type ScheduleData = {
 export type FindEventsResponse = ScheduleData;
 
 export type State = {
-  scheduleData: ScheduleData;
-  selectedDivision: string;
+  scheduleData: ScheduleData | undefined;
+  selectedDivision: string | undefined;
   isLoading: boolean;
   error: string[];
 };

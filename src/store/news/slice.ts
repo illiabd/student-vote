@@ -19,7 +19,7 @@ export const newsSlice = createSlice({
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
-    resetState(state) {
+    resetState() {
       return initialState;
     },
   },

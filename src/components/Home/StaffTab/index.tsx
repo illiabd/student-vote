@@ -34,6 +34,10 @@ export const StaffTab: FC<StaffTabProps> = ({ selectedOrganisationId, hasOrganis
   const membersComponent =
     hasStaff &&
     members.map((member) => {
+      if (!user) {
+        return;
+      }
+
       const isCurrentUser = user.id === member.user?.id;
       return (
         <StaffCard

@@ -17,9 +17,9 @@ export const AddEventModal: FC<AddEventModalProps> = ({ organisationId, onClose,
       ...values,
       repeat: {
         timezone: dayjs.tz.guess(),
-        count: formValues?.count,
-        interval: formValues?.interval,
-        frequency: Number(formValues?.frequency),
+        count: Number(count),
+        interval: Number(interval),
+        frequency: Number(frequency),
       },
     };
     await dispatch(createEvent(body));

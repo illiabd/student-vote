@@ -10,5 +10,5 @@ export type PhoneInputProps = {
   label?: string;
   value?: string;
   id?: string;
-  onChange?: (value: string) => void;
+  onChange: (value: string) => void;
 };
