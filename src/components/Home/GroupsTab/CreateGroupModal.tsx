@@ -5,7 +5,7 @@ import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { findGroups } from '../../../store/current/actions';
 import { Button, Dropdown, Input } from '../../UI';
-import { Option } from '../../UI/Dropdown/types';
+import type { Option } from '../../UI/Dropdown/types';
 import styles from './GroupTab.module.scss';
 import { CreateGroupFormValues, CreateGroupModalProps } from './types';
 

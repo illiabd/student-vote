@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findGroups, findStudents, putStudentIntoGroup } from '../../../store/current/actions';
 import { Button, Dropdown } from '../../UI';
-import { Option } from '../../UI/Dropdown/types';
+import type { Option } from '../../UI/Dropdown/types';
 import styles from './GroupTab.module.scss';
 import { AddUserModalProps } from './types';
 

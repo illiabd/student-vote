@@ -10,7 +10,7 @@ import { createEventSchema } from '../../../schemas/create-event-schema';
 import { FindGroupsResponse, Group } from '../../../store/current/types';
 import { deleteEvent, findEvents } from '../../../store/schedule/actions';
 import { Button, Dropdown, Input } from '../../UI';
-import { Option } from '../../UI/Dropdown/types';
+import type { Option } from '../../UI/Dropdown/types';
 import styles from './EventForm.module.scss';
 import { EventFormProps, EventFormValues } from './types';
 
@@ -99,7 +99,8 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
       const [endHours, endMinutes] = end?.split(':') ?? ['0', '0'];
       const endDate = dayjs(date).set('hour', +endHours).set('minute', +endMinutes);
 
-      const body =  {
+      const body = defaultValues
+        ? {
             divisions: values.divisions,
 
             ...(defaultValues?.title !== title && { title }),
@@ -135,16 +136,26 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             organisation: selectedOrganisationId,
             start: startDate.toISOString(),
             end: endDate.toISOString(),
+            repeat: {
+              interval: Number(interval),
+              count: Number(count),
+              frequency: Number(frequency),
+            },
           };
 
       onSubmit(body);
     },
   });
 
-  const handleDivisionDropdownChange = async (value: Option[]) => {
+  const handleDivisionDropdownChange = async (value: Option[] | Option) => {
+    const isOptionArray = Array.isArray(value);
+    if (!isOptionArray) {
+      return;
+    }
+
     formik.setFieldValue(
       'divisions',
-      value.reduce((array, option) => {
+      value.reduce<string[]>((array, option) => {
         if (option) {
           array.push(option.value);
         }
@@ -153,8 +164,9 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     );
   };
 
-  const handleFrequencyDropdownChange = (option: Option) => {
-    if (!option) {
+  const handleFrequencyDropdownChange = (option: Option | Option[]) => {
+    const isOption = option instanceof Option;
+    if (!option || !isOption) {
       return;
     }
 
@@ -169,8 +181,9 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     setGroupNameFilter(value);
   };
 
-  const handleKindDropdownChange = (value: Option) => {
-    if (!value) {
+  const handleKindDropdownChange = (value: Option | Option[]) => {
+    const isOption = value instanceof Option;
+    if (!value || !isOption) {
       return;
     }
 
@@ -192,6 +205,9 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
   const dispatch = useAppDispatch();
 
   const handleDeleteButtonClick = async () => {
+    if (!defaultValues?.id) {
+      return;
+    }
     await dispatch(deleteEvent(defaultValues?.id));
     await dispatch(findEvents({ organisation: selectedOrganisationId }));
   };
@@ -203,7 +219,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
 
   const defaultSelectedDivisions = defaultValues?.divisions?.map<Option>((item) => ({
     label: item.name,
-    value: item.id,
+    value: item.id ?? '',
   }));
 
   const defaultDivisionOptions = useMemo(() => {
@@ -230,10 +246,12 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     ],
     [],
   );
-  const defaultKindOption = useMemo(
-    () => kindOptions?.find((option) => option.value === defaultValues?.kind),
-    [defaultValues?.kind, kindOptions],
-  );
+  const defaultKindOption = kindOptions.find((option) => {
+    if (!defaultValues) {
+      return;
+    }
+    return option.value === defaultValues.kind;
+  });
 
   const frequencyOption = [
     { label: EventFrequencyLabels.DAILY, value: Frequency.DAILY.toString() },

@@ -4,7 +4,7 @@ import { ROLES } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findStaff, setMemberRole } from '../../../store/current/actions';
 import { Button, Dropdown } from '../../UI';
-import { Option } from '../../UI/Dropdown/types';
+import type { Option } from '../../UI/Dropdown/types';
 import styles from './StaffTab.module.scss';
 import { EditModalProps } from './types';
 
