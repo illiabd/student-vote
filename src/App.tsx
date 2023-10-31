@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import styles from './App.module.scss';
-// import { VotesPage } from './components/Votes';
 import { SideBar } from './components';
 import { AuthPage } from './components/Auth';
+import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { SchedulePage } from './components/Schedule';
@@ -105,6 +105,7 @@ const App: FC = () => {
   return (
     <Routes>
       <Route path="/auth" Component={AuthPage} />
+      <Route path="/create-profile" Component={CreateProfilePage} />
       <Route path="*" Component={Home} />
     </Routes>
   );
