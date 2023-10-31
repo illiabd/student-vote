@@ -10,7 +10,7 @@ import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { SchedulePage } from './components/Schedule';
 import { Button, MessageBox } from './components/UI';
-import { VacanciesPage } from './components/Vacancies';
+import { VacanciesPage, VacancyPage } from './components/Vacancies';
 import { SELECTED_ORGANISATION_ID } from './constants';
 import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
 import { currentActions } from './store/current/slice';
@@ -23,22 +23,6 @@ const Home: FC = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const organisationId = localStorage.getItem(SELECTED_ORGANISATION_ID);
-    if (!organisationId) {
-      const newOrganisationId = organisationsData?.docs[0]?.id;
-
-      if (!newOrganisationId) {
-        return;
-      }
-
-      dispatch(currentActions.setSelectedOrganisationId(newOrganisationId));
-      localStorage.setItem(SELECTED_ORGANISATION_ID, newOrganisationId);
-      return;
-    }
-    dispatch(currentActions.setSelectedOrganisationId(organisationId));
-  }, [dispatch, organisationsData]);
 
   const handleDropdownChange = (option: string) => {
     dispatch(currentActions.setSelectedOrganisationId(option));
@@ -102,10 +86,31 @@ const Home: FC = () => {
 };
 
 const App: FC = () => {
+  const { user } = useUser();
+  const { organisationsData } = useOrganisations(!!user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const organisationId = localStorage.getItem(SELECTED_ORGANISATION_ID);
+    if (!organisationId) {
+      const newOrganisationId = organisationsData?.docs[0]?.id;
+
+      if (!newOrganisationId) {
+        return;
+      }
+
+      dispatch(currentActions.setSelectedOrganisationId(newOrganisationId));
+      localStorage.setItem(SELECTED_ORGANISATION_ID, newOrganisationId);
+      return;
+    }
+    dispatch(currentActions.setSelectedOrganisationId(organisationId));
+  }, [dispatch, organisationsData]);
+
   return (
     <Routes>
       <Route path="/auth" Component={AuthPage} />
       <Route path="/create-profile" Component={CreateProfilePage} />
+      <Route path="/vacancies/:vacancyId" Component={VacancyPage} />
       <Route path="*" Component={Home} />
     </Routes>
   );

@@ -6,7 +6,13 @@ import api from '../../axios';
 import * as constants from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
 import { vacanciesActions } from './slice';
-import { CreateVacancyRequest, FindParams, FindVacanciesResponse, Vacancy } from './types';
+import {
+  CreateVacancyRequest,
+  EditVacancyRequest,
+  FindParams,
+  FindVacanciesResponse,
+  Vacancy,
+} from './types';
 
 export const findVacancies = (params?: FindParams) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -127,11 +133,11 @@ export const createVacancy =
     return false;
   };
 
-export const patchVacancy = (vacancy: Vacancy, vacancyId: string) => async (dispatch: Dispatch) => {
+export const patchVacancy = (vacancy: EditVacancyRequest) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(vacanciesActions.setIsLoading(true));
 
-    return api.patch(`vacancy/v1/${vacancyId}`, vacancy);
+    return api.patch(`vacancy/v1/${vacancy.id}`, vacancy);
   };
 
   try {

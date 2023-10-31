@@ -50,3 +50,14 @@ export type State = {
   vacanciesData: VacanciesData | undefined;
   isLoading: boolean;
 };
+
+export type EditVacancyRequest = {
+  id: string;
+  title: string;
+  description: string;
+  remoteType: string;
+  city: string;
+  minSalary: number;
+  maxSalary: number;
+  textLength?: number | undefined;
+};
