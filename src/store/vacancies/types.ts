@@ -42,8 +42,15 @@ export type FindVacanciesResponse = {
   data: VacanciesData;
 };
 
-export type CreateVacancyRequest = Vacancy & {
+export type CreateVacancyRequest = {
   organisation: string;
+  title: string;
+  description: string;
+  remoteType: string;
+  city: string;
+  minSalary: number;
+  maxSalary: number;
+  textLength?: number | undefined;
 };
 
 export type State = {

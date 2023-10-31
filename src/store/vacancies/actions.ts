@@ -11,7 +11,6 @@ import {
   EditVacancyRequest,
   FindParams,
   FindVacanciesResponse,
-  Vacancy,
 } from './types';
 
 export const findVacancies = (params?: FindParams) => async (dispatch: Dispatch) => {
@@ -94,44 +93,38 @@ export const deleteVacancy = (vacancyId?: string) => async (dispatch: Dispatch) 
   return false;
 };
 
-export const createVacancy =
-  (vacancy: Vacancy, organisationId: string) => async (dispatch: Dispatch) => {
-    const fetchData = () => {
-      dispatch(vacanciesActions.setIsLoading(true));
+export const createVacancy = (vacancy: CreateVacancyRequest) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(vacanciesActions.setIsLoading(true));
 
-      const body: CreateVacancyRequest = {
-        ...vacancy,
-        organisation: organisationId,
-      };
+    return api.post('vacancy/v1', vacancy);
+  };
 
-      return api.post('vacancy/v1', body);
-    };
+  try {
+    const response = await fetchData();
 
-    try {
-      const response = await fetchData();
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
 
-      if (axios.isAxiosError(response)) {
-        const error = response as AxiosError;
-        const statusCode = error?.response?.status;
-
-        switch (statusCode) {
-          default:
-            handleResponseError(error);
-            break;
-        }
-
-        return false;
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
       }
 
-      toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
-      return true;
-    } catch (e) {
-      console.log(e);
-    } finally {
-      dispatch(vacanciesActions.setIsLoading(false));
+      return false;
     }
-    return false;
-  };
+
+    toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
+    return true;
+  } catch (e) {
+    console.log(e);
+  } finally {
+    dispatch(vacanciesActions.setIsLoading(false));
+  }
+  return false;
+};
 
 export const patchVacancy = (vacancy: EditVacancyRequest) => async (dispatch: Dispatch) => {
   const fetchData = () => {

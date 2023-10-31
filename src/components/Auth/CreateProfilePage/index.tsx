@@ -1,9 +1,11 @@
+import { FC } from 'react';
+
 import { UserTypes } from '../../../constants';
 import { useOrganisations, useUser } from '../../../hooks';
 import { Button, MessageBox } from '../../UI';
 import { CreateProfileForm } from '../CreateProfileForm';
 
-export const CreateProfilePage = () => {
+export const CreateProfilePage: FC = () => {
   const { user, isUserLoading } = useUser();
   const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
 

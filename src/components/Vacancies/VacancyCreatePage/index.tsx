@@ -1,26 +1,20 @@
-/* eslint-disable react/no-danger */
 import { FC, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { Button, MessageBox } from '../../../components/UI';
+import { VacancyForm } from '../../../components/Vacancies/VacancyForm';
 import { useAppDispatch, useAppSelector, useOrganisations, useUser } from '../../../hooks';
-import { findVacancies, patchVacancy } from '../../../store/vacancies/actions';
-import { Button, MessageBox } from '../../UI';
-import { VacancyForm } from '../VacancyForm';
+import { createVacancy, findVacancies } from '../../../store/vacancies/actions';
 import { VacancyFormValues } from '../VacancyForm/types';
-import styles from './VacancyEdit.module.scss';
 
-export const VacancyEditPage: FC = () => {
+export const VacancyCreatePage: FC = () => {
   const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const params = useParams();
 
   const { user, isUserLoading } = useUser();
   const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
-
-  const vacanciesData = useAppSelector((state) => state.vacancies.vacanciesData);
-  const vacancyData = vacanciesData?.docs.find((vacancy) => vacancy.id === params.vacancyId);
 
   const isLoading = isUserLoading || isOrganisationsLoading;
 
@@ -29,21 +23,6 @@ export const VacancyEditPage: FC = () => {
       dispatch(findVacancies({ organisation: selectedOrganisationId }));
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
-
-  const handleFormSubmission = async (values: VacancyFormValues) => {
-    if (!vacancyData) {
-      return false;
-    }
-
-    const vacancy = {
-      id: vacancyData.id,
-      ...values,
-    };
-
-    const response = await dispatch(patchVacancy(vacancy));
-    navigate('/');
-    return response;
-  };
 
   if (isLoading) {
     return (
@@ -82,19 +61,23 @@ export const VacancyEditPage: FC = () => {
     );
   }
 
-  const hasVacancies = vacanciesData && vacanciesData?.docs?.length > 0;
-  if (!hasVacancies) {
-    return (
-      <MessageBox>
-        <p>Вакансію не знайдено</p>
-        <a href="/">На головну</a>
-      </MessageBox>
-    );
-  }
+  const handleFormSubmission = async (values: VacancyFormValues) => {
+    if (!selectedOrganisationId) {
+      return false;
+    }
+
+    const vacancy = {
+      organisation: selectedOrganisationId,
+      ...values,
+    };
+    const response = await dispatch(createVacancy(vacancy));
+    navigate('/');
+    return response;
+  };
 
   return (
-    <div className={styles.container}>
-      <VacancyForm onSubmit={handleFormSubmission} defaultValues={vacancyData} />
+    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <VacancyForm onSubmit={handleFormSubmission} />
     </div>
   );
 };

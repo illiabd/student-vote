@@ -10,7 +10,8 @@ import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { SchedulePage } from './components/Schedule';
 import { Button, MessageBox } from './components/UI';
-import { VacanciesPage, VacancyPage } from './components/Vacancies';
+import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
+import { VacancyEditPage } from './components/Vacancies/VacancyEditPage';
 import { SELECTED_ORGANISATION_ID } from './constants';
 import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
 import { currentActions } from './store/current/slice';
@@ -111,6 +112,8 @@ const App: FC = () => {
       <Route path="/auth" Component={AuthPage} />
       <Route path="/create-profile" Component={CreateProfilePage} />
       <Route path="/vacancies/:vacancyId" Component={VacancyPage} />
+      <Route path="/vacancies/create" Component={VacancyCreatePage} />
+      <Route path="/vacancies/edit/:vacancyId" Component={VacancyEditPage} />
       <Route path="*" Component={Home} />
     </Routes>
   );
