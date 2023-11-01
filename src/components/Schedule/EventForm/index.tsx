@@ -43,7 +43,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
 
         setGroups(response.data.data.docs);
       } catch (e) {
-        console.log(e);
+        console.warn(e);
       }
     },
     [selectedOrganisationId],

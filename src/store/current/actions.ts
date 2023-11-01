@@ -50,7 +50,7 @@ export const createOrganisation =
 
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -82,7 +82,7 @@ export const patchUser = (requestData: PatchUserRequest) => async (dispatch: Dis
 
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(currentActions.setIsLoading(false));
   }
@@ -119,7 +119,7 @@ export const findStaff =
       dispatch(currentActions.setStaff(response.data.data.docs));
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -155,7 +155,7 @@ export const findGroups = (filters?: FindGroupFilters) => async (dispatch: Dispa
 
     dispatch(currentActions.setGroups(response.data.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(currentActions.setIsLoading(false));
   }
@@ -204,7 +204,7 @@ export const loadGroups = (filters?: FindGroupFilters) => async (dispatch: Dispa
 
     dispatch(currentActions.pushGroups(response.data.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(currentActions.setIsNextPageLoading(false));
   }
@@ -240,7 +240,7 @@ export const findStudents =
 
       dispatch(currentActions.setStudents(response.data.data));
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -293,7 +293,7 @@ export const loadStudents =
 
       dispatch(currentActions.pushStudents(response.data.data));
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsNextPageLoading(false));
     }
@@ -328,7 +328,7 @@ export const putStudentIntoGroup =
       toast.success(constants.ADD_STUDENT_TO_GROUP_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -364,7 +364,7 @@ export const deleteStaff =
       toast.success(constants.DELETE_USER_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -405,7 +405,7 @@ export const setMemberRole =
       toast.success(constants.CHANGE_USER_ROLE_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -446,7 +446,7 @@ export const addMember =
       toast.success(constants.ADD_MEMBER_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -483,7 +483,7 @@ export const uploadProfilePicture =
 
       return response.data.data;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }
@@ -516,7 +516,7 @@ export const patchOrganisation =
 
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(currentActions.setIsLoading(false));
     }

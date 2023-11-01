@@ -54,7 +54,7 @@ export const findVacancies = (params?: FindParams) => async (dispatch: Dispatch)
 
     dispatch(vacanciesActions.setVacanciesData(response.data.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -86,7 +86,7 @@ export const deleteVacancy = (vacancyId?: string) => async (dispatch: Dispatch) 
     toast.success(constants.DELETE_VACANCY_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -119,7 +119,7 @@ export const createVacancy = (vacancy: CreateVacancyRequest) => async (dispatch:
     toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -152,7 +152,7 @@ export const patchVacancy = (vacancy: EditVacancyRequest) => async (dispatch: Di
     toast.success(constants.EDIT_VACANCY_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -189,7 +189,7 @@ export const archiveVacancy = (vacancyId?: string) => async (dispatch: Dispatch)
     toast.success(constants.UNPUBLISH_VACANCY_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -226,7 +226,7 @@ export const publishVacancy = (vacancyId?: string) => async (dispatch: Dispatch)
     toast.success(constants.PUBLISHED_VACANCY_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }

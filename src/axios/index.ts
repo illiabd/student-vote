@@ -32,9 +32,19 @@ const responseErrorHandler = async (error: AxiosError) => {
       localStorage.setItem('accessToken', response.data.data.accessToken);
       return await api.request(originalRequest);
     } catch (e) {
-      console.log(e);
+      const isAxiosError = e instanceof AxiosError;
+      if (!isAxiosError) {
+        console.log(e);
+      }
+
+      const axiosError = e as AxiosError<{ message: string }>;
+      const errorStatusCode = axiosError.response?.status ?? 'unexpected status';
+      const errorMessage = axiosError.response?.data.message ?? 'something went wrong';
+
+      console.warn(errorStatusCode + ': ' + errorMessage);
     }
   }
+
   return error;
 };
 

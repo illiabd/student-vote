@@ -105,7 +105,7 @@ export const ScheduleView: FC = () => {
 
         setGroups(response.data.data.docs);
       } catch (e) {
-        console.log(e);
+        console.warn(e);
       }
     },
     [selectedOrganisationId],

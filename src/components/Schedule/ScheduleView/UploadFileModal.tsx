@@ -47,7 +47,7 @@ export const UploadFileModal: FC<UploadFileModalProps> = ({
 
       onClose();
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     }
   };
 

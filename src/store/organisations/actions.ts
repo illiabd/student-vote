@@ -31,7 +31,7 @@ export const findOrganisations =
       dispatch(organisationsActions.setOrganisationsData(response.data.data));
       return response.data.data;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(organisationsActions.setIsLoading(false));
     }

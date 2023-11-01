@@ -40,7 +40,7 @@ export const loginUser = (phoneNumber: string, password: string) => async (dispa
     localStorage.setItem('oneTimeToken', response.data.data.oneTimeToken);
     dispatch(authActions.setNeedVerification(true));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(authActions.setIsLoading(false));
   }
@@ -84,7 +84,7 @@ export const verifyCode = (code: string) => async (dispatch: Dispatch) => {
 
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(authActions.setIsLoading(false));
   }
@@ -117,7 +117,7 @@ export const getUser = () => async (dispatch: Dispatch) => {
     dispatch(authActions.setUserData(response.data.data.user));
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(authActions.setIsLoading(false));
   }
@@ -155,7 +155,7 @@ export const logout = () => async (dispatch: Dispatch) => {
 
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(authActions.setIsLoading(false));
   }

@@ -40,7 +40,7 @@ export const createEvent = (createEventBody: CreateEventBody) => async (dispatch
     toast.success(CREATE_EVENT_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(vacanciesActions.setIsLoading(false));
   }
@@ -79,7 +79,7 @@ export const findEvents = (params?: FindParams) => async (dispatch: Dispatch) =>
 
     dispatch(scheduleActions.setScheduleData(response.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(scheduleActions.setIsLoading(false));
   }
@@ -112,7 +112,7 @@ export const deleteEvent = (eventId: string) => async (dispatch: Dispatch) => {
     toast.success(DELETE_EVENT_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(scheduleActions.setIsLoading(false));
   }
@@ -147,7 +147,7 @@ export const patchEvent =
       toast.success(PATCH_EVENT_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(scheduleActions.setIsLoading(false));
     }
@@ -195,7 +195,7 @@ export const loadEvents = (params?: FindParams) => async (dispatch: Dispatch) =>
 
     dispatch(scheduleActions.pushEvents(response.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(scheduleActions.setIsLoading(false));
   }

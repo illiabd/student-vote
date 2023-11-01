@@ -4,8 +4,11 @@ import { toast } from 'react-toastify';
 import * as constants from '../constants';
 
 export const handleResponseError = (e: AxiosError | undefined) => {
-  const statusCode = e?.response?.status;
-  console.log(e);
+  if (!e) {
+    return;
+  }
+
+  const statusCode = e.response?.status;
 
   switch (statusCode) {
     case 400:

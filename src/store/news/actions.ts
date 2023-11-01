@@ -40,7 +40,7 @@ export const findNews = (params: FindParams) => async (dispatch: Dispatch) => {
 
     dispatch(newsActions.setNews(response.data.data));
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(newsActions.setIsLoading(false));
   }
@@ -76,7 +76,7 @@ export const createArticle = (article: CreateArticleRequest) => async (dispatch:
       return true;
     }
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   }
   return false;
 };
@@ -110,7 +110,7 @@ export const publishArticle = (articleId: string) => async (dispatch: Dispatch) 
       return true;
     }
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(newsActions.setIsLoading(false));
   }
@@ -141,7 +141,7 @@ export const patchArticle =
       toast.success(constants.EDIT_ARTICLE_SUCCESS_MESSAGE);
       return true;
     } catch (e) {
-      console.log(e);
+      console.warn(e);
     } finally {
       dispatch(newsActions.setIsLoading(false));
     }
@@ -175,7 +175,7 @@ export const deleteArticle = (articleId: string) => async (dispatch: Dispatch) =
     toast.success(constants.DELETE_ARTICLE_SUCCESS_MESSAGE);
     return true;
   } catch (e) {
-    console.log(e);
+    console.warn(e);
   } finally {
     dispatch(newsActions.setIsLoading(false));
   }
