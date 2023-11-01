@@ -1,8 +1,4 @@
 import 'dayjs/locale/uk';
-import './components/UI/SeparatedInput/reactCodeInput.scss';
-import './components/UI/Snackbar/snackbarStyles.scss';
-import './styles/global.scss';
-import './styles/reset.scss';
 
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';

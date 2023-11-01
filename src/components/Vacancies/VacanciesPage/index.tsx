@@ -9,6 +9,7 @@ import { findVacancies } from '../../../store/vacancies/actions';
 import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { VacancyCard } from '../VacancyCard';
 import styles from './VacanciesPage.module.scss';
+import { toast } from 'react-toastify';
 
 export const VacanciesPage: FC = () => {
   const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
@@ -89,7 +90,7 @@ export const VacanciesPage: FC = () => {
             Нова вакансія
           </Button>
           <div>
-            <IconButton>
+            <IconButton onClick={() => toast.success('lol')}>
               <ArrowSort24Regular />
             </IconButton>
           </div>

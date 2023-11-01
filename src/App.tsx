@@ -1,3 +1,8 @@
+import './components/UI/SeparatedInput/reactCodeInput.scss';
+import './components/UI/Snackbar/snackbarStyles.scss';
+import './styles/global.scss';
+import './styles/reset.scss';
+
 import { FC } from 'react';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
