@@ -71,7 +71,7 @@ export const VacancyCreatePage: FC = () => {
       ...values,
     };
     const response = await dispatch(createVacancy(vacancy));
-    navigate('/');
+    navigate('/vacancies');
     return response;
   };
 

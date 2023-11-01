@@ -51,7 +51,7 @@ export const VacancyForm: FC<VacancyFormProps> = ({ defaultValues, onSubmit }) =
   };
 
   const handleBackButtonClick = () => {
-    navigate('/');
+    navigate('/vacancies');
   };
 
   const submitButtonClasses = clsx(styles.button, styles['submit-button']);

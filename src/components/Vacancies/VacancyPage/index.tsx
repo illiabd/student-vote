@@ -41,7 +41,7 @@ export const VacancyPage: FC = () => {
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
   const handleBackButtonClick = () => {
-    navigate('/');
+    navigate('/vacancies');
   };
 
   const handleEditButtonClick = () => {

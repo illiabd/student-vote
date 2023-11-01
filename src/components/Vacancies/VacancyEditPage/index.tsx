@@ -41,7 +41,7 @@ export const VacancyEditPage: FC = () => {
     };
 
     const response = await dispatch(patchVacancy(vacancy));
-    navigate('/');
+    navigate('/vacancies');
     return response;
   };
 
