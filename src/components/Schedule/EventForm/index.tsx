@@ -165,8 +165,8 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
   };
 
   const handleFrequencyDropdownChange = (option: Option | Option[]) => {
-    const isOption = option instanceof Option;
-    if (!option || !isOption) {
+    const isOptionArray = Array.isArray(option);
+    if (isOptionArray) {
       return;
     }
 

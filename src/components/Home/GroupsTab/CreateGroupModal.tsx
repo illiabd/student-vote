@@ -19,8 +19,8 @@ export const CreateGroupModal: FC<CreateGroupModalProps> = ({ organisationId, on
   };
 
   const handleDropdown = (option: Option | Option[]) => {
-    const isOption = option instanceof Option;
-    if (!isOption) {
+    const isOptionArray = Array.isArray(option);
+    if (isOptionArray) {
       return;
     }
 

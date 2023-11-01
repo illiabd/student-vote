@@ -42,12 +42,12 @@ export const VacancyForm: FC<VacancyFormProps> = ({ defaultValues, onSubmit }) =
   };
 
   const handleDropdownChange = (value: Option | Option[]) => {
-    const isOption = !(value instanceof Option);
-    if (isOption) {
+    const isOptionArray = Array.isArray(value);
+    if (isOptionArray) {
       return;
     }
 
-    formik.setFieldValue('remoteType', value?.value);
+    formik.setFieldValue('remoteType', value.value);
   };
 
   const handleBackButtonClick = () => {

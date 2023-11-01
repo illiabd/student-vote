@@ -20,8 +20,8 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
   };
 
   const handleDropdownChange = (option: Option | Option[]) => {
-    const isOption = option instanceof Option;
-    if (!isOption) {
+    const isOptionArray = Array.isArray(option);
+    if (isOptionArray) {
       return;
     }
 

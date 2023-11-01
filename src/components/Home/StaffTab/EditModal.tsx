@@ -15,8 +15,8 @@ export const EditModal: FC<EditModalProps> = ({ currentRole, userId, organisatio
   const dispatch = useAppDispatch();
 
   const handleDropdown = (option: Option | Option[]) => {
-    const isOption = option instanceof Option;
-    if (!isOption) {
+    const isOptionArray = Array.isArray(option);
+    if (isOptionArray) {
       return;
     }
 
