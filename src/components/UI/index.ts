@@ -5,6 +5,7 @@ export { IconButton } from './IconButton';
 export { ImageUpload } from './ImageUpload';
 export { Input } from './Input';
 export { LinksInput } from './LinksInput';
+export { LoadingAnimation } from './LoadingAnimation';
 export { MessageBox } from './MessageBox';
 export { Modal } from './Modal';
 export { PhoneInput } from './PhoneInput';

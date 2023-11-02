@@ -3,7 +3,8 @@ import './components/UI/Snackbar/snackbarStyles.scss';
 import './styles/global.scss';
 import './styles/reset.scss';
 
-import { FC } from 'react';
+import { LottieRefCurrentProps } from 'lottie-react';
+import { FC, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
@@ -14,7 +15,7 @@ import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { SchedulePage } from './components/Schedule';
-import { Button, MessageBox } from './components/UI';
+import { Button, LoadingAnimation, MessageBox } from './components/UI';
 import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
 import { VacancyEditPage } from './components/Vacancies/VacancyEditPage';
 import { SELECTED_ORGANISATION_ID } from './constants';
@@ -22,13 +23,14 @@ import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hoo
 import { currentActions } from './store/current/slice';
 
 const Home: FC = () => {
-  const { selectedOrganisationId } = useAppSelector((state) => state.current);
-
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
   const { user, isUserLoading } = useUser();
   const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+
+  const [isLottiePlaying, setIsLottiePlaying] = useState(true);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleDropdownChange = (option: string) => {
     dispatch(currentActions.setSelectedOrganisationId(option));
@@ -39,13 +41,23 @@ const Home: FC = () => {
     navigate(path);
   };
 
+  const handleLoadingAnimationStart = () => {
+    setIsLottiePlaying(true);
+  };
+
+  const handleLoadingAnimationEnd = () => {
+    setIsLottiePlaying(false);
+  };
+
   const isLoading = isOrganisationsLoading || isUserLoading;
 
-  if (isLoading) {
+  if (isLoading || isLottiePlaying) {
     return (
-      <MessageBox>
-        <p>Loading</p>
-      </MessageBox>
+      <LoadingAnimation
+        lottieRef={lottieRef}
+        onAnimationStart={handleLoadingAnimationStart}
+        onAnimationEnd={handleLoadingAnimationEnd}
+      />
     );
   }
 
@@ -54,7 +66,7 @@ const Home: FC = () => {
   }
 
   const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
-  if (!hasOrganisations && user) {
+  if (!hasOrganisations && user && !isLoading) {
     const handleButtonClick = () => {
       navigate('/create-profile');
     };
@@ -80,7 +92,6 @@ const Home: FC = () => {
         <Routes>
           <Route path="*" index Component={HomePage} />
           <Route path="/news" Component={NewsPage} />
-          <Route path="/vacancies" Component={VacanciesPage} />
           <Route path="/vacancies/*" Component={VacanciesPage} />
           <Route path="/timetable" Component={SchedulePage} />
         </Routes>

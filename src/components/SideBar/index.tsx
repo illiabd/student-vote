@@ -92,7 +92,7 @@ export const SideBar: FC<SideBarProps> = ({
       [AllowedFeatures.news, News24Regular],
       [AllowedFeatures.vacancies, Briefcase24Regular],
       [AllowedFeatures.timetable, Timeline24Regular],
-      [AllowedFeatures.votes, Vote24Regular],
+      [AllowedFeatures.polls, Vote24Regular],
     ]);
 
     const Icon = iconsMap.get(AllowedFeatures[feature as keyof typeof AllowedFeatures]);

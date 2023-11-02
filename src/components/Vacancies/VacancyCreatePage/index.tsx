@@ -1,7 +1,8 @@
-import { FC, useEffect } from 'react';
+import { LottieRefCurrentProps } from 'lottie-react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, MessageBox } from '../../../components/UI';
+import { Button, LoadingAnimation, MessageBox } from '../../../components/UI';
 import { VacancyForm } from '../../../components/Vacancies/VacancyForm';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createVacancy, findVacancies } from '../../../store/vacancies/actions';
@@ -11,9 +12,14 @@ export const VacancyCreatePage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { organisationsData } = useAppSelector((state) => state.organisations);
+  const [isLottiePlaying, setIsLottiePlaying] = useState(false);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
-  const { userData } = useAppSelector((state) => state.auth);
+  const { userData, isLoading: isUserLoading } = useAppSelector((state) => state.auth);
+  const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
+    (state) => state.organisations,
+  );
 
   useEffect(() => {
     if (selectedOrganisationId) {
@@ -21,7 +27,27 @@ export const VacancyCreatePage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  if (!userData) {
+  const handleLoadingAnimationStart = () => {
+    setIsLottiePlaying(true);
+  };
+
+  const handleLoadingAnimationEnd = () => {
+    setIsLottiePlaying(false);
+  };
+
+  const isLoading = isUserLoading || isOrganisationsLoading;
+
+  if (isLoading || isLottiePlaying) {
+    return (
+      <LoadingAnimation
+        lottieRef={lottieRef}
+        onAnimationStart={handleLoadingAnimationStart}
+        onAnimationEnd={handleLoadingAnimationEnd}
+      />
+    );
+  }
+
+  if (!userData && !isLoading) {
     return (
       <MessageBox>
         <p>Ви не авторизовані</p>
@@ -31,7 +57,7 @@ export const VacancyCreatePage: FC = () => {
   }
 
   const isVacanciesAllowed = organisationsData?.docs[0]?.allowedFeatures?.includes('vacancies');
-  if (!isVacanciesAllowed) {
+  if (!isVacanciesAllowed && !isLoading) {
     return (
       <MessageBox>
         <span>Вакансії не дозволені для вашої організації, чат-бот підтримки -</span>

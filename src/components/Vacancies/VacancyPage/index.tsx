@@ -6,10 +6,11 @@ import {
   Location24Regular,
   Share24Regular,
 } from '@fluentui/react-icons';
-import { FC, useEffect } from 'react';
+import { LottieRefCurrentProps } from 'lottie-react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, Card, MessageBox } from '../../../components/UI';
+import { Button, Card, LoadingAnimation, MessageBox } from '../../../components/UI';
 import { RemoteTypes } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findVacancies } from '../../../store/vacancies/actions';
@@ -21,10 +22,15 @@ export const VacancyPage: FC = () => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const [isLottiePlaying, setIsLottiePlaying] = useState(false);
+  const lottieRef = useRef<LottieRefCurrentProps>(null);
+
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
-  const { organisationsData } = useAppSelector((state) => state.organisations);
   const { vacanciesData } = useAppSelector((state) => state.vacancies);
-  const { userData } = useAppSelector((state) => state.auth);
+  const { userData, isLoading: isUserLoading } = useAppSelector((state) => state.auth);
+  const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
+    (state) => state.organisations,
+  );
 
   const vacancyData = vacanciesData?.docs.find((vacancy) => vacancy.id === params.vacancyId);
 
@@ -46,7 +52,27 @@ export const VacancyPage: FC = () => {
     navigate(`/vacancies/edit/:${vacancyData?.id}`);
   };
 
-  if (!userData) {
+  const handleLoadingAnimationStart = () => {
+    setIsLottiePlaying(true);
+  };
+
+  const handleLoadingAnimationEnd = () => {
+    setIsLottiePlaying(false);
+  };
+
+  const isLoading = isUserLoading || isOrganisationsLoading;
+
+  if (isLoading || isLottiePlaying) {
+    return (
+      <LoadingAnimation
+        lottieRef={lottieRef}
+        onAnimationStart={handleLoadingAnimationStart}
+        onAnimationEnd={handleLoadingAnimationEnd}
+      />
+    );
+  }
+
+  if (!userData && !isLoading) {
     return (
       <MessageBox>
         <p>Ви не авторизовані</p>
@@ -56,7 +82,7 @@ export const VacancyPage: FC = () => {
   }
 
   const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
-  if (!hasOrganisations) {
+  if (!hasOrganisations && !isLoading) {
     return (
       <MessageBox>
         <p>У вас немає прав на жодну з організацій</p>
@@ -66,7 +92,7 @@ export const VacancyPage: FC = () => {
   }
 
   const isVacanciesAllowed = organisationsData?.docs[0]?.allowedFeatures?.includes('vacancies');
-  if (!isVacanciesAllowed) {
+  if (!isVacanciesAllowed && !isLoading) {
     return (
       <MessageBox>
         <span>Вакансії не дозволені для вашої організації, чат-бот підтримки -</span>
@@ -76,7 +102,7 @@ export const VacancyPage: FC = () => {
   }
 
   const hasVacancies = vacanciesData && vacanciesData?.docs?.length > 0;
-  if (!hasVacancies) {
+  if (!hasVacancies && !isLoading) {
     return (
       <MessageBox>
         <p>Вакансію не знайдено</p>

@@ -13,9 +13,9 @@ export const HomePage: FC = () => {
   const { organisationsData } = useAppSelector((state) => state.organisations);
 
   const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
-  const selectedOrganisation =
-    organisationsData &&
-    organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);
+  const selectedOrganisation = organisationsData?.docs.find(
+    (organisation) => organisation.id === selectedOrganisationId,
+  );
 
   const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
 
