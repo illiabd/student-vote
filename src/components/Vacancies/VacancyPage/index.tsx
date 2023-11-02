@@ -11,28 +11,26 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Button, Card, MessageBox } from '../../../components/UI';
 import { RemoteTypes } from '../../../constants';
-import { useAppDispatch, useAppSelector, useOrganisations, useUser } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findVacancies } from '../../../store/vacancies/actions';
 import { TextEditor } from '../../UI/TextEditor';
 import styles from './Vacancy.module.scss';
 
 export const VacancyPage: FC = () => {
-  const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
-
   const dispatch = useAppDispatch();
-  const params = useParams();
   const navigate = useNavigate();
+  const params = useParams();
 
-  const { user, isUserLoading } = useUser();
-  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  const { organisationsData } = useAppSelector((state) => state.organisations);
+  const { vacanciesData } = useAppSelector((state) => state.vacancies);
+  const { userData } = useAppSelector((state) => state.auth);
+
+  const vacancyData = vacanciesData?.docs.find((vacancy) => vacancy.id === params.vacancyId);
+
   const selectedOrganisation = organisationsData?.docs?.find(
     (organisation) => organisation.id === selectedOrganisationId,
   );
-
-  const vacanciesData = useAppSelector((state) => state.vacancies.vacanciesData);
-  const vacancyData = vacanciesData?.docs.find((vacancy) => vacancy.id === params.vacancyId);
-
-  const isLoading = isUserLoading || isOrganisationsLoading;
 
   useEffect(() => {
     if (selectedOrganisationId) {
@@ -48,19 +46,11 @@ export const VacancyPage: FC = () => {
     navigate(`/vacancies/edit/:${vacancyData?.id}`);
   };
 
-  if (isLoading) {
+  if (!userData) {
     return (
       <MessageBox>
-        <p>Loading</p>
-      </MessageBox>
-    );
-  }
-
-  if (!user && !isLoading) {
-    return (
-      <MessageBox>
-        Увійдіть для перегляду цієї сторінки
-        <a href="/">На головну</a>
+        <p>Ви не авторизовані</p>
+        <Button href="/auth">Увійти до акаунту</Button>
       </MessageBox>
     );
   }

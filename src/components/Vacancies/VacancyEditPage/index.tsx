@@ -2,7 +2,7 @@
 import { FC, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { useAppDispatch, useAppSelector, useOrganisations, useUser } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findVacancies, patchVacancy } from '../../../store/vacancies/actions';
 import { Button, MessageBox } from '../../UI';
 import { VacancyForm } from '../VacancyForm';
@@ -10,19 +10,16 @@ import { VacancyFormValues } from '../VacancyForm/types';
 import styles from './VacancyEdit.module.scss';
 
 export const VacancyEditPage: FC = () => {
-  const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
 
-  const { user, isUserLoading } = useUser();
-  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  const { organisationsData } = useAppSelector((state) => state.organisations);
+  const { vacanciesData } = useAppSelector((state) => state.vacancies);
+  const { userData } = useAppSelector((state) => state.auth);
 
-  const vacanciesData = useAppSelector((state) => state.vacancies.vacanciesData);
   const vacancyData = vacanciesData?.docs.find((vacancy) => vacancy.id === params.vacancyId);
-
-  const isLoading = isUserLoading || isOrganisationsLoading;
 
   useEffect(() => {
     if (selectedOrganisationId) {
@@ -45,29 +42,11 @@ export const VacancyEditPage: FC = () => {
     return response;
   };
 
-  if (isLoading) {
+  if (!userData) {
     return (
       <MessageBox>
-        <p>Loading</p>
-      </MessageBox>
-    );
-  }
-
-  if (!user && !isLoading) {
-    return (
-      <MessageBox>
-        Увійдіть для перегляду цієї сторінки
-        <a href="/">На головну</a>
-      </MessageBox>
-    );
-  }
-
-  const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
-  if (!hasOrganisations) {
-    return (
-      <MessageBox>
-        <p>У вас немає прав на жодну з організацій</p>
-        <Button href="/">Завершіть процес реєстрації</Button>
+        <p>Ви не авторизовані</p>
+        <Button href="/auth">Увійти до акаунту</Button>
       </MessageBox>
     );
   }

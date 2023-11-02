@@ -22,13 +22,13 @@ import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hoo
 import { currentActions } from './store/current/slice';
 
 const Home: FC = () => {
-  const { user, isUserLoading } = useUser();
-  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
-
-  const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const { user, isUserLoading } = useUser();
+  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
 
   const handleDropdownChange = (option: string) => {
     dispatch(currentActions.setSelectedOrganisationId(option));
@@ -54,7 +54,7 @@ const Home: FC = () => {
   }
 
   const hasOrganisations = organisationsData && organisationsData.docs.length > 0;
-  if (!hasOrganisations) {
+  if (!hasOrganisations && user) {
     const handleButtonClick = () => {
       navigate('/create-profile');
     };
@@ -69,32 +69,31 @@ const Home: FC = () => {
   }
 
   return (
-    <>
-      <div className={styles.container}>
-        <SideBar
-          selectedOrganisationId={selectedOrganisationId}
-          organisations={organisationsData.docs}
-          onTabSelect={handleTabNavigation}
-          onChange={handleDropdownChange}
-        />
-        <div className={styles.main}>
-          <Routes>
-            <Route path="*" index Component={HomePage} />
-            <Route path="/news" Component={NewsPage} />
-            <Route path="/vacancies" Component={VacanciesPage} />
-            <Route path="/vacancies/*" Component={VacanciesPage} />
-            <Route path="/timetable" Component={SchedulePage} />
-          </Routes>
-        </div>
+    <div className={styles.container}>
+      <SideBar
+        selectedOrganisationId={selectedOrganisationId}
+        organisations={organisationsData?.docs ?? []}
+        onTabSelect={handleTabNavigation}
+        onChange={handleDropdownChange}
+      />
+      <div className={styles.main}>
+        <Routes>
+          <Route path="*" index Component={HomePage} />
+          <Route path="/news" Component={NewsPage} />
+          <Route path="/vacancies" Component={VacanciesPage} />
+          <Route path="/vacancies/*" Component={VacanciesPage} />
+          <Route path="/timetable" Component={SchedulePage} />
+        </Routes>
       </div>
-    </>
+    </div>
   );
 };
 
 const App: FC = () => {
+  const dispatch = useAppDispatch();
+
   const { user } = useUser();
   const { organisationsData } = useOrganisations(!!user);
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const organisationId = localStorage.getItem(SELECTED_ORGANISATION_ID);

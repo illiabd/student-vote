@@ -1,35 +1,25 @@
 import { FC } from 'react';
 
 import { UserTypes } from '../../../constants';
-import { useOrganisations, useUser } from '../../../hooks';
+import { useAppSelector } from '../../../hooks';
 import { Button, MessageBox } from '../../UI';
 import { CreateProfileForm } from '../CreateProfileForm';
 
 export const CreateProfilePage: FC = () => {
-  const { user, isUserLoading } = useUser();
-  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
+  const { organisationsData } = useAppSelector((state) => state.organisations);
+  const { userData } = useAppSelector((state) => state.auth);
 
-  const isLoading = isUserLoading || isOrganisationsLoading;
+  const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
+  const isSuperadmin = userData?.type === UserTypes.superadmin;
 
-  if (isLoading) {
-    return (
-      <MessageBox>
-        <p>Loading</p>
-      </MessageBox>
-    );
-  }
-
-  if (!user && !isLoading) {
+  if (!userData) {
     return (
       <MessageBox>
         <p>Ви не авторизовані</p>
-        <Button href="/">Авторизуватися</Button>
+        <Button href="/auth">Увійти до акаунту</Button>
       </MessageBox>
     );
   }
-
-  const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
-  const isSuperadmin = user?.type === UserTypes.superadmin;
 
   if (!isSuperadmin && hasOrganisations) {
     return (

@@ -3,20 +3,17 @@ import { useNavigate } from 'react-router-dom';
 
 import { Button, MessageBox } from '../../../components/UI';
 import { VacancyForm } from '../../../components/Vacancies/VacancyForm';
-import { useAppDispatch, useAppSelector, useOrganisations, useUser } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createVacancy, findVacancies } from '../../../store/vacancies/actions';
 import { VacancyFormValues } from '../VacancyForm/types';
 
 export const VacancyCreatePage: FC = () => {
-  const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { user, isUserLoading } = useUser();
-  const { organisationsData, isOrganisationsLoading } = useOrganisations(!!user);
-
-  const isLoading = isUserLoading || isOrganisationsLoading;
+  const { organisationsData } = useAppSelector((state) => state.organisations);
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  const { userData } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (selectedOrganisationId) {
@@ -24,29 +21,11 @@ export const VacancyCreatePage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  if (isLoading) {
+  if (!userData) {
     return (
       <MessageBox>
-        <p>Loading</p>
-      </MessageBox>
-    );
-  }
-
-  if (!user && !isLoading) {
-    return (
-      <MessageBox>
-        Увійдіть для перегляду цієї сторінки
-        <a href="/">На головну</a>
-      </MessageBox>
-    );
-  }
-
-  const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
-  if (!hasOrganisations) {
-    return (
-      <MessageBox>
-        <p>У вас немає прав на жодну з організацій</p>
-        <Button href="/">Завершіть процес реєстрації</Button>
+        <p>Ви не авторизовані</p>
+        <Button href="/auth">Увійти до акаунту</Button>
       </MessageBox>
     );
   }
