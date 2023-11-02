@@ -155,16 +155,6 @@ export const SideBar: FC<SideBarProps> = ({
           Додому
         </Button>
         {links?.sort()}
-        {/* <Button
-          variant="text"
-          size="md"
-          startIcon={<Vote24Regular />}
-          onClick={() => {
-            onTabSelect('votes');
-          }}
-        >
-          {AllowedFeaturesLinks.votes}
-        </Button> */}
         {isSuperadmin && createNewOrganisationButton}
       </div>
       <Button size="sm" onClick={handleLogoutButtonClick}>

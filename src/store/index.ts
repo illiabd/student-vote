@@ -4,6 +4,7 @@ import { authSlice } from './auth/slice';
 import { currentSlice } from './current/slice';
 import { newsSlice } from './news/slice';
 import { organisationsSlice } from './organisations/slice';
+import { pollsSlice } from './polls/slice';
 import { scheduleSlice } from './schedule/slice';
 import { vacanciesSlice } from './vacancies/slice';
 
@@ -11,8 +12,9 @@ const reducer = {
   auth: authSlice.reducer,
   organisations: organisationsSlice.reducer,
   vacancies: vacanciesSlice.reducer,
-  current: currentSlice.reducer,
   schedule: scheduleSlice.reducer,
+  current: currentSlice.reducer,
+  polls: pollsSlice.reducer,
   news: newsSlice.reducer,
 };
 

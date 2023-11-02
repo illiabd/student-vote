@@ -1,21 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { NewsData, State } from './types';
+import { Poll, State } from './types';
 
 export const initialState: State = {
-  newsData: undefined,
+  pollsData: undefined,
   isLoading: false,
 };
 
-export const newsSlice = createSlice({
-  name: 'news',
+export const pollsSlice = createSlice({
+  name: 'polls',
   initialState,
   reducers: {
-    setNews(state, action: PayloadAction<NewsData>) {
-      state.newsData = action.payload;
-    },
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
+    },
+    setPollsData(state, action: PayloadAction<Poll[]>) {
+      state.pollsData = action.payload;
     },
     resetState() {
       return initialState;
@@ -23,4 +23,4 @@ export const newsSlice = createSlice({
   },
 });
 
-export const newsActions = newsSlice.actions;
+export const pollsActions = pollsSlice.actions;

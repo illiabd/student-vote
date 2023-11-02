@@ -14,6 +14,7 @@ import { AuthPage } from './components/Auth';
 import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
+import { PollsPage } from './components/Polls/';
 import { SchedulePage } from './components/Schedule';
 import { Button, LoadingAnimation, MessageBox } from './components/UI';
 import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
@@ -94,6 +95,7 @@ const Home: FC = () => {
           <Route path="/news" Component={NewsPage} />
           <Route path="/vacancies/*" Component={VacanciesPage} />
           <Route path="/timetable" Component={SchedulePage} />
+          <Route path="/polls/*" Component={PollsPage} />
         </Routes>
       </div>
     </div>

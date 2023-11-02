@@ -173,14 +173,14 @@ export enum AllowedFeatures {
   news = 'news',
   vacancies = 'vacancies',
   timetable = 'timetable',
-  votes = 'votes',
+  polls = 'polls',
 }
 
 export enum AllowedFeaturesLinks {
   news = 'Новини',
   vacancies = 'Мої вакансії',
   timetable = 'Розклад',
-  votes = 'Голосування',
+  polls = 'Голосування',
 }
 
 export enum RemoteTypes {
