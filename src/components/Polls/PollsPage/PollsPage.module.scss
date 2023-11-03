@@ -46,8 +46,8 @@
   display: flex;
   flex-direction: column;
 
-  padding: 22px;
-  padding-top: 140px;
+  padding: 30px;
+  margin-top: 23px;
   gap: 22px;
 }
 
@@ -64,7 +64,6 @@
 }
 @media (max-width: 1025px) {
   .info-container {
-    padding-top: 22px;
     padding: 12px;
     gap: 12px;
   }

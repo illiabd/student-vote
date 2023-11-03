@@ -14,11 +14,9 @@ export const PollsPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { pollsData, isLoading: isPollsLoading } = useAppSelector((state) => state.polls);
+  // const { pollsData, isLoading: isPollsLoading } = useAppSelector((state) => state.polls);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
-  const { organisationsData, isLoading: isOrganisationsLoading } = useAppSelector(
-    (state) => state.organisations,
-  );
+  const { organisationsData } = useAppSelector((state) => state.organisations);
 
   useEffect(() => {
     const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
@@ -41,14 +39,14 @@ export const PollsPage: FC = () => {
 
   const pollsNotAllowedContent = <MessageBox>Голосування не дозволені</MessageBox>;
 
-  const isLoading = isOrganisationsLoading || isPollsLoading;
-  const data = pollsData?.docs;
-  const hasPolls = data?.length > 0;
+  // const hasPolls = pollsData && pollsData?.length > 0;
 
-  const publishedPollsAmount = data?.filter((poll) => poll.isPublished)?.length ?? 0;
-  const createdPollsAmount = data?.length ?? 0;
+  // const publishedPollsAmount = pollsData?.filter((poll) => poll.isPublished)?.length ?? 0;
+  // const createdPollsAmount = pollsData?.length ?? 0;
 
-  const polls = hasPolls ? data?.map((poll) => <PollCard key={poll.id} data={poll} />) : undefined;
+  // const polls = hasPolls
+  //   ? pollsData?.map((poll) => <PollCard key={poll.id} data={poll} />)
+  //   : undefined;
 
   const statusBadgeClasses = clsx(
     styles['status-badge'],
@@ -70,8 +68,8 @@ export const PollsPage: FC = () => {
         <div className={styles.info}>
           <p>Мої голосування</p>
           <div className={styles.stats}>
-            <span>{`Створених: ${createdPollsAmount} `}</span>
-            <span>{`Активні: ${publishedPollsAmount}`}</span>
+            {/* <span>{`Створених: ${createdPollsAmount} `}</span>
+            <span>{`Активні: ${publishedPollsAmount}`}</span> */}
           </div>
         </div>
         {!selectedOrganisation?.isActive && (
