@@ -13,7 +13,7 @@ import Dropdown, { Option } from 'react-dropdown';
 import { useNavigate } from 'react-router-dom';
 
 import { AllowedFeatures, AllowedFeaturesLinks, UserTypes } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector, useWindowWidth } from '../../hooks';
 import { logout } from '../../store/auth/actions';
 import { Button, ProfilePicture } from '../UI';
 import styles from './SideBar.module.scss';
@@ -28,6 +28,7 @@ export const SideBar: FC<SideBarProps> = ({
   const { userData } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const windowWidth = useWindowWidth();
 
   const selectedOrganisation =
     organisations.find((value) => value.id === selectedOrganisationId) ?? organisations[0];
@@ -137,12 +138,14 @@ export const SideBar: FC<SideBarProps> = ({
   return (
     <div className={styles.sidebar}>
       <img alt="univera-logo" src="/images/univera-logo-full.svg" width={177} height={60} />
-      <ProfilePicture
-        source={selectedOrganisation?.profilePictureLink}
-        alternative={selectedOrganisation?.name ?? ''}
-        width={120}
-        height={120}
-      />
+      {windowWidth > 1025 ? (
+        <ProfilePicture
+          source={selectedOrganisation?.profilePictureLink}
+          alternative={selectedOrganisation?.name ?? ''}
+          width={120}
+          height={120}
+        />
+      ) : undefined}
       {organisationInfo}
 
       <div className={styles.navigation}>

@@ -36,13 +36,13 @@
 @media (max-width: 1025px) {
   .sidebar {
     justify-content: center;
-
     max-width: 100%;
-    padding-top: 117px;
-    padding-bottom: 15px;
-    gap: 15px;
 
+    margin: 0;
+    padding: 30px;
+    gap: 15px;
     border-radius: 20px;
+
     overflow: unset !important;
   }
 }
