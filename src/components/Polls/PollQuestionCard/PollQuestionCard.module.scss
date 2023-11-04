@@ -1,0 +1,37 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 23px;
+}
+
+.name {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.option-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}

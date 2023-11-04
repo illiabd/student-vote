@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findPolls } from '../../../store/polls/actions';
 import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { PollCard } from '../PollCard';
-import styles from './pollsPage.module.scss';
+import styles from './PollsPage.module.scss';
 
 export const PollsPage: FC = () => {
   const dispatch = useAppDispatch();
