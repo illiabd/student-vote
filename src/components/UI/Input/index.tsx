@@ -15,6 +15,7 @@ export const Input: FC<InputProps> = ({
   label,
   id,
   noLabel = false,
+  disabled = false,
   onChange,
   ...props
 }) => {
@@ -35,6 +36,7 @@ export const Input: FC<InputProps> = ({
 
   const inputContainerClasses = clsx(
     styles.container,
+    disabled && styles.disabled,
     rounded && styles.rounded,
     isFocused && styles.focused,
     hasErrors && styles.error,
@@ -47,7 +49,14 @@ export const Input: FC<InputProps> = ({
     <>
       <div className={inputContainerClasses}>
         {startIcon && <div className={styles.icon}>{startIcon}</div>}
-        <input id={id} onChange={onChange} onFocus={handleFocus} onBlur={handleBlur} {...props} />
+        <input
+          id={id}
+          onChange={onChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          disabled={disabled}
+          {...props}
+        />
         {hasErrors && (
           <div className={iconsClasses}>
             <ErrorCircle20Regular />
