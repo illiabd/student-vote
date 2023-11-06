@@ -3,11 +3,27 @@
   flex-direction: column;
   padding: 30px;
   gap: 23px;
+  min-width: 450px;
+}
+
+@media (max-width: 320px) {
+}
+@media (max-width: 481px) {
+}
+@media (max-width: 641px) {
+  .card {
+    min-width: unset;
+  }
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
 }
 
 .name {
-  display: flex;
-  flex-direction: column;
   width: 100%;
 }
 

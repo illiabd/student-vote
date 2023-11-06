@@ -1,15 +1,8 @@
-type Vote = {
-  id: string;
-  organisation: string;
-  title: string;
-  isPublished: boolean;
-};
-
 export type VoteCardProps = {
-  data: Vote;
+  data: { name: string; id: string; status: string };
 };
 
 export type DeleteModalProps = {
-  data: Vote;
+  data: { name: string; id: string; status: string };
   onClose: () => void;
 };

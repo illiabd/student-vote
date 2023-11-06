@@ -10,11 +10,11 @@ export const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
   const { isLoading } = useAppSelector((state) => state.news);
   const dispatch = useAppDispatch();
 
-  const handleAcceptButtonClick = async () => {
-    await dispatch(deleteVacancy(data.id));
-    await dispatch(findVacancies({ organisation: data.organisation }));
-    onClose();
-  };
+  // const handleAcceptButtonClick = async () => {
+  //   await dispatch(deleteVacancy(data.id));
+  //   await dispatch(findVacancies({ organisation: data.organisation }));
+  //   onClose();
+  // };
 
   const content = 'Ви справді бажаєте видалити цю вакансію?';
 

@@ -89,6 +89,11 @@ export const EVENT_END_NOT_PROVIDED = 'Ведіть час, кінцю поді�
 export const EVENT_DIVISIONS_NOT_PROVIDED = 'Оберіть одну чи декілька груп';
 export const EVENT_DATE_NOT_PROVIDED = 'Введіть дату проведення події';
 
+/* Poll validation */
+
+export const QUESTION_NAME_NOT_PROVIDED = 'Введіть питання';
+export const OPTION_NAME_NOT_PROVIDED = 'Введіть питання';
+
 /* Phone input */
 export const PHONE_NUMBER_MASK = '00-000-00-00';
 export const COUNTRIES = [
@@ -147,6 +152,10 @@ export const EDIT_VACANCY_SUCCESS_MESSAGE = 'Вакансію відредаго
 export const DELETE_EVENT_SUCCESS_MESSAGE = 'Подію видалено';
 export const CREATE_EVENT_SUCCESS_MESSAGE = 'Подію створено';
 export const PATCH_EVENT_SUCCESS_MESSAGE = 'Подію відредаговано';
+
+export const CREATE_POLL_SUCCESS_MESSAGE = 'Голосування створено';
+export const ACTIVATE_POLL_SUCCESS_MESSAGE = 'Глосування активне';
+export const DEACTIVATE_POLL_SUCCESS_MESSAGE = 'Голосування дезактивовано';
 
 /* File uploading */
 

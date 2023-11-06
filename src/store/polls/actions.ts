@@ -3,10 +3,15 @@ import axios, { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 
 import api from '../../axios';
-import * as constants from '../../constants';
+import {
+  ACTIVATE_POLL_SUCCESS_MESSAGE,
+  CREATE_POLL_SUCCESS_MESSAGE,
+  DEACTIVATE_POLL_SUCCESS_MESSAGE,
+} from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
+import store from '..';
 import { pollsActions } from './slice';
-import { Poll } from './types';
+import { CreatePollRequest, Poll } from './types';
 
 export const findPolls = (organisationId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -42,6 +47,127 @@ export const findPolls = (organisationId: string) => async (dispatch: Dispatch) 
   }
 };
 
+export const createPoll = (poll: CreatePollRequest) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(pollsActions.setIsLoading(true));
+
+    return api.post('vote/v1/polls', poll);
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+
+      return false;
+    }
+
+    toast.success(CREATE_POLL_SUCCESS_MESSAGE);
+    return true;
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsLoading(false));
+  }
+  return false;
+};
+
+export const publishPoll = (pollId?: string) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(pollsActions.setIsLoading(true));
+
+    const state = store.getState();
+    const poll = state.polls.pollsData?.find((poll) => poll.id === pollId);
+    if (!poll) {
+      return;
+    }
+
+    const body = {
+      ...poll,
+      status: 'active',
+    };
+
+    return api.patch(`/vote/v1/polls/${pollId}`, body);
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+
+      return false;
+    }
+
+    toast.success(ACTIVATE_POLL_SUCCESS_MESSAGE);
+    return true;
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsLoading(false));
+  }
+  return false;
+};
+
+export const archivePoll = (pollId?: string) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(pollsActions.setIsLoading(true));
+
+    const state = store.getState();
+    const poll = state.polls.pollsData?.find((poll) => poll.id === pollId);
+    if (!poll) {
+      return;
+    }
+
+    const body = {
+      ...poll,
+      status: 'created',
+    };
+
+    return api.patch(`/vote/v1/polls/${pollId}`, body);
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+
+      return false;
+    }
+
+    toast.success(DEACTIVATE_POLL_SUCCESS_MESSAGE);
+    return true;
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsLoading(false));
+  }
+  return false;
+};
+
 // export const deletePoll = (pollId?: string) => async (dispatch: Dispatch) => {
 //   const fetchData = () => {
 //     dispatch(pollsActions.setIsLoading(true));
@@ -75,39 +201,6 @@ export const findPolls = (organisationId: string) => async (dispatch: Dispatch) 
 //   return false;
 // };
 
-// export const createPoll = (poll: CreatePollRequest) => async (dispatch: Dispatch) => {
-//   const fetchData = () => {
-//     dispatch(pollsActions.setIsLoading(true));
-
-//     return api.post('poll/v1', poll);
-//   };
-
-//   try {
-//     const response = await fetchData();
-
-//     if (axios.isAxiosError(response)) {
-//       const error = response as AxiosError;
-//       const statusCode = error?.response?.status;
-
-//       switch (statusCode) {
-//         default:
-//           handleResponseError(error);
-//           break;
-//       }
-
-//       return false;
-//     }
-
-//     toast.success(constants.CREATE_VACANCY_SUCCESS_MESSAGE);
-//     return true;
-//   } catch (e) {
-//     console.warn(e);
-//   } finally {
-//     dispatch(pollsActions.setIsLoading(false));
-//   }
-//   return false;
-// };
-
 // export const patchPoll = (poll: EditPollRequest) => async (dispatch: Dispatch) => {
 //   const fetchData = () => {
 //     dispatch(pollsActions.setIsLoading(true));
@@ -132,80 +225,6 @@ export const findPolls = (organisationId: string) => async (dispatch: Dispatch) 
 //     }
 
 //     toast.success(constants.EDIT_VACANCY_SUCCESS_MESSAGE);
-//     return true;
-//   } catch (e) {
-//     console.warn(e);
-//   } finally {
-//     dispatch(pollsActions.setIsLoading(false));
-//   }
-//   return false;
-// };
-
-// export const archivePoll = (pollId?: string) => async (dispatch: Dispatch) => {
-//   const fetchData = () => {
-//     dispatch(pollsActions.setIsLoading(true));
-
-//     const body = {
-//       isPublished: false,
-//     };
-
-//     return api.post(`poll/v1/publication/${pollId}`, body);
-//   };
-
-//   try {
-//     const response = await fetchData();
-
-//     if (axios.isAxiosError(response)) {
-//       const error = response as AxiosError;
-//       const statusCode = error?.response?.status;
-
-//       switch (statusCode) {
-//         default:
-//           handleResponseError(error);
-//           break;
-//       }
-
-//       return false;
-//     }
-
-//     toast.success(constants.UNPUBLISH_VACANCY_SUCCESS_MESSAGE);
-//     return true;
-//   } catch (e) {
-//     console.warn(e);
-//   } finally {
-//     dispatch(pollsActions.setIsLoading(false));
-//   }
-//   return false;
-// };
-
-// export const publishPoll = (pollId?: string) => async (dispatch: Dispatch) => {
-//   const fetchData = () => {
-//     dispatch(pollsActions.setIsLoading(true));
-
-//     const body = {
-//       isPublished: true,
-//     };
-
-//     return api.post(`poll/v1/publication/${pollId}`, body);
-//   };
-
-//   try {
-//     const response = await fetchData();
-
-//     if (axios.isAxiosError(response)) {
-//       const error = response as AxiosError;
-//       const statusCode = error?.response?.status;
-
-//       switch (statusCode) {
-//         default:
-//           handleResponseError(error);
-//           break;
-//       }
-
-//       return false;
-//     }
-
-//     toast.success(constants.PUBLISHED_VACANCY_SUCCESS_MESSAGE);
 //     return true;
 //   } catch (e) {
 //     console.warn(e);

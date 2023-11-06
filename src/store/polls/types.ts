@@ -25,6 +25,21 @@ export type Poll = {
   questions: PollQuestion[];
 };
 
+export type NewOption = {
+  name: string;
+};
+
+export type NewQuestion = {
+  name: string;
+  options: NewOption[];
+};
+
+export type CreatePollRequest = {
+  name: string;
+  questions: NewQuestion[];
+  organisationId: string;
+};
+
 export type State = {
   pollsData: Poll[] | undefined;
   isLoading: boolean;

@@ -17,6 +17,7 @@ export const PollsPage: FC = () => {
   // const { pollsData, isLoading: isPollsLoading } = useAppSelector((state) => state.polls);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const { organisationsData } = useAppSelector((state) => state.organisations);
+  const { pollsData } = useAppSelector((state) => state.polls);
 
   useEffect(() => {
     const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
@@ -86,7 +87,10 @@ export const PollsPage: FC = () => {
           </div>
         </div>
       </Card>
-      <PollCard data={{ id: 'lol', organisation: 'lol', title: 'lol', isPublished: true }} />
+      {pollsData &&
+        pollsData.map((data) => (
+          <PollCard key={data.id} data={{ id: data.id, name: data.name, status: data.status }} />
+        ))}
     </>
   );
 

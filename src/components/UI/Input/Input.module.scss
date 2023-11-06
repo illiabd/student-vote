@@ -44,10 +44,10 @@
   &.disabled {
     color: $gray-400;
     border-color: $gray-300;
-    cursor: pointer;
+    cursor: default;
 
     input {
-      cursor: pointer;
+      cursor: default;
     }
   }
 
@@ -87,11 +87,11 @@
 }
 
 .hints {
-  position: absolute;
+  position: relative;
   box-sizing: border-box;
 
   z-index: 5;
-  margin-top: 18px;
+  margin-top: 12px;
   color: $gray-700;
 
   p {

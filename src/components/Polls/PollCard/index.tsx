@@ -1,8 +1,8 @@
 import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
 
-import { useAppDispatch } from '../../../hooks';
-import { findPolls } from '../../../store/polls/actions';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { archivePoll, findPolls, publishPoll } from '../../../store/polls/actions';
 import { Card, IconButton, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
 import styles from './PollCard.module.scss';
@@ -11,6 +11,8 @@ import { VoteCardProps } from './types';
 export const PollCard: FC<VoteCardProps> = ({ data }) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
 
   const dispatch = useAppDispatch();
 
@@ -24,13 +26,23 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
   };
 
   const handlePublishButtonClick = async () => {
-    // await dispatch(publishPoll(data.id));
-    await dispatch(findPolls(data.organisation));
+    await dispatch(publishPoll(data.id));
+
+    if (!selectedOrganisationId) {
+      return;
+    }
+
+    await dispatch(findPolls(selectedOrganisationId));
   };
 
   const handleArchiveButtonClick = async () => {
-    // await dispatch(archivePoll(data.id));
-    await dispatch(findPolls(data.organisation));
+    await dispatch(archivePoll(data.id));
+
+    if (!selectedOrganisationId) {
+      return;
+    }
+
+    await dispatch(findPolls(selectedOrganisationId));
   };
 
   const pollLink = `/polls/${data.id}`;
@@ -46,17 +58,17 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
       <Card className={styles.card}>
         <div className={styles['title-container']}>
           <a href={pollLink} className={styles.link}>
-            {data.title}
+            {data.name}
           </a>
-          {!data.isPublished && <span className={styles.isActive}>(неактивна)</span>}
+          {data.status === 'created' && <span className={styles.isActive}>(неактивна)</span>}
         </div>
         <div className={styles['tools-container']}>
-          {!data.isPublished && (
+          {data.status === 'created' && (
             <IconButton onClick={handlePublishButtonClick}>
               <Checkmark24Filled primaryFill="#1784cc" />
             </IconButton>
           )}
-          {data.isPublished && (
+          {data.status === 'active' && (
             <IconButton onClick={handleArchiveButtonClick}>
               <Archive24Regular />
             </IconButton>
