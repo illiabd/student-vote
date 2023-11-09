@@ -5,7 +5,7 @@ import {
   Edit24Regular,
 } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../../hooks';
 import { archiveVacancy, findVacancies, publishVacancy } from '../../../store/vacancies/actions';
@@ -56,9 +56,9 @@ export const VacancyCard: FC<VacancyCardProps> = ({ data }) => {
       </Modal>
       <Card className={styles.card}>
         <div className={styles['title-container']}>
-          <a href={vacancyLink} className={styles.link}>
+          <Link to={vacancyLink} className={styles.link}>
             {data.title}
-          </a>
+          </Link>
           {!data.isPublished && <span className={styles.isActive}>(неактивна)</span>}
         </div>
         <div className={styles['tools-container']}>

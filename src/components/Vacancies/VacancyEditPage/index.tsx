@@ -1,7 +1,6 @@
-/* eslint-disable react/no-danger */
 import { LottieRefCurrentProps } from 'lottie-react';
 import { FC, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { findVacancies, patchVacancy } from '../../../store/vacancies/actions';
@@ -92,7 +91,7 @@ export const VacancyEditPage: FC = () => {
     return (
       <MessageBox>
         <p>Вакансію не знайдено</p>
-        <a href="/">На головну</a>
+        <Link to="/">На головну</Link>
       </MessageBox>
     );
   }

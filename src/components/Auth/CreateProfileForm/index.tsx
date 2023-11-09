@@ -7,6 +7,7 @@ import styles from './CreateProfileForm.module.scss';
 import { FinalWindow } from './FinalWindow';
 import { Step } from './Step';
 import { UserForm } from './UserForm';
+import { Link } from 'react-router-dom';
 
 const stepsData = [
   {
@@ -76,9 +77,9 @@ export const CreateProfileForm: FC = () => {
     <div className={styles.container}>
       <div className={styles['progress-container']}>
         <div className={styles['image-container']}>
-          <a href="/">
+          <Link to="/">
             <img alt="univera-logo" src="/images/univera-logo-full.svg" />
-          </a>
+          </Link>
         </div>
         <div className={styles['progressbar-container']}>
           <div className={styles['progressbar-wrapper']}>

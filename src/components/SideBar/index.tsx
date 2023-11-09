@@ -10,7 +10,7 @@ import {
 } from '@fluentui/react-icons';
 import { FC } from 'react';
 import Dropdown, { Option } from 'react-dropdown';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { AllowedFeatures, AllowedFeaturesLinks, UserTypes } from '../../constants';
 import { useAppDispatch, useAppSelector, useWindowWidth } from '../../hooks';
@@ -79,9 +79,9 @@ export const SideBar: FC<SideBarProps> = ({
         placeholderClassName={styles['place-holder']}
       />
     ) : (
-      <a href="/" style={{ all: 'unset' }}>
+      <Link to="/" style={{ all: 'unset' }}>
         <div className={styles.option}>{organisations[0]?.name}</div>
-      </a>
+      </Link>
     );
 
   const links = selectedOrganisation.allowedFeatures?.map((feature) => {

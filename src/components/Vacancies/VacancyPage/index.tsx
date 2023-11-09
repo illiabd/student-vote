@@ -8,7 +8,7 @@ import {
 } from '@fluentui/react-icons';
 import { LottieRefCurrentProps } from 'lottie-react';
 import { FC, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { Button, Card, LoadingAnimation, MessageBox } from '../../../components/UI';
 import { RemoteTypes } from '../../../constants';
@@ -106,7 +106,7 @@ export const VacancyPage: FC = () => {
     return (
       <MessageBox>
         <p>Вакансію не знайдено</p>
-        <a href="/">На головну</a>
+        <Link to="/">На головну</Link>
       </MessageBox>
     );
   }

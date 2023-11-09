@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import styles from './Button.module.scss';
 import { ButtonProps } from './types';
+import { Link } from 'react-router-dom';
 
 export const Button: FC<ButtonProps> = ({
   className,
@@ -21,7 +22,7 @@ export const Button: FC<ButtonProps> = ({
   if (href) {
     return (
       <div className={styles.link}>
-        <a href={href}>{children}</a>
+        <Link to={href}>{children}</Link>
       </div>
     );
   }
