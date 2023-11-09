@@ -1,8 +1,3 @@
-import './components/UI/SeparatedInput/reactCodeInput.scss';
-import './components/UI/Snackbar/snackbarStyles.scss';
-import './styles/global.scss';
-import './styles/reset.scss';
-
 import { LottieRefCurrentProps } from 'lottie-react';
 import { FC, useRef, useState } from 'react';
 import { useEffect } from 'react';
@@ -15,6 +10,7 @@ import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { CreatePollPage, PollsPage } from './components/Polls/';
+import { EditPollPage } from './components/Polls/EditPollPage';
 import { SchedulePage } from './components/Schedule';
 import { Button, LoadingAnimation, MessageBox } from './components/UI';
 import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
@@ -97,6 +93,7 @@ const Home: FC = () => {
           <Route path="/timetable" Component={SchedulePage} />
           <Route path="/polls/*" Component={PollsPage} />
           <Route path="/polls/create" Component={CreatePollPage} />
+          <Route path="/polls/edit/:pollId" Component={EditPollPage} />
         </Routes>
       </div>
     </div>

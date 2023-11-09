@@ -4,7 +4,7 @@ import { FormikProps, useFormik } from 'formik';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { vacancySchema } from '../../../schemas/create-vacancy-schema';
+import { vacancySchema } from '../../../schemas';
 import { Button, Card, Dropdown, IconButton, Input } from '../../UI';
 import type { Option } from '../../UI/Dropdown/types';
 import { TextEditor } from '../../UI/TextEditor';

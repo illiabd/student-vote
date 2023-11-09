@@ -154,6 +154,7 @@ export const CREATE_EVENT_SUCCESS_MESSAGE = 'Подію створено';
 export const PATCH_EVENT_SUCCESS_MESSAGE = 'Подію відредаговано';
 
 export const CREATE_POLL_SUCCESS_MESSAGE = 'Голосування створено';
+export const EDIT_POll_SUCCESS_MESSAGE = 'Голосування відредаговано';
 export const ACTIVATE_POLL_SUCCESS_MESSAGE = 'Глосування активне';
 export const DEACTIVATE_POLL_SUCCESS_MESSAGE = 'Голосування дезактивовано';
 

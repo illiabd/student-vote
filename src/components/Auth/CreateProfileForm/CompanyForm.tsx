@@ -4,7 +4,7 @@ import { FC } from 'react';
 
 import { ScreenOrientation } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { companyInfoSchema } from '../../../schemas/company-info-schema';
+import { companyInfoSchema } from '../../../schemas';
 import { createOrganisation } from '../../../store/current/actions';
 import { Button, Input } from '../../UI';
 import styles from './CreateProfileForm.module.scss';

@@ -1,5 +1,6 @@
 import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
 import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { archivePoll, findPolls, publishPoll } from '../../../store/polls/actions';
@@ -45,7 +46,7 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
     await dispatch(findPolls(selectedOrganisationId));
   };
 
-  const pollLink = `/polls/${data.id}`;
+  const pollLink = `/polls/edit/${data.id}`;
 
   const isModalShown = showDeleteModal || showEditModal;
   const modalContent = <DeleteModal data={data} onClose={handleModalClose} />;
@@ -57,22 +58,25 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
       </Modal>
       <Card className={styles.card}>
         <div className={styles['title-container']}>
-          <a href={pollLink} className={styles.link}>
+          <Link to={pollLink} className={styles.link}>
             {data.name}
-          </a>
-          {data.status === 'created' && <span className={styles.isActive}>(неактивна)</span>}
+          </Link>
+          {data.status === 'created' && <span className={styles.isActive}>(неактивне)</span>}
         </div>
+
         <div className={styles['tools-container']}>
           {data.status === 'created' && (
             <IconButton onClick={handlePublishButtonClick}>
               <Checkmark24Filled primaryFill="#1784cc" />
             </IconButton>
           )}
+
           {data.status === 'active' && (
             <IconButton onClick={handleArchiveButtonClick}>
               <Archive24Regular />
             </IconButton>
           )}
+
           <IconButton>
             <Delete24Regular onClick={handleDeleteButtonClick} />
           </IconButton>

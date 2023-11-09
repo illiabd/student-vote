@@ -7,7 +7,6 @@ import { newsSchema } from '../../../schemas';
 import { CreateArticleRequest } from '../../../store/news/types';
 import { Button, Card, Input } from '../../UI';
 import { TextEditor } from '../../UI/TextEditor';
-// import { newsSchema } from '../../../schemas/news-schema';
 import styles from './NewsForm.module.scss';
 import { NewsFormProps, NewsFormValues } from './types';
 

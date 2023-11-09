@@ -6,7 +6,7 @@ import { Frequency } from 'rrule';
 import api from '../../../axios';
 import { EventFrequencyLabels, EventKind, EventKindNames } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { createEventSchema } from '../../../schemas/create-event-schema';
+import { createEventSchema } from '../../../schemas';
 import { FindGroupsResponse, Group } from '../../../store/current/types';
 import { deleteEvent, findEvents } from '../../../store/schedule/actions';
 import { Button, Dropdown, Input } from '../../UI';

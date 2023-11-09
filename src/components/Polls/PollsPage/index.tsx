@@ -14,7 +14,6 @@ export const PollsPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // const { pollsData, isLoading: isPollsLoading } = useAppSelector((state) => state.polls);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const { organisationsData } = useAppSelector((state) => state.organisations);
   const { pollsData } = useAppSelector((state) => state.polls);
@@ -39,15 +38,6 @@ export const PollsPage: FC = () => {
   );
 
   const pollsNotAllowedContent = <MessageBox>Голосування не дозволені</MessageBox>;
-
-  // const hasPolls = pollsData && pollsData?.length > 0;
-
-  // const publishedPollsAmount = pollsData?.filter((poll) => poll.isPublished)?.length ?? 0;
-  // const createdPollsAmount = pollsData?.length ?? 0;
-
-  // const polls = hasPolls
-  //   ? pollsData?.map((poll) => <PollCard key={poll.id} data={poll} />)
-  //   : undefined;
 
   const statusBadgeClasses = clsx(
     styles['status-badge'],
@@ -87,10 +77,7 @@ export const PollsPage: FC = () => {
           </div>
         </div>
       </Card>
-      {pollsData &&
-        pollsData.map((data) => (
-          <PollCard key={data.id} data={{ id: data.id, name: data.name, status: data.status }} />
-        ))}
+      {pollsData ? pollsData.docs.map((data) => <PollCard key={data.id} data={data} />) : undefined}
     </>
   );
 

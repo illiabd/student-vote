@@ -5,19 +5,24 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import { pollOptionSchema } from '../../../schemas/poll-option-schema';
-import { pollQuestionSchema } from '../../../schemas/poll-question-schema';
+import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
 import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
 
-export const PollQuestionCard: FC<PollQuestionCardProps> = ({ questionId, onChange, onDelete }) => {
-  const [options, setOptions] = useState<string[]>([]);
+export const PollQuestionCard: FC<PollQuestionCardProps> = ({
+  questionId,
+  defaultQuestion,
+  onChange,
+  onDelete,
+}) => {
+  const defaultOptions = defaultQuestion?.options.map((option) => option.name);
+  const [options, setOptions] = useState<string[]>(defaultOptions ?? []);
 
   const questionFormik = useFormik<QuestionFormValues>({
-    initialValues: { questionName: '' },
+    initialValues: { questionName: defaultQuestion?.name ?? '' },
     validationSchema: pollQuestionSchema,
     onSubmit: () => {},
   });
@@ -27,23 +32,24 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({ questionId, onChan
     validationSchema: pollOptionSchema,
     onSubmit: (values) => {
       setOptions((prev) => {
-        const prevCopy = Array.from(prev);
-        prevCopy.push(values.optionName);
-        return prevCopy;
+        return [...prev, values.optionName];
       });
 
       optionFormik.resetForm();
-
-      const question = {
-        questionId,
-        name: questionFormik.values.questionName,
-        options: options.map((optionName) => ({
-          name: optionName,
-        })),
-      };
-      onChange(questionId, question);
     },
   });
+
+  useEffect(() => {
+    const question = {
+      questionId,
+      name: questionFormik.values.questionName,
+      options: options.map((optionName) => ({
+        name: optionName,
+      })),
+    };
+
+    onChange(questionId, question);
+  }, [options]);
 
   const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
@@ -104,6 +110,8 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({ questionId, onChan
         />
       </div>
 
+      {hasOptions && <div className={styles.options}>{optionsElement}</div>}
+
       <div className={styles['add-section']}>
         <form style={{ width: '100%' }}>
           <Input
@@ -126,8 +134,6 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({ questionId, onChan
           <Add24Regular onClick={optionFormik.submitForm} />
         </IconButton>
       </div>
-
-      {hasOptions && <div className={styles.options}>{optionsElement}</div>}
 
       <div style={{ margin: '0 auto' }}>
         <IconButton onClick={handleDeleteButtonClick}>

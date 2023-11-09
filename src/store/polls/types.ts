@@ -34,13 +34,41 @@ export type NewQuestion = {
   options: NewOption[];
 };
 
+export type NewPoll = {
+  name: string;
+  organisationId: string;
+  questions: NewQuestion[];
+};
+
 export type CreatePollRequest = {
   name: string;
   questions: NewQuestion[];
   organisationId: string;
 };
 
+export type PollData = {
+  docs: Poll[];
+  totalDocs: number;
+  offset: number;
+  limit: number;
+  totalPages: number;
+  page: number;
+  pagingCounter: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+  prevPage: number;
+  nextPage: number;
+};
+
 export type State = {
-  pollsData: Poll[] | undefined;
+  pollsData: PollData | undefined;
   isLoading: boolean;
+};
+
+export type EditPollRequest = {
+  id: string;
+  name: string;
+  status: PollStatus;
+  organisationId: string;
+  questions: NewQuestion[];
 };

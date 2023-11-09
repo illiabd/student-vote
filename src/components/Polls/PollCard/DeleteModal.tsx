@@ -1,14 +1,14 @@
 import { FC } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { deleteVacancy, findVacancies } from '../../../store/vacancies/actions';
+import { useAppSelector } from '../../../hooks';
+// import { deleteVacancy, findVacancies } from '../../../store/vacancies/actions';
 import { Button } from '../../UI';
 import styles from './PollCard.module.scss';
 import { DeleteModalProps } from './types';
 
-export const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
+export const DeleteModal: FC<DeleteModalProps> = ({ onClose }) => {
   const { isLoading } = useAppSelector((state) => state.news);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
   // const handleAcceptButtonClick = async () => {
   //   await dispatch(deleteVacancy(data.id));
@@ -25,7 +25,7 @@ export const DeleteModal: FC<DeleteModalProps> = ({ data, onClose }) => {
         <Button onClick={onClose} variant="outlined">
           Скасувати
         </Button>
-        <Button onClick={handleAcceptButtonClick} loading={isLoading}>
+        <Button onClick={() => undefined} loading={isLoading}>
           Видалити
         </Button>
       </div>

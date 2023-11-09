@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Poll, State } from './types';
+import { PollData, State } from './types';
 
 export const initialState: State = {
   pollsData: undefined,
@@ -14,7 +14,7 @@ export const pollsSlice = createSlice({
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload;
     },
-    setPollsData(state, action: PayloadAction<Poll[]>) {
+    setPollsData(state, action: PayloadAction<PollData>) {
       state.pollsData = action.payload;
     },
     resetState() {

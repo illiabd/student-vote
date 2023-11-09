@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { FC, useState } from 'react';
 
 import { useAppDispatch } from '../../../hooks';
-import { companyInfoPatchSchema } from '../../../schemas/company-info-schema';
+import { companyInfoPatchSchema } from '../../../schemas';
 import { patchOrganisation, uploadProfilePicture } from '../../../store/current/actions';
 import { findOrganisations } from '../../../store/organisations/actions';
 import { Organisation } from '../../../store/organisations/types';

@@ -1,8 +1,10 @@
+import { Poll } from '../../../store/polls/types';
+
 export type VoteCardProps = {
-  data: { name: string; id: string; status: string };
+  data: Poll;
 };
 
 export type DeleteModalProps = {
-  data: { name: string; id: string; status: string };
+  data: Poll;
   onClose: () => void;
 };
