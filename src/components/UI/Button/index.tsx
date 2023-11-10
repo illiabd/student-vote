@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 import styles from './Button.module.scss';
 import { ButtonProps } from './types';
-import { Link } from 'react-router-dom';
 
 export const Button: FC<ButtonProps> = ({
   className,
