@@ -1,0 +1,15 @@
+.github/
+.idea/
+.vscode/
+.VSCodeCounter/
+
+node_modules
+
+.eslintcache
+.env.local
+.env.dev
+
+
+TODO
+
+*.log

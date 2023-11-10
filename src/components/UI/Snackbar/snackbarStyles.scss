@@ -1,0 +1,149 @@
+@import "../../../styles/color.scss";
+
+/** Used to define container behavior: width, position: fixed etc... **/
+.Toastify__toast-container {
+}
+
+/** Used to define the position of the ToastContainer **/
+.Toastify__toast-container--top-left {
+}
+.Toastify__toast-container--top-center {
+}
+.Toastify__toast-container--top-right {
+}
+.Toastify__toast-container--bottom-left {
+}
+.Toastify__toast-container--bottom-center {
+}
+.Toastify__toast-container--bottom-right {
+}
+
+/** Classes for the displayed toast **/
+.Toastify__toast {
+}
+.Toastify__toast--rtl {
+}
+.Toastify__toast-body {
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  .Toastify__toast {
+    margin-bottom: 0.5rem !important;
+  }
+  .Toastify__toast--rtl {
+  }
+  .Toastify__toast-body {
+  }
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+/** Used to position the icon **/
+.Toastify__toast-icon {
+}
+
+/** handle the notification color and the text color based on the theme **/
+.Toastify__toast-theme--dark {
+}
+.Toastify__toast-theme--light {
+}
+.Toastify__toast-theme--colored.Toastify__toast--default {
+}
+.Toastify__toast-theme--colored.Toastify__toast--info {
+}
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: $background-02 !important;
+  border: 1.5px solid #8fc93a !important;
+  color: #8fc93a !important;
+}
+.Toastify__toast-theme--colored.Toastify__toast--warning {
+  background-color: $background-02;
+  border: 1.5px solid #e4cc37 !important;
+  color: #e4cc37 !important;
+}
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  background-color: $background-02 !important;
+  border: 1.5px solid #e5625e !important;
+  color: #e5625e !important;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  .Toastify__toast-theme--colored.Toastify__toast--default {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  .Toastify__toast-theme--colored.Toastify__toast--success {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  .Toastify__toast-theme--colored.Toastify__toast--warning {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+
+  .Toastify__toast-theme--colored.Toastify__toast--error {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.Toastify__progress-bar {
+}
+.Toastify__progress-bar--rtl {
+}
+.Toastify__progress-bar-theme--light {
+}
+.Toastify__progress-bar-theme--dark {
+}
+.Toastify__progress-bar--info {
+}
+.Toastify__progress-bar--success {
+}
+.Toastify__progress-bar--warning {
+}
+.Toastify__progress-bar--error {
+}
+/** colored notifications share the same progress bar color **/
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--info,
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--success,
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--warning,
+.Toastify__progress-bar-theme--colored.Toastify__progress-bar--error {
+}
+
+/** Classes for the close button. Better use your own closeButton **/
+.Toastify__close-button {
+  color: inherit !important;
+}
+.Toastify__close-button--default {
+}
+.Toastify__close-button > svg {
+}
+.Toastify__close-button:hover,
+.Toastify__close-button:focus {
+}

@@ -1,0 +1,140 @@
+@import "../../../styles/color.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 100%;
+
+  padding: 22px;
+  margin: 22px;
+  margin-top: 130px;
+  gap: 22px;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  .container {
+    margin: 12px;
+    margin-top: 117px;
+    padding: 12px;
+  }
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 22px;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  .header {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.title {
+  font-size: 32px;
+
+  p {
+    font-size: inherit;
+  }
+
+  .isActive {
+    color: $error-text;
+  }
+
+  .salary {
+    color: $success-text;
+  }
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  .title {
+    font-size: 24px;
+  }
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.company-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  min-width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.text {
+  font-size: 18px;
+}
+
+.additional-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+  color: $accent-color;
+  cursor: pointer;
+}

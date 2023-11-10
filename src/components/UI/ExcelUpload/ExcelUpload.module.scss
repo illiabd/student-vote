@@ -1,0 +1,32 @@
+@import "../../../styles/color.scss";
+
+.dropzone-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+
+  margin-bottom: 30px;
+  padding: 22px;
+  gap: 8px;
+
+  border: 2px dashed $accent-color;
+  border-radius: 20px;
+
+  color: $accent-color;
+}
+
+.uploaded-container {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  margin-bottom: 30px;
+  padding: 22px;
+  gap: 8px;
+
+  border: 2px dashed $accent-color;
+  border-radius: 20px;
+
+  color: $accent-color;
+}

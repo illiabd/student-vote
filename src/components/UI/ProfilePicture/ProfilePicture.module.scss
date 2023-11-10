@@ -1,0 +1,28 @@
+@import "../../../styles/color.scss";
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 42px;
+  min-height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.blank-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  margin-bottom: 0;
+  border-radius: 50%;
+
+  background: $gradient;
+  color: $background-02;
+}

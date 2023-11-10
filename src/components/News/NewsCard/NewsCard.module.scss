@@ -1,0 +1,145 @@
+@import "../../../styles/color.scss";
+
+.image-container {
+  overflow: hidden;
+  border-radius: 4px 4px 0 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 54px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  box-sizing: border-box;
+  padding: 20px 0 44px 0;
+
+  .title {
+    font-size: 18px;
+
+    &.not-published {
+      color: $gray-400;
+    }
+  }
+
+  .text {
+    margin: 24px 0 32px 0;
+    font-size: 14px;
+    gap: 5px;
+    display: grid;
+
+    h1,
+    h3,
+    h4,
+    p {
+      all: unset;
+    }
+  }
+}
+
+.input {
+  all: unset;
+
+  height: 72px;
+  border-radius: 20px;
+
+  padding: 0 20px;
+  background-color: $background-03;
+  color: $gray-900;
+
+  font-weight: 600;
+  font-size: 18px;
+  cursor: text;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 54px;
+
+  .date {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    color: $gray-600;
+    font-size: 14px;
+  }
+
+  .badge-container {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+  }
+}
+
+.delete-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  gap: 22px;
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+  }
+}
+
+.edit-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 750px;
+  max-height: 90vh;
+  padding: 0 12px;
+  gap: 28px;
+
+  overflow: auto;
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+  }
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .edit-modal {
+    min-width: 100%;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.textarea-wrapper {
+  display: flex;
+  align-items: flex-start;
+
+  margin-bottom: 6px;
+
+  background-color: $background-03;
+  border-radius: 20px;
+}

@@ -1,0 +1,79 @@
+@import "./mixins.scss";
+@import "./color.scss";
+
+@font-face {
+  font-family: "Fixel-Display";
+  src: url("/fonts/MacPawFixelDisplay-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Fixel-Text";
+  src: url("/fonts/MacPawFixelText-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin resetTypography {
+  all: unset;
+  font-style: normal;
+  font-weight: 600;
+}
+
+* {
+  scrollbar-color: $accent-color #f0f5f9;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: #f0f5f9;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $accent-color;
+    border-radius: 8px;
+    height: 54px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: $background-01;
+  color: $gray-900;
+  font-family: Fixel-Text;
+}
+
+/*==Typography==*/
+
+h1,
+h3,
+h4,
+p {
+  @include resetTypography;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 48px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 133%;
+}
+
+h4 {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+p {
+  font-size: 18px;
+  line-height: 21px;
+}

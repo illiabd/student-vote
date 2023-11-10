@@ -1,0 +1,56 @@
+@import "../../../styles/color.scss";
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  max-width: 722px;
+  width: 100%;
+  padding: 59px 98px;
+
+  color: $gray-900;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 95%;
+    height: auto;
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+
+  button[type="submit"] {
+    margin-top: 88px;
+    margin-bottom: 88px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    button[type="submit"] {
+      box-sizing: border-box;
+      margin-top: 59px;
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,104 @@
+@import "../../../styles/color.scss";
+
+.container {
+  margin-bottom: 18px;
+}
+
+.editor-wrapper {
+  margin-bottom: 6px;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid $gray-400;
+
+  &.focused {
+    border-color: $accent-color;
+    color: $gray-800;
+  }
+
+  &.error {
+    border-color: $error-text;
+  }
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .editor-wrapper {
+    margin-bottom: 0px;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.label {
+  margin-bottom: 12px;
+  color: $gray-800;
+
+  h4 {
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
+.input {
+  margin-bottom: 20px;
+}
+
+.hints {
+  position: absolute;
+  box-sizing: border-box;
+
+  margin-top: 18px;
+  color: $gray-700;
+
+  p {
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  &.error {
+    color: $error-text;
+  }
+}
+
+.root {
+  width: 100%;
+  border: none !important;
+
+  &.error {
+    border-color: $error-text;
+    color: $gray-800;
+  }
+}
+
+.editor {
+  font-family: Fixel-Text;
+}
+
+.editor-button {
+  border: none !important;
+}
+
+.toolbar {
+  button {
+    border: none !important;
+  }
+}
+
+.editor {
+  padding: 0;
+}

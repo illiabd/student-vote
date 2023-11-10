@@ -1,0 +1,117 @@
+.card {
+  padding: 35px;
+}
+
+.member-card {
+  padding: 22px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .member-card {
+    width: 100%;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 22px;
+}
+@media (max-width: 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+}
+@media (max-width: 481px) {
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+}
+@media (max-width: 641px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .container {
+    gap: 10px;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
+.info-wrapper {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 2px;
+}
+
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.tools-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.edit-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.delete-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  gap: 22px;
+
+  button {
+    width: 200px;
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+  }
+}
+
+.add-modal-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  gap: 22px;
+
+  button {
+    width: 200px;
+  }
+
+  .buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 35px;
+  }
+}
