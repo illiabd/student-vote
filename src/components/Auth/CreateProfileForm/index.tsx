@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { ScreenOrientation } from '../../../constants';
 import { useWindowWidth } from '../../../hooks';
@@ -7,7 +8,6 @@ import styles from './CreateProfileForm.module.scss';
 import { FinalWindow } from './FinalWindow';
 import { Step } from './Step';
 import { UserForm } from './UserForm';
-import { Link } from 'react-router-dom';
 
 const stepsData = [
   {

@@ -159,18 +159,14 @@ export const ScheduleView: FC = () => {
     setShowUploadFileModal(true);
   };
 
-  const handleDivisionDropdownChange = (division: Option | Option[]) => {
-    const isOption = division instanceof Option;
-    if (!isOption) {
-      return;
-    }
-
-    if (!division) {
+  const handleDivisionDropdownChange = (value: Option | Option[]) => {
+    const option = value as Option;
+    if (!option) {
       dispatch(scheduleActions.setSelectedDivision(''));
       return;
     }
 
-    dispatch(scheduleActions.setSelectedDivision(division.value));
+    dispatch(scheduleActions.setSelectedDivision(option.value));
   };
 
   const handleDivisionDropdownInputChange = (value: string) => {

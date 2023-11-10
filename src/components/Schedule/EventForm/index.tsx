@@ -182,12 +182,8 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
   };
 
   const handleKindDropdownChange = (value: Option | Option[]) => {
-    const isOption = value instanceof Option;
-    if (!value || !isOption) {
-      return;
-    }
-
-    formik.setFieldValue('kind', value.value);
+    const option = value as Option;
+    formik.setFieldValue('kind', option.value);
   };
 
   const handleStartTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
