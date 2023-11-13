@@ -155,8 +155,9 @@ export const PATCH_EVENT_SUCCESS_MESSAGE = 'Подію відредагован�
 
 export const CREATE_POLL_SUCCESS_MESSAGE = 'Голосування створено';
 export const EDIT_POll_SUCCESS_MESSAGE = 'Голосування відредаговано';
-export const ACTIVATE_POLL_SUCCESS_MESSAGE = 'Глосування активне';
-export const DEACTIVATE_POLL_SUCCESS_MESSAGE = 'Голосування дезактивовано';
+export const OPEN_POLL_SUCCESS_MESSAGE = 'Глосування відкрито';
+export const CLOSE_POLL_SUCCESS_MESSAGE = 'Голосування закрито';
+export const DELETE_POLL_SUCCESS_MESSAGE = 'Голосування видалено';
 
 /* File uploading */
 

@@ -12,8 +12,8 @@ export type PollQuestion = {
 
 export enum PollStatus {
   created = 'created',
-  active = 'active',
-  finished = 'finished',
+  open = 'open',
+  closed = 'closed',
 }
 
 export type Poll = {

@@ -3,7 +3,8 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { archivePoll, findPolls, publishPoll } from '../../../store/polls/actions';
+import { closePoll, findPolls, publishPoll } from '../../../store/polls/actions';
+import { PollStatus } from '../../../store/polls/types';
 import { Card, IconButton, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
 import styles from './PollCard.module.scss';
@@ -37,7 +38,7 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
   };
 
   const handleArchiveButtonClick = async () => {
-    await dispatch(archivePoll(data.id));
+    await dispatch(closePoll(data.id));
 
     if (!selectedOrganisationId) {
       return;
@@ -61,17 +62,20 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
           <Link to={pollLink} className={styles.link}>
             {data.name}
           </Link>
-          {data.status === 'created' && <span className={styles.isActive}>(неактивне)</span>}
+
+          {data.status === PollStatus.created && (
+            <span className={styles.isActive}>(неактивне)</span>
+          )}
         </div>
 
         <div className={styles['tools-container']}>
-          {data.status === 'created' && (
+          {data.status === PollStatus.created && (
             <IconButton onClick={handlePublishButtonClick}>
               <Checkmark24Filled primaryFill="#1784cc" />
             </IconButton>
           )}
 
-          {data.status === 'active' && (
+          {data.status === PollStatus.open && (
             <IconButton onClick={handleArchiveButtonClick}>
               <Archive24Regular />
             </IconButton>
