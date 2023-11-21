@@ -12,7 +12,7 @@ import {
 } from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
 import { pollsActions } from './slice';
-import { CreatePollRequest, EditPollRequest, PollData } from './types';
+import { CreatePollRequest, CreatePollResponse, EditPollRequest, PollData } from './types';
 
 export const findPolls = (organisationId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -52,7 +52,7 @@ export const createPoll = (poll: CreatePollRequest) => async (dispatch: Dispatch
   const fetchData = () => {
     dispatch(pollsActions.setIsLoading(true));
 
-    return api.post('vote/v1/polls', poll);
+    return api.post<CreatePollResponse>('vote/v1/polls', poll);
   };
 
   try {
@@ -72,7 +72,7 @@ export const createPoll = (poll: CreatePollRequest) => async (dispatch: Dispatch
     }
 
     toast.success(CREATE_POLL_SUCCESS_MESSAGE);
-    return true;
+    return response.data;
   } catch (e) {
     console.warn(e);
   } finally {

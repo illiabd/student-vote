@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { AllowedFeatures } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { findPolls } from '../../../store/polls/actions';
+import { createPoll, findPolls } from '../../../store/polls/actions';
+import { CreatePollRequest } from '../../../store/polls/types';
 import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { PollCard } from '../PollCard';
 import styles from './PollsPage.module.scss';
@@ -25,8 +26,22 @@ export const PollsPage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  const handleCreatePollButtonClick = () => {
-    navigate('/polls/create');
+  const handleCreatePollButtonClick = async () => {
+    if (!selectedOrganisationId) {
+      return;
+    }
+
+    const newPollData: CreatePollRequest = {
+      name: 'Нове голосування',
+      questions: [],
+      organisationId: selectedOrganisationId,
+    };
+
+    const response = await dispatch(createPoll(newPollData));
+    if (!response) {
+      return;
+    }
+    navigate(`/polls/${response.id}`);
   };
 
   const selectedOrganisation = organisationsData?.docs?.find(

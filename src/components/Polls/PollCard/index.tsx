@@ -47,7 +47,7 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
     await dispatch(findPolls(selectedOrganisationId));
   };
 
-  const pollLink = `/polls/edit/${data.id}`;
+  const pollLink = `/polls/${data.id}`;
 
   const isModalShown = showDeleteModal || showEditModal;
   const modalContent = <DeleteModal data={data} onClose={handleModalClose} />;

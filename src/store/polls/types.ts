@@ -21,6 +21,8 @@ export type Poll = {
   name: string;
   userIds: string[];
   status: PollStatus;
+  closedAt: string;
+  openedAt: string;
   organisationId: string;
   questions: PollQuestion[];
 };
@@ -45,6 +47,8 @@ export type CreatePollRequest = {
   questions: NewQuestion[];
   organisationId: string;
 };
+
+export type CreatePollResponse = Poll;
 
 export type PollData = {
   docs: Poll[];
