@@ -67,6 +67,7 @@ export type PollData = {
 export type State = {
   pollsData: PollData | undefined;
   isLoading: boolean;
+  isNextPageLoading: boolean;
 };
 
 export type EditPollRequest = {

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { OrganisationType } from '../../../constants';
-import { useAppSelector } from '../../../hooks';
+import { useAppSelector, useWindowWidth } from '../../../hooks';
 import { MessageBox, Tabs } from '../../UI';
 import { GroupTab } from '../GroupsTab';
 import { OrganisationCard } from '../OrganisationCard';
@@ -13,6 +13,9 @@ export const HomePage: FC = () => {
   const { organisationsData } = useAppSelector((state) => state.organisations);
 
   const selectedOrganisationId = useAppSelector((state) => state.current.selectedOrganisationId);
+
+  const width = useWindowWidth();
+
   const selectedOrganisation = organisationsData?.docs.find(
     (organisation) => organisation.id === selectedOrganisationId,
   );
@@ -63,7 +66,7 @@ export const HomePage: FC = () => {
     organisationsData.docs.find((organisation) => organisation.id === selectedOrganisationId);
 
   return (
-    <div id="scrollableDiv" className={styles['content-container']}>
+    <div className={styles['content-container']} id={width > 1025 ? 'scrollableDiv' : ''}>
       {selectedOrganisationData && <OrganisationCard organisationData={selectedOrganisationData} />}{' '}
       <Tabs data={isCompany ? [tabsData[0]] : tabsData} />
     </div>

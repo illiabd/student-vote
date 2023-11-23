@@ -19,6 +19,10 @@ export const EditPollPage: FC = () => {
       return;
     }
 
+    if (pollsData && pollsData?.docs?.length > 0) {
+      return;
+    }
+
     dispatch(findPolls(selectedOrganisationId));
   }, []);
 

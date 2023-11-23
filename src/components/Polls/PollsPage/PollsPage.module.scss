@@ -135,3 +135,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.polls-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+  overflow-y: auto;
+  margin-bottom: 23px;
+}

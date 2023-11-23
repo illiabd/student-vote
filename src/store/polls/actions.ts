@@ -11,6 +11,7 @@ import {
   OPEN_POLL_SUCCESS_MESSAGE,
 } from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
+import store from '..';
 import { pollsActions } from './slice';
 import { CreatePollRequest, CreatePollResponse, EditPollRequest, PollData } from './types';
 
@@ -210,5 +211,52 @@ export const deletePoll = (pollId: string) => async (dispatch: Dispatch) => {
   } finally {
     dispatch(pollsActions.setIsLoading(false));
   }
+  return false;
+};
+
+export const loadPolls = (organisationId: string) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    const state = store.getState();
+    const { pollsData } = state.polls;
+
+    if (!pollsData?.hasNextPage) {
+      console.log('no next page');
+      return undefined;
+    }
+
+    dispatch(pollsActions.setIsNextPageLoading(true));
+
+    return api.get<PollData>(`vote/v1/polls/organisation/${organisationId}`, {
+      params: { page: pollsData.nextPage },
+    });
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (!response) {
+      return;
+    }
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+
+      return false;
+    }
+
+    dispatch(pollsActions.pushGroups(response.data));
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsNextPageLoading(false));
+  }
+
   return false;
 };
