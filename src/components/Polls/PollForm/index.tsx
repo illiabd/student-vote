@@ -12,19 +12,17 @@ import styles from './PollForm.module.scss';
 import { CreateQuestion, FormValues, PollFormProps } from './type';
 
 export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
-  const defaultQuestions =
-    defaultValues &&
-    defaultValues.questions.map((question) => {
-      const options = question.options.map<NewOption>((option) => ({ name: option.name }));
-      const newId = uuidv4();
-      return { key: newId, value: { questionId: newId, name: question.name, options } };
-    });
+  const defaultQuestions = defaultValues?.questions.map((question) => {
+    const options = question.options.map<NewOption>((option) => ({ name: option.name }));
+    const newId = uuidv4();
+    return { key: newId, value: { questionId: newId, name: question.name, options } };
+  });
 
   const [pollQuestionMap, setPollQuestionMap] = useState<Map<string, CreateQuestion>>(
     defaultQuestions ? new Map(defaultQuestions.map((item) => [item.key, item.value])) : new Map(),
   );
-  const { selectedOrganisationId } = useAppSelector((state) => state.current);
 
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const navigate = useNavigate();
 
   const formik = useFormik<FormValues>({

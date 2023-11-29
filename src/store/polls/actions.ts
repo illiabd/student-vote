@@ -13,7 +13,7 @@ import {
 import { handleResponseError } from '../../tools/api-error-handler';
 import store from '..';
 import { pollsActions } from './slice';
-import { CreatePollRequest, CreatePollResponse, EditPollRequest, PollData } from './types';
+import { CreatePollRequest, CreatePollResponse, EditPollRequest, Poll, PollData } from './types';
 
 export const findPolls = (organisationId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -42,6 +42,40 @@ export const findPolls = (organisationId: string) => async (dispatch: Dispatch) 
     }
 
     dispatch(pollsActions.setPollsData(response.data));
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsLoading(false));
+  }
+};
+
+export const findPollById = (pollId: string) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(pollsActions.setIsLoading(true));
+
+    return api.get<Poll>(`/vote/v1/polls/${pollId}`);
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (!response) {
+      return;
+    }
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+      return;
+    }
+
+    return response.data;
   } catch (e) {
     console.warn(e);
   } finally {

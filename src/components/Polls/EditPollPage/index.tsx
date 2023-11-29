@@ -1,48 +1,52 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { editPoll, findPolls } from '../../../store/polls/actions';
-import { NewPoll } from '../../../store/polls/types';
+import { editPoll, findPollById } from '../../../store/polls/actions';
+import { NewPoll, Poll } from '../../../store/polls/types';
 import { MessageBox } from '../../UI';
 import { PollForm } from '../PollForm';
 
 export const EditPollPage: FC = () => {
+  const [pollData, setPollData] = useState<Poll>();
+
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  // const { isLoading } = useAppSelector((state) => state.polls);
+
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const { pollsData } = useAppSelector((state) => state.polls);
-  const { selectedOrganisationId } = useAppSelector((state) => state.current);
-
-  useEffect(() => {
+  const findPollData = useCallback(async () => {
     if (!selectedOrganisationId) {
       return;
     }
-
-    if (pollsData && pollsData?.docs?.length > 0) {
+    if (!params.pollId) {
       return;
     }
 
-    dispatch(findPolls(selectedOrganisationId));
+    const response = await dispatch(findPollById(params.pollId));
+    setPollData(response);
   }, []);
 
-  const pollByParamId = pollsData?.docs.find((poll) => poll.id === params.pollId);
+  useEffect(() => {
+    findPollData();
+  }, []);
 
-  if (!pollByParamId) {
+  if (!pollData) {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
   const handleFormSubmit = (poll: NewPoll) => {
     const body = {
-      id: pollByParamId.id,
+      id: pollData.id,
       name: poll.name,
-      status: pollByParamId.status,
-      organisationId: pollByParamId.organisationId,
+      status: pollData.status,
+      organisationId: pollData.organisationId,
       questions: poll.questions,
     };
 
     dispatch(editPoll(body));
   };
 
-  return <PollForm defaultValues={pollByParamId} onSubmit={handleFormSubmit} />;
+  return <PollForm defaultValues={pollData} onSubmit={handleFormSubmit} />;
 };
