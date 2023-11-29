@@ -15,3 +15,7 @@ export type QuestionFormValues = {
 export type OptionFormValues = {
   optionName: string;
 };
+
+export type HandleValidate = {
+  validate: () => Promise<boolean>;
+};

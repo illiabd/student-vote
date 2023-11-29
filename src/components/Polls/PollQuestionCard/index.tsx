@@ -5,19 +5,20 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 
 import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
-import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
+import {
+  HandleValidate,
+  OptionFormValues,
+  PollQuestionCardProps,
+  QuestionFormValues,
+} from './type';
 
-export const PollQuestionCard: FC<PollQuestionCardProps> = ({
-  questionId,
-  defaultQuestion,
-  onChange,
-  onDelete,
-}) => {
+export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps>((props, ref) => {
+  const { questionId, defaultQuestion, onChange, onDelete } = props as PollQuestionCardProps;
   const defaultOptions = defaultQuestion?.options.map((option) => option.name);
   const [options, setOptions] = useState<string[]>(defaultOptions ?? []);
 
@@ -38,6 +39,21 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       optionFormik.resetForm();
     },
   });
+
+  useImperativeHandle(
+    ref,
+    () => {
+      return {
+        validate: async () => {
+          await questionFormik.validateForm();
+          await optionFormik.validateForm();
+
+          return questionFormik.isValid && optionFormik.isValid;
+        },
+      };
+    },
+    [],
+  );
 
   useEffect(() => {
     const question = {
@@ -142,6 +158,8 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       </div>
     </Card>
   );
-};
+});
 
 /* тут була Діана  */
+
+PollQuestionCard.displayName = 'PollQuestionCard';

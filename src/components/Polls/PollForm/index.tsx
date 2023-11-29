@@ -1,35 +1,37 @@
 import { Add24Regular, ArrowLeft24Regular, Checkmark24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useState } from 'react';
+import { createRef, FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useAppSelector } from '../../../hooks';
+import { pollNameSchema } from '../../../schemas';
 import { NewOption } from '../../../store/polls/types';
 import { Button, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
+import { HandleValidate } from '../PollQuestionCard/type';
 import styles from './PollForm.module.scss';
 import { CreateQuestion, FormValues, PollFormProps } from './type';
 
 export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
-  const defaultQuestions =
-    defaultValues &&
-    defaultValues.questions.map((question) => {
-      const options = question.options.map<NewOption>((option) => ({ name: option.name }));
-      const newId = uuidv4();
-      return { key: newId, value: { questionId: newId, name: question.name, options } };
-    });
+  const defaultQuestions = defaultValues?.questions.map((question) => {
+    const options = question.options.map<NewOption>((option) => ({ name: option.name }));
+    const newId = uuidv4();
+    return { key: newId, value: { questionId: newId, name: question.name, options } };
+  });
 
+  const [questionsRefs, setQuestionsRefs] = useState<React.RefObject<HandleValidate>[]>([]);
   const [pollQuestionMap, setPollQuestionMap] = useState<Map<string, CreateQuestion>>(
     defaultQuestions ? new Map(defaultQuestions.map((item) => [item.key, item.value])) : new Map(),
   );
-  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  // const [isQuestionsValid, setIsQuestionsValid] = useState(false);
 
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const navigate = useNavigate();
 
   const formik = useFormik<FormValues>({
     initialValues: { name: defaultValues?.name ?? '' },
-    validationSchema: '',
+    validationSchema: pollNameSchema,
     onSubmit: (values) => {
       if (!selectedOrganisationId) {
         return;
@@ -43,6 +45,17 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
           options: value.options,
         };
       });
+
+      // questionsRefs.forEach((ref) => {
+      //   const isValid = ref.current?.validate();
+      //   if (!isValid) {
+      //     setIsQuestionsValid(false);
+      //   }
+      // });
+
+      // if (!isQuestionsValid) {
+      //   return;
+      // }
 
       const body = {
         name: values.name,
@@ -80,6 +93,7 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
 
   const questionsMapValues = Array.from(pollQuestionMap.values());
   const questionsComponents = questionsMapValues.map((question) => {
+    const questionRef = createRef<HandleValidate>();
     const handleChange = (id: string, value: CreateQuestion) => {
       setPollQuestionMap((prev) => {
         const prevCopy = new Map(prev);
@@ -96,8 +110,13 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
       });
     };
 
+    setQuestionsRefs((prev) => {
+      return [...prev, questionRef];
+    });
+
     return (
       <PollQuestionCard
+        ref={questionRef}
         key={question.questionId}
         questionId={question.questionId}
         defaultQuestion={question}

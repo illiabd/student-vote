@@ -90,9 +90,9 @@ export const EVENT_DIVISIONS_NOT_PROVIDED = 'Оберіть одну чи дек
 export const EVENT_DATE_NOT_PROVIDED = 'Введіть дату проведення події';
 
 /* Poll validation */
-
 export const QUESTION_NAME_NOT_PROVIDED = 'Введіть питання';
-export const OPTION_NAME_NOT_PROVIDED = 'Введіть питання';
+export const OPTION_NAME_NOT_PROVIDED = 'Введіть відповідь';
+export const POLL_NAME_NOT_PROVIDED = 'Введіть назву питання';
 
 /* Phone input */
 export const PHONE_NUMBER_MASK = '00-000-00-00';

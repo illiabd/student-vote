@@ -13,20 +13,19 @@ export const EditPollPage: FC = () => {
 
   const { pollsData } = useAppSelector((state) => state.polls);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  const pollByParamId = pollsData?.docs.find((poll) => poll.id === params.pollId);
 
   useEffect(() => {
     if (!selectedOrganisationId) {
       return;
     }
 
-    if (pollsData && pollsData?.docs?.length > 0) {
+    if (pollByParamId) {
       return;
     }
 
     dispatch(findPolls(selectedOrganisationId));
   }, []);
-
-  const pollByParamId = pollsData?.docs.find((poll) => poll.id === params.pollId);
 
   if (!pollByParamId) {
     return <MessageBox>Голосування не знайдено</MessageBox>;
