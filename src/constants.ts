@@ -84,10 +84,15 @@ export const VACANCY_MAX_CITY_LENGTH = 100;
 export const EVENT_TITLE_NOT_PROVIDED = 'Введіть назву події';
 export const EVENT_KIND_NOT_PROVIDED = 'Оберіть один з варіантів';
 export const EVENT_MAIN_LECTURER_FULL_NAME = 'Введіть ПІБ викладачів';
-export const EVENT_START_NOT_PROVIDED = 'Ведіть час, початку події';
-export const EVENT_END_NOT_PROVIDED = 'Ведіть час, кінцю події';
+export const EVENT_START_NOT_PROVIDED = 'Ведіть час початку події';
+export const EVENT_END_NOT_PROVIDED = 'Ведіть час закінчення події';
 export const EVENT_DIVISIONS_NOT_PROVIDED = 'Оберіть одну чи декілька груп';
 export const EVENT_DATE_NOT_PROVIDED = 'Введіть дату проведення події';
+export const EVENT_INTERVAL_NOT_PROVIDED = 'Введіть інтервал повторень';
+export const EVENT_FREQUENCY_NOT_PROVIDED = 'Оберіть частоту повторень';
+export const EVENT_COUNT_NOT_PROVIDED = 'Введіть кількість повторень';
+export const EVENT_INTERVAL_MIN_VALUE = 'Недопустиме значення';
+export const EVENT_COUNT_MIN_VALUE = 'Недопустиме значення';
 
 /* Poll validation */
 
