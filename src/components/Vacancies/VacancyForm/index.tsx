@@ -47,7 +47,7 @@ export const VacancyForm: FC<VacancyFormProps> = ({ defaultValues, onSubmit }) =
       return;
     }
 
-    formik.setFieldValue('remoteType', value.value);
+    formik.setFieldValue('remoteType', value?.value ?? '');
   };
 
   const handleBackButtonClick = () => {
