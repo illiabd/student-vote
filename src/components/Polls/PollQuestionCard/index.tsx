@@ -110,41 +110,31 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
   const hasOptions = optionsElement.length > 0;
   return (
     <Card className={styles.card}>
-      <div className={styles.name}>
-        <Input
-          id="questionName"
-          type="text"
-          noLabel
-          value={questionFormik.values.questionName}
-          errors={questionFormik.errors.questionName}
-          touched={questionFormik.touched.questionName}
-          onChange={handleNameInputChange}
-          placeholder="Ваше питання"
-          onKeyDown={(e) => {
-            e.key === 'Enter' && e.preventDefault();
-          }}
-        />
-      </div>
+      <Input
+        id="questionName"
+        type="text"
+        noLabel
+        value={questionFormik.values.questionName}
+        errors={questionFormik.errors.questionName}
+        touched={questionFormik.touched.questionName}
+        onChange={handleNameInputChange}
+        placeholder="Ваше питання"
+      />
 
       {hasOptions && <div className={styles.options}>{optionsElement}</div>}
 
       <div className={styles['add-section']}>
-        <form style={{ width: '100%' }}>
-          <Input
-            id="optionName"
-            type="text"
-            noLabel
-            disabled={questionFormik.values.questionName.trim().length === 0}
-            value={optionFormik.values.optionName}
-            errors={optionFormik.errors.optionName}
-            touched={optionFormik.touched.optionName}
-            onChange={optionFormik.handleChange}
-            placeholder="Додати варіант"
-            onKeyDown={(e) => {
-              e.key === 'Enter' && e.preventDefault();
-            }}
-          />
-        </form>
+        <Input
+          id="optionName"
+          type="text"
+          noLabel
+          disabled={questionFormik.values.questionName.trim().length === 0}
+          value={optionFormik.values.optionName}
+          errors={optionFormik.errors.optionName}
+          touched={optionFormik.touched.optionName}
+          onChange={optionFormik.handleChange}
+          placeholder="Додати варіант"
+        />
 
         <IconButton>
           <Add24Regular onClick={optionFormik.submitForm} />

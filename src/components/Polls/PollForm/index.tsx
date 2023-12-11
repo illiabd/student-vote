@@ -1,30 +1,29 @@
 import { Add24Regular, ArrowLeft24Regular, Checkmark24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { createRef, FC, useState } from 'react';
+import React, { createRef, FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
+import api from '../../../axios';
 import { useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
 import { NewOption } from '../../../store/polls/types';
-import { Button, IconButton, Input } from '../../UI';
+import { Button, Card, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
 import { HandleValidate } from '../PollQuestionCard/type';
 import styles from './PollForm.module.scss';
 import { CreateQuestion, FormValues, PollFormProps } from './type';
 
-export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
+export const PollForm: FC<PollFormProps> = ({ defaultValues }) => {
   const defaultQuestions = defaultValues?.questions.map((question) => {
     const options = question.options.map<NewOption>((option) => ({ name: option.name }));
     const newId = uuidv4();
     return { key: newId, value: { questionId: newId, name: question.name, options } };
   });
 
-  const [questionsRefs, setQuestionsRefs] = useState<React.RefObject<HandleValidate>[]>([]);
   const [pollQuestionMap, setPollQuestionMap] = useState<Map<string, CreateQuestion>>(
     defaultQuestions ? new Map(defaultQuestions.map((item) => [item.key, item.value])) : new Map(),
   );
-  // const [isQuestionsValid, setIsQuestionsValid] = useState(false);
 
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const navigate = useNavigate();
@@ -37,35 +36,23 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
         return;
       }
 
-      const questionsMapValues = Array.from(pollQuestionMap.values());
+      // const questionsMapValues = Array.from(pollQuestionMap.values());
 
-      const questions = questionsMapValues.map((value) => {
-        return {
-          name: value.name,
-          options: value.options,
-        };
-      });
-
-      // questionsRefs.forEach((ref) => {
-      //   const isValid = ref.current?.validate();
-      //   if (!isValid) {
-      //     setIsQuestionsValid(false);
-      //   }
+      // const questions = questionsMapValues.map((value) => {
+      //   return {
+      //     name: value.name,
+      //     options: value.options,
+      //   };
       // });
 
-      // if (!isQuestionsValid) {
-      //   return;
-      // }
-
-      const body = {
-        name: values.name,
-        organisationId: selectedOrganisationId,
-        questions,
-      };
-
-      onSubmit(body);
+      api.patch(`/vote/v1/polls/${defaultValues?.id}`, { name: values.name });
     },
   });
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formik.handleChange(e);
+    formik.submitForm();
+  };
 
   const handleBackButtonClick = () => {
     navigate('/polls');
@@ -110,10 +97,6 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
       });
     };
 
-    setQuestionsRefs((prev) => {
-      return [...prev, questionRef];
-    });
-
     return (
       <PollQuestionCard
         ref={questionRef}
@@ -132,7 +115,7 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
         <ArrowLeft24Regular />
       </IconButton>
 
-      <div className={styles.name}>
+      <Card className={styles['name-card']}>
         <Input
           id="name"
           type="text"
@@ -141,12 +124,10 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
           errors={formik.errors.name}
           touched={formik.touched.name}
           onChange={formik.handleChange}
+          onBlur={handleBlur}
           placeholder="Назва голосування"
-          onKeyDown={(e) => {
-            e.key === 'Enter' && e.preventDefault();
-          }}
         />
-      </div>
+      </Card>
 
       <div className={styles.questions}>
         {questionsComponents.length > 0 && questionsComponents}
