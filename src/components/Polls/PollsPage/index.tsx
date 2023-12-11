@@ -36,7 +36,16 @@ export const PollsPage: FC = () => {
 
     const newPollData: CreatePollRequest = {
       name: 'Нове голосування',
-      questions: [],
+      questions: [
+        {
+          name: 'Питання 1',
+          options: [
+            {
+              name: 'Відповідь 1',
+            },
+          ],
+        },
+      ],
       organisationId: selectedOrganisationId,
     };
 
