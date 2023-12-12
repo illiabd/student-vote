@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { loginUser, verifyCode } from '../../../store/auth/actions';
+import { authActions } from '../../../store/auth/slice';
 import { Card } from '../../UI';
 import { LoginForm, SuccessWindow, VerificationForm } from '../';
 import type { LoginFormValues } from '../LoginForm/types';
@@ -25,6 +26,10 @@ export const AuthPage: FC = () => {
     setIsAuthSuccess(isSuccess);
   };
 
+  const handleBackButtonClick = () => {
+    dispatch(authActions.setNeedVerification(false));
+  };
+
   const handleResendCodeButtonClick = async () => {
     if (!authData) {
       return;
@@ -39,6 +44,7 @@ export const AuthPage: FC = () => {
     <VerificationForm
       className={styles.form}
       onSubmit={handleVerificationFormSubmission}
+      onBackButtonClick={handleBackButtonClick}
       onResendCode={handleResendCodeButtonClick}
     />
   );

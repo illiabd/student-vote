@@ -54,6 +54,15 @@
   /* hi-res laptops and desktops */
 }
 
+.navigation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 8px;
+
+  overflow-y: auto;
+}
+
 .navigation {
   display: flex;
   flex-direction: column;

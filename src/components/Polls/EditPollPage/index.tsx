@@ -1,34 +1,53 @@
-import { FC, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { editPoll, findPollById } from '../../../store/polls/actions';
+import { NewPoll, Poll } from '../../../store/polls/types';
 import { findPolls } from '../../../store/polls/actions';
 import { MessageBox } from '../../UI';
 import { PollForm } from '../PollForm';
 
 export const EditPollPage: FC = () => {
+  const [pollData, setPollData] = useState<Poll>();
+
+  const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  // const { isLoading } = useAppSelector((state) => state.polls);
+
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const { pollsData } = useAppSelector((state) => state.polls);
-  const { selectedOrganisationId } = useAppSelector((state) => state.current);
-  const pollByParamId = pollsData?.docs.find((poll) => poll.id === params.pollId);
-
-  useEffect(() => {
+  const findPollData = useCallback(async () => {
     if (!selectedOrganisationId) {
       return;
     }
-
-    if (pollByParamId) {
+    if (!params.pollId) {
       return;
     }
 
-    dispatch(findPolls(selectedOrganisationId));
+    const response = await dispatch(findPollById(params.pollId));
+    setPollData(response);
   }, []);
 
-  if (!pollByParamId) {
+  useEffect(() => {
+    findPollData();
+  }, []);
+
+  if (!pollData) {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
-  return <PollForm pollData={pollByParamId} />;
+  const handleFormSubmit = (poll: NewPoll) => {
+    const body = {
+      id: pollData.id,
+      name: poll.name,
+      status: pollData.status,
+      organisationId: pollData.organisationId,
+      questions: poll.questions,
+    };
+
+    dispatch(editPoll(body));
+  };
+
+  return <PollForm defaultValues={pollData} onSubmit={handleFormSubmit} />;
 };

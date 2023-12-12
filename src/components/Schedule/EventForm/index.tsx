@@ -170,7 +170,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
       return;
     }
 
-    formik.setFieldValue('frequency', option.value);
+    formik.setFieldValue('frequency', option?.value ?? '');
   };
 
   const handleDivisionDropdownInputChange = (value: string) => {
@@ -183,7 +183,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
 
   const handleKindDropdownChange = (value: Option | Option[]) => {
     const option = value as Option;
-    formik.setFieldValue('kind', option.value);
+    formik.setFieldValue('kind', option?.value ?? '');
   };
 
   const handleStartTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
