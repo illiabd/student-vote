@@ -5,21 +5,26 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 
 import api from '../../../axios';
+import { useAppDispatch } from '../../../hooks';
 import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
+import { deleteQuestion } from '../../../store/polls/actions';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
 import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
 
 export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   defaultQuestion,
-  pollId,
   questionId,
+  pollId,
+  fetchPollData,
 }) => {
   const defaultOptions = defaultQuestion?.options.map((option) => option.name);
   const [options, setOptions] = useState<string[]>(defaultOptions ?? []);
+
+  const dispatch = useAppDispatch();
 
   const questionFormik = useFormik<QuestionFormValues>({
     initialValues: { questionName: defaultQuestion?.name ?? '' },
@@ -67,8 +72,14 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
     questionFormik.submitForm();
   };
 
-  const handleDeleteButtonClick = () => {
-    onDelete(questionId);
+  const handleDeleteButtonClick = async () => {
+    if (!pollId) {
+      return;
+    }
+
+    await dispatch(deleteQuestion(pollId, questionId));
+    await fetchPollData();
+    fetch;
   };
 
   const optionsElement = options.map((value, index) => {

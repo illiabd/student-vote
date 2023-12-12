@@ -2,9 +2,8 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { editPoll, findPollById } from '../../../store/polls/actions';
-import { NewPoll, Poll } from '../../../store/polls/types';
-import { findPolls } from '../../../store/polls/actions';
+import { findPollById } from '../../../store/polls/actions';
+import { Poll } from '../../../store/polls/types';
 import { MessageBox } from '../../UI';
 import { PollForm } from '../PollForm';
 
@@ -37,17 +36,5 @@ export const EditPollPage: FC = () => {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
-  const handleFormSubmit = (poll: NewPoll) => {
-    const body = {
-      id: pollData.id,
-      name: poll.name,
-      status: pollData.status,
-      organisationId: pollData.organisationId,
-      questions: poll.questions,
-    };
-
-    dispatch(editPoll(body));
-  };
-
-  return <PollForm defaultValues={pollData} onSubmit={handleFormSubmit} />;
+  return <PollForm pollData={pollData} fetchPollData={findPollData} />;
 };

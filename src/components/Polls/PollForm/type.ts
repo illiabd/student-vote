@@ -10,4 +10,5 @@ export type FormValues = {
 
 export type PollFormProps = {
   pollData: Poll;
+  fetchPollData: () => void;
 };

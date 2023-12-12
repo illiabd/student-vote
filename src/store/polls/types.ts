@@ -69,11 +69,3 @@ export type State = {
   isLoading: boolean;
   isNextPageLoading: boolean;
 };
-
-export type EditPollRequest = {
-  id: string;
-  name: string;
-  status: PollStatus;
-  organisationId: string;
-  questions: NewQuestion[];
-};

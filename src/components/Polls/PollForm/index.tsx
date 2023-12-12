@@ -1,20 +1,20 @@
 import { Add24Regular, ArrowLeft24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import api from '../../../axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
 import { createQuestion } from '../../../store/polls/actions';
-import { NewOption } from '../../../store/polls/types';
 import { Button, Card, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
 import styles from './PollForm.module.scss';
 import { FormValues, PollFormProps } from './type';
 
-export const PollForm: FC<PollFormProps> = ({ pollData }) => {
+export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
+  const { isLoading } = useAppSelector((state) => state.polls);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -39,17 +39,18 @@ export const PollForm: FC<PollFormProps> = ({ pollData }) => {
     navigate('/polls');
   };
 
-  const handleAddQuestionButtonClick = () => {
+  const handleAddQuestionButtonClick = async () => {
     const initialQuestion = {
-      name: 'Питання 1',
+      name: 'Нове питання',
       options: [
         {
-          name: 'Відповідь 1',
+          name: 'Нова відповідь',
         },
       ],
     };
 
-    dispatch(createQuestion(pollData.id, initialQuestion));
+    await dispatch(createQuestion(pollData.id, initialQuestion));
+    await fetchPollData();
   };
 
   const questionsComponents = pollData.questions.map((question) => {
@@ -59,8 +60,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData }) => {
         pollId={pollData.id}
         questionId={question.id}
         defaultQuestion={question}
-        // onChange={handleChange}
-        // onDelete={handleDelete}
+        fetchPollData={fetchPollData}
       />
     );
   });
@@ -91,6 +91,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData }) => {
             variant="outlined"
             endIcon={<Add24Regular />}
             onClick={handleAddQuestionButtonClick}
+            loading={isLoading}
           >
             Додати питання
           </Button>

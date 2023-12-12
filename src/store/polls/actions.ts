@@ -7,20 +7,12 @@ import {
   CLOSE_POLL_SUCCESS_MESSAGE,
   CREATE_POLL_SUCCESS_MESSAGE,
   DELETE_POLL_SUCCESS_MESSAGE,
-  EDIT_POll_SUCCESS_MESSAGE,
   OPEN_POLL_SUCCESS_MESSAGE,
 } from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
 import store from '..';
 import { pollsActions } from './slice';
-import {
-  CreatePollRequest,
-  CreatePollResponse,
-  EditPollRequest,
-  NewQuestion,
-  Poll,
-  PollData,
-} from './types';
+import { CreatePollRequest, CreatePollResponse, NewQuestion, Poll, PollData } from './types';
 
 export const findPolls = (organisationId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
@@ -189,39 +181,6 @@ export const closePoll = (pollId: string) => async (dispatch: Dispatch) => {
   return false;
 };
 
-export const editPoll = (poll: EditPollRequest) => async (dispatch: Dispatch) => {
-  const fetchData = () => {
-    dispatch(pollsActions.setIsLoading(true));
-
-    return api.patch(`/vote/v1/polls/${poll.id}`, poll);
-  };
-
-  try {
-    const response = await fetchData();
-
-    if (axios.isAxiosError(response)) {
-      const error = response as AxiosError;
-      const statusCode = error?.response?.status;
-
-      switch (statusCode) {
-        default:
-          handleResponseError(error);
-          break;
-      }
-
-      return false;
-    }
-
-    toast.success(EDIT_POll_SUCCESS_MESSAGE);
-    return true;
-  } catch (e) {
-    console.warn(e);
-  } finally {
-    dispatch(pollsActions.setIsLoading(false));
-  }
-  return false;
-};
-
 export const deletePoll = (pollId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(pollsActions.setIsLoading(true));
@@ -333,3 +292,36 @@ export const createQuestion = (pollId: string, body: NewQuestion) => async (disp
   }
   return false;
 };
+
+export const deleteQuestion =
+  (pollId: string, questionId: string) => async (dispatch: Dispatch) => {
+    const fetchData = () => {
+      dispatch(pollsActions.setIsLoading(true));
+
+      return api.delete<Poll>(`/vote/v1/polls/${pollId}/question/${questionId}`);
+    };
+
+    try {
+      const response = await fetchData();
+
+      if (axios.isAxiosError(response)) {
+        const error = response as AxiosError;
+        const statusCode = error?.response?.status;
+
+        switch (statusCode) {
+          default:
+            handleResponseError(error);
+            break;
+        }
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      dispatch(pollsActions.setIsLoading(false));
+    }
+    return false;
+  };
