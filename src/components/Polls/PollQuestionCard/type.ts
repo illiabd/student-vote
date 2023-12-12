@@ -3,9 +3,10 @@ import { CreateQuestion } from '../PollForm/type';
 
 export type PollQuestionCardProps = {
   questionId: string;
+  pollId?: string;
   defaultQuestion?: NewQuestion;
-  onChange: (id: string, value: CreateQuestion) => void;
-  onDelete: (id: string) => void;
+  // onChange: (id: string, value: CreateQuestion) => void;
+  // onDelete: (id: string) => void;
 };
 
 export type QuestionFormValues = {
@@ -14,8 +15,4 @@ export type QuestionFormValues = {
 
 export type OptionFormValues = {
   optionName: string;
-};
-
-export type HandleValidate = {
-  validate: () => Promise<boolean>;
 };

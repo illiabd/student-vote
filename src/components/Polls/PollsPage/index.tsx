@@ -53,6 +53,7 @@ export const PollsPage: FC = () => {
     if (!response) {
       return;
     }
+
     navigate(`/polls/${response.id}`);
   };
 

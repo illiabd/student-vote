@@ -30,5 +30,5 @@ export const EditPollPage: FC = () => {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
-  return <PollForm defaultValues={pollByParamId} />;
+  return <PollForm pollData={pollByParamId} />;
 };

@@ -94,7 +94,6 @@ const Home: FC = () => {
           <Route path="/vacancies/*" Component={VacanciesPage} />
           <Route path="/timetable" Component={SchedulePage} />
           <Route path="/polls/*" Component={PollsPage} />
-          <Route path="/polls/create" Component={CreatePollPage} />
           <Route path="/polls/:pollId" Component={EditPollPage} />
         </Routes>
       </div>

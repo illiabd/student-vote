@@ -1,51 +1,32 @@
-import { Add24Regular, ArrowLeft24Regular, Checkmark24Regular } from '@fluentui/react-icons';
+import { Add24Regular, ArrowLeft24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import React, { createRef, FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
 import api from '../../../axios';
-import { useAppSelector } from '../../../hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
+import { createQuestion } from '../../../store/polls/actions';
 import { NewOption } from '../../../store/polls/types';
 import { Button, Card, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
-import { HandleValidate } from '../PollQuestionCard/type';
 import styles from './PollForm.module.scss';
-import { CreateQuestion, FormValues, PollFormProps } from './type';
+import { FormValues, PollFormProps } from './type';
 
-export const PollForm: FC<PollFormProps> = ({ defaultValues }) => {
-  const defaultQuestions = defaultValues?.questions.map((question) => {
-    const options = question.options.map<NewOption>((option) => ({ name: option.name }));
-    const newId = uuidv4();
-    return { key: newId, value: { questionId: newId, name: question.name, options } };
-  });
-
-  const [pollQuestionMap, setPollQuestionMap] = useState<Map<string, CreateQuestion>>(
-    defaultQuestions ? new Map(defaultQuestions.map((item) => [item.key, item.value])) : new Map(),
-  );
-
+export const PollForm: FC<PollFormProps> = ({ pollData }) => {
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik<FormValues>({
-    initialValues: { name: defaultValues?.name ?? '' },
+    initialValues: { name: pollData?.name ?? '' },
     validationSchema: pollNameSchema,
     onSubmit: (values) => {
       if (!selectedOrganisationId) {
         return;
       }
 
-      // const questionsMapValues = Array.from(pollQuestionMap.values());
-
-      // const questions = questionsMapValues.map((value) => {
-      //   return {
-      //     name: value.name,
-      //     options: value.options,
-      //   };
-      // });
-
-      api.patch(`/vote/v1/polls/${defaultValues?.id}`, { name: values.name });
+      api.patch(`/vote/v1/polls/${pollData.id}`, { name: values.name });
     },
   });
 
@@ -59,52 +40,27 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues }) => {
   };
 
   const handleAddQuestionButtonClick = () => {
-    setPollQuestionMap((prev) => {
-      const prevCopy = new Map(prev);
-      const newId = uuidv4();
-      const initialQuestion = {
-        questionId: newId,
-        name: '',
-        options: [] as NewOption[],
-      };
-
-      prevCopy.set(newId, initialQuestion);
-
-      return prevCopy;
-    });
-  };
-
-  const handleCreatePollButtonCLick = () => {
-    formik.submitForm();
-  };
-
-  const questionsMapValues = Array.from(pollQuestionMap.values());
-  const questionsComponents = questionsMapValues.map((question) => {
-    const questionRef = createRef<HandleValidate>();
-    const handleChange = (id: string, value: CreateQuestion) => {
-      setPollQuestionMap((prev) => {
-        const prevCopy = new Map(prev);
-        prevCopy.set(id, value);
-        return prevCopy;
-      });
+    const initialQuestion = {
+      name: 'Питання 1',
+      options: [
+        {
+          name: 'Відповідь 1',
+        },
+      ],
     };
 
-    const handleDelete = (id: string) => {
-      setPollQuestionMap((prev) => {
-        const prevCopy = new Map(prev);
-        prevCopy.delete(id);
-        return prevCopy;
-      });
-    };
+    dispatch(createQuestion(pollData.id, initialQuestion));
+  };
 
+  const questionsComponents = pollData.questions.map((question) => {
     return (
       <PollQuestionCard
-        ref={questionRef}
-        key={question.questionId}
-        questionId={question.questionId}
+        key={question.id}
+        pollId={pollData.id}
+        questionId={question.id}
         defaultQuestion={question}
-        onChange={handleChange}
-        onDelete={handleDelete}
+        // onChange={handleChange}
+        // onDelete={handleDelete}
       />
     );
   });
@@ -119,13 +75,12 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues }) => {
         <Input
           id="name"
           type="text"
-          noLabel
           value={formik.values.name}
           errors={formik.errors.name}
           touched={formik.touched.name}
           onChange={formik.handleChange}
           onBlur={handleBlur}
-          placeholder="Назва голосування"
+          label="Назва голосування"
         />
       </Card>
 
@@ -138,10 +93,6 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues }) => {
             onClick={handleAddQuestionButtonClick}
           >
             Додати питання
-          </Button>
-
-          <Button onClick={handleCreatePollButtonCLick} endIcon={<Checkmark24Regular />}>
-            {defaultValues ? 'Зберегти' : 'Опублікувати'}
           </Button>
         </div>
       </div>

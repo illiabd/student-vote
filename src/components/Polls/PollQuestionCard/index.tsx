@@ -5,27 +5,37 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
+import api from '../../../axios';
 import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
-import {
-  HandleValidate,
-  OptionFormValues,
-  PollQuestionCardProps,
-  QuestionFormValues,
-} from './type';
+import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
 
-export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps>((props, ref) => {
-  const { questionId, defaultQuestion, onChange, onDelete } = props as PollQuestionCardProps;
+export const PollQuestionCard: FC<PollQuestionCardProps> = ({
+  defaultQuestion,
+  pollId,
+  questionId,
+}) => {
   const defaultOptions = defaultQuestion?.options.map((option) => option.name);
   const [options, setOptions] = useState<string[]>(defaultOptions ?? []);
 
   const questionFormik = useFormik<QuestionFormValues>({
     initialValues: { questionName: defaultQuestion?.name ?? '' },
     validationSchema: pollQuestionSchema,
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      const optionsBody = options.map((value) => ({
+        name: value,
+      }));
+
+      const body = {
+        name: values.questionName,
+        options: optionsBody,
+      };
+
+      api.put(`/vote/v1/polls/${pollId}/question/${questionId}`, body);
+    },
   });
 
   const optionFormik = useFormik<OptionFormValues>({
@@ -40,33 +50,6 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
     },
   });
 
-  useImperativeHandle(
-    ref,
-    () => {
-      return {
-        validate: async () => {
-          await questionFormik.validateForm();
-          await optionFormik.validateForm();
-
-          return questionFormik.isValid && optionFormik.isValid;
-        },
-      };
-    },
-    [],
-  );
-
-  useEffect(() => {
-    const question = {
-      questionId,
-      name: questionFormik.values.questionName,
-      options: options.map((optionName) => ({
-        name: optionName,
-      })),
-    };
-
-    onChange(questionId, question);
-  }, [options]);
-
   const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const name = event.target.value;
     questionFormik.setFieldValue('questionName', name);
@@ -78,7 +61,10 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
         name: optionName,
       })),
     };
-    onChange(questionId, question);
+  };
+
+  const handleNameInputBlur = () => {
+    questionFormik.submitForm();
   };
 
   const handleDeleteButtonClick = () => {
@@ -113,12 +99,12 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
       <Input
         id="questionName"
         type="text"
-        noLabel
         value={questionFormik.values.questionName}
         errors={questionFormik.errors.questionName}
         touched={questionFormik.touched.questionName}
         onChange={handleNameInputChange}
-        placeholder="Ваше питання"
+        onBlur={handleNameInputBlur}
+        label="Ваше питання"
       />
 
       {hasOptions && <div className={styles.options}>{optionsElement}</div>}
@@ -127,13 +113,13 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
         <Input
           id="optionName"
           type="text"
-          noLabel
           disabled={questionFormik.values.questionName.trim().length === 0}
           value={optionFormik.values.optionName}
           errors={optionFormik.errors.optionName}
           touched={optionFormik.touched.optionName}
           onChange={optionFormik.handleChange}
-          placeholder="Додати варіант"
+          fullWidth
+          label="Додати варіант"
         />
 
         <IconButton>
@@ -148,7 +134,7 @@ export const PollQuestionCard = forwardRef<HandleValidate, PollQuestionCardProps
       </div>
     </Card>
   );
-});
+};
 
 /* тут була Діана  */
 

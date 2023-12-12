@@ -1,4 +1,3 @@
-export { CreatePollPage } from './CreatePollPage';
 export { PollCard } from './PollCard';
 export { PollForm } from './PollForm';
 export { PollQuestionCard } from './PollQuestionCard';

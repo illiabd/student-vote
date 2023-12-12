@@ -9,5 +9,5 @@ export type FormValues = {
 };
 
 export type PollFormProps = {
-  defaultValues?: Poll;
+  pollData: Poll;
 };
