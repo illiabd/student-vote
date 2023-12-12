@@ -9,7 +9,7 @@ export type InputProps = HTMLProps<HTMLInputElement> & {
   rounded?: boolean;
   errors?: string | string[];
   value?: string;
-  noLabel?: boolean;
   variant?: TextFieldVariants;
+  fullWidth?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };

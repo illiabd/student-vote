@@ -13,6 +13,7 @@ export const Input: FC<InputProps> = ({
   label,
   id,
   disabled = false,
+  fullWidth,
   variant,
   onChange,
   ...props
@@ -28,8 +29,9 @@ export const Input: FC<InputProps> = ({
       disabled={disabled}
       helperText={errors}
       variant={variant}
-      inputProps={{
-        ...props,
+      fullWidth={fullWidth}
+      inputProps={{ ...props }}
+      InputProps={{
         startAdornment: (
           <InputAdornment position="start">
             <div className={styles.icon}>{startIcon}</div>
