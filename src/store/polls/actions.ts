@@ -325,3 +325,36 @@ export const deleteQuestion =
     }
     return false;
   };
+
+export const putQuestion =
+  (pollId: string, questionId: string, body: NewQuestion) => async (dispatch: Dispatch) => {
+    const fetchData = () => {
+      dispatch(pollsActions.setIsLoading(true));
+
+      api.put<Poll>(`/vote/v1/polls/${pollId}/question/${questionId}`, body);
+    };
+
+    try {
+      const response = await fetchData();
+
+      if (axios.isAxiosError(response)) {
+        const error = response as AxiosError;
+        const statusCode = error?.response?.status;
+
+        switch (statusCode) {
+          default:
+            handleResponseError(error);
+            break;
+        }
+
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      dispatch(pollsActions.setIsLoading(false));
+    }
+    return false;
+  };

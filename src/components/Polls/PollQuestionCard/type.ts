@@ -4,7 +4,7 @@ export type PollQuestionCardProps = {
   questionId: string;
   pollId?: string;
   defaultQuestion?: NewQuestion;
-  fetchPollData: () => void;
+  fetchPollData: () => Promise<void>;
 };
 
 export type QuestionFormValues = {

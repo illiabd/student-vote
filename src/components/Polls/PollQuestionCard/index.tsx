@@ -5,12 +5,11 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
-import api from '../../../axios';
 import { useAppDispatch } from '../../../hooks';
 import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
-import { deleteQuestion } from '../../../store/polls/actions';
+import { deleteQuestion, putQuestion } from '../../../store/polls/actions';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
 import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
@@ -29,7 +28,16 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   const questionFormik = useFormik<QuestionFormValues>({
     initialValues: { questionName: defaultQuestion?.name ?? '' },
     validationSchema: pollQuestionSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      const isQuestionNameNotChanged = values.questionName === defaultQuestion?.name;
+      if (isQuestionNameNotChanged) {
+        return;
+      }
+
+      if (!pollId) {
+        return;
+      }
+
       const optionsBody = options.map((value) => ({
         name: value,
       }));
@@ -39,14 +47,15 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         options: optionsBody,
       };
 
-      api.put(`/vote/v1/polls/${pollId}/question/${questionId}`, body);
+      await dispatch(putQuestion(pollId, questionId, body));
+      await fetchPollData();
     },
   });
 
   const optionFormik = useFormik<OptionFormValues>({
     initialValues: { optionName: '' },
     validationSchema: pollOptionSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setOptions((prev) => {
         return [...prev, values.optionName];
       });
@@ -55,18 +64,27 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
     },
   });
 
-  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.value;
-    questionFormik.setFieldValue('questionName', name);
+  const updateQuestion = useCallback(async () => {
+    if (!pollId) {
+      return;
+    }
 
-    const question = {
-      questionId,
-      name,
-      options: options.map((optionName) => ({
-        name: optionName,
-      })),
+    const optionsBody = options.map((value) => ({
+      name: value,
+    }));
+
+    const body = {
+      name: defaultQuestion?.name ?? '',
+      options: optionsBody,
     };
-  };
+
+    await dispatch(putQuestion(pollId, questionId, body));
+    await fetchPollData();
+  }, [options]);
+
+  useEffect(() => {
+    updateQuestion();
+  }, [options, updateQuestion]);
 
   const handleNameInputBlur = () => {
     questionFormik.submitForm();
@@ -79,7 +97,6 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
 
     await dispatch(deleteQuestion(pollId, questionId));
     await fetchPollData();
-    fetch;
   };
 
   const optionsElement = options.map((value, index) => {
@@ -91,14 +108,16 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       });
     };
 
+    const hasLastOption = options.length === 1;
+
     return (
       <div key={index} className={styles.option}>
         <div className={styles['option-content']}>
           <RadioButton24Regular color="#1784cc" />
           {value}
         </div>
-        <IconButton onClick={handleDeleteOptionButton}>
-          <Dismiss24Regular />
+        <IconButton onClick={handleDeleteOptionButton} disabled={hasLastOption}>
+          <Dismiss24Regular color={hasLastOption ? '#e1e1e1' : ''} />
         </IconButton>
       </div>
     );
@@ -113,7 +132,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         value={questionFormik.values.questionName}
         errors={questionFormik.errors.questionName}
         touched={questionFormik.touched.questionName}
-        onChange={handleNameInputChange}
+        onChange={questionFormik.handleChange}
         onBlur={handleNameInputBlur}
         label="Ваше питання"
       />
@@ -148,5 +167,3 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
 };
 
 /* тут була Діана  */
-
-PollQuestionCard.displayName = 'PollQuestionCard';
