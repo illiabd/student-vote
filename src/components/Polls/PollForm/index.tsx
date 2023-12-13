@@ -3,10 +3,9 @@ import { useFormik } from 'formik';
 import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import api from '../../../axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
-import { createQuestion } from '../../../store/polls/actions';
+import { createQuestion, updatePollName } from '../../../store/polls/actions';
 import { Button, Card, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
 import styles from './PollForm.module.scss';
@@ -26,7 +25,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
         return;
       }
 
-      api.patch(`/vote/v1/polls/${pollData.id}`, { name: values.name });
+      dispatch(updatePollName(pollData.id, values.name));
     },
   });
 
@@ -71,20 +70,19 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
         <ArrowLeft24Regular />
       </IconButton>
 
-      <Card className={styles['name-card']}>
-        <Input
-          id="name"
-          type="text"
-          value={formik.values.name}
-          errors={formik.errors.name}
-          touched={formik.touched.name}
-          onChange={formik.handleChange}
-          onBlur={handleBlur}
-          label="Назва голосування"
-        />
-      </Card>
-
       <div className={styles.questions}>
+        <Card className={styles['name-card']}>
+          <Input
+            id="name"
+            type="text"
+            value={formik.values.name}
+            errors={formik.errors.name}
+            touched={formik.touched.name}
+            onChange={formik.handleChange}
+            onBlur={handleBlur}
+            label="Назва голосування"
+          />
+        </Card>
         {questionsComponents.length > 0 && questionsComponents}
         <div className={styles.buttons}>
           <Button

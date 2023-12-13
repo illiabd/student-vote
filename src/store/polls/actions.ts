@@ -261,6 +261,38 @@ export const loadPolls = (organisationId: string) => async (dispatch: Dispatch) 
   return false;
 };
 
+export const updatePollName = (pollId: string, name: string) => async (dispatch: Dispatch) => {
+  const fetchData = () => {
+    dispatch(pollsActions.setIsLoading(true));
+
+    return api.patch<Poll>(`/vote/v1/polls/${pollId}`, { name });
+  };
+
+  try {
+    const response = await fetchData();
+
+    if (axios.isAxiosError(response)) {
+      const error = response as AxiosError;
+      const statusCode = error?.response?.status;
+
+      switch (statusCode) {
+        default:
+          handleResponseError(error);
+          break;
+      }
+
+      return false;
+    }
+
+    return true;
+  } catch (e) {
+    console.warn(e);
+  } finally {
+    dispatch(pollsActions.setIsLoading(false));
+  }
+  return false;
+};
+
 export const createQuestion = (pollId: string, body: NewQuestion) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(pollsActions.setIsLoading(true));

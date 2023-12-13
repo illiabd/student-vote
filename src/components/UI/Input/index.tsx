@@ -1,4 +1,5 @@
-import { InputAdornment } from '@mui/material';
+import styled from '@emotion/styled';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { FC } from 'react';
 
@@ -18,10 +19,16 @@ export const Input: FC<InputProps> = ({
   onChange,
   ...props
 }) => {
+  const TextFieldStyled = styled(TextField)(() => ({
+    '& .MuiFilledInput-input': {
+      backgroundColor: 'white',
+    },
+  }));
+
   const hasErrors = !!errors && errors.length > 0 && touched;
 
   return (
-    <TextField
+    <TextFieldStyled
       id={id}
       label={label}
       error={hasErrors}
@@ -38,7 +45,7 @@ export const Input: FC<InputProps> = ({
           </InputAdornment>
         ),
         endAdornment: (
-          <InputAdornment position="start">
+          <InputAdornment position="end">
             <div className={styles.icon}>{endIcon}</div>
           </InputAdornment>
         ),
