@@ -6,6 +6,12 @@ import { FC } from 'react';
 import styles from './Input.module.scss';
 import { InputProps } from './types';
 
+const TextFieldStyled = styled(TextField)(() => ({
+  '& .MuiOutlinedInput-root': {
+    backgroundColor: 'white',
+  },
+}));
+
 export const Input: FC<InputProps> = ({
   startIcon,
   endIcon,
@@ -19,12 +25,6 @@ export const Input: FC<InputProps> = ({
   onChange,
   ...props
 }) => {
-  const TextFieldStyled = styled(TextField)(() => ({
-    '& .MuiFilledInput-input': {
-      backgroundColor: 'white',
-    },
-  }));
-
   const hasErrors = !!errors && errors.length > 0 && touched;
 
   return (
