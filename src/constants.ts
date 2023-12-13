@@ -95,9 +95,10 @@ export const EVENT_INTERVAL_MIN_VALUE = 'Недопустиме значення
 export const EVENT_COUNT_MIN_VALUE = 'Недопустиме значення';
 
 /* Poll validation */
-
+export const POLL_NAME_NOT_PROVIDED = 'Введіть назву питання';
 export const QUESTION_NAME_NOT_PROVIDED = 'Введіть питання';
-export const OPTION_NAME_NOT_PROVIDED = 'Введіть питання';
+export const QUESTION_NAME_MIN_LENGTH = 'Закоротке питання, мінімум 5 символів';
+export const OPTION_NAME_NOT_PROVIDED = 'Введіть відповідь';
 
 /* Phone input */
 export const PHONE_NUMBER_MASK = '00-000-00-00';

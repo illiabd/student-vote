@@ -1,11 +1,10 @@
 import { NewQuestion } from '../../../store/polls/types';
-import { CreateQuestion } from '../PollForm/type';
 
 export type PollQuestionCardProps = {
   questionId: string;
+  pollId?: string;
   defaultQuestion?: NewQuestion;
-  onChange: (id: string, value: CreateQuestion) => void;
-  onDelete: (id: string) => void;
+  fetchPollData: () => Promise<void>;
 };
 
 export type QuestionFormValues = {
