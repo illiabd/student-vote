@@ -8,6 +8,24 @@
   width: 100%;
 }
 
+@media (max-width: 320px) {
+}
+@media (max-width: 481px) {
+}
+@media (max-width: 641px) {
+}
+@media (max-width: 961px) {
+}
+@media (max-width: 1025px) {
+  .container {
+    margin-top: 0 !important;
+    padding-top: 12px;
+  }
+}
+@media (max-width: 1281px) {
+  /* hi-res laptops and desktops */
+}
+
 .name-card {
   display: flex;
   flex-direction: column;
@@ -22,7 +40,7 @@
 @media (max-width: 481px) {
 }
 @media (max-width: 641px) {
-  .name {
+  .name-card {
     min-width: unset;
   }
 }

@@ -15,31 +15,9 @@
 }
 
 .card {
-  padding: 24px 12px;
-  max-width: 95%;
-  box-sizing: border-box;
+  padding: 22px;
+  overflow: hidden;
   @include no-select;
-}
-
-@media (max-width: 320px) {
-}
-@media (max-width: 481px) {
-  .card {
-    padding: 12px !important;
-  }
-}
-@media (max-width: 641px) {
-  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-}
-@media (max-width: 961px) {
-}
-@media (max-width: 1025px) {
-  .card {
-    padding: 18px;
-  }
-}
-@media (max-width: 1281px) {
-  /* hi-res laptops and desktops */
 }
 
 .header {

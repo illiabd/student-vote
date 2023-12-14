@@ -60,6 +60,11 @@ export const Dropdown: FC<DropdownProps> = ({
         color: '#05568c !important',
       },
     }),
+
+    menu: (provided) => ({
+      ...provided,
+      zIndex: '5',
+    }),
   };
 
   const handleChange = (newValue: unknown) => {
