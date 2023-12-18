@@ -54,3 +54,15 @@
     box-sizing: border-box;
   }
 }
+
+.navigation-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 59px;
+}
+
+@media (max-width: 481px) {
+  .navigation-container {
+    flex-direction: column;
+  }
+}

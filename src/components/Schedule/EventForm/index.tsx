@@ -1,3 +1,5 @@
+import { FormControl, FormHelperText, InputLabel, MenuItem, OutlinedInput } from '@mui/material';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import dayjs from 'dayjs';
 import { FormikProps, useFormik } from 'formik';
 import { ChangeEvent, FC, useCallback, useEffect, useMemo, useState } from 'react';
@@ -164,13 +166,14 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     );
   };
 
-  const handleFrequencyDropdownChange = (option: Option | Option[]) => {
-    const isOptionArray = Array.isArray(option);
+  const handleFrequencyDropdownChange = (event: SelectChangeEvent) => {
+    const { value } = event.target;
+    const isOptionArray = Array.isArray(value);
     if (isOptionArray) {
       return;
     }
 
-    formik.setFieldValue('frequency', option.value);
+    formik.setFieldValue('frequency', value ?? '');
   };
 
   const handleDivisionDropdownInputChange = (value: string) => {
@@ -183,7 +186,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
 
   const handleKindDropdownChange = (value: Option | Option[]) => {
     const option = value as Option;
-    formik.setFieldValue('kind', option.value);
+    formik.setFieldValue('kind', option?.value ?? '');
   };
 
   const handleStartTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -233,15 +236,13 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     return options;
   }, [defaultSelectedDivisions, divisionsOptions]);
 
-  const kindOptions: Option[] = useMemo(
-    () => [
-      { label: EventKindNames.exam, value: EventKind.exam },
-      { label: EventKindNames.lecture, value: EventKind.lecture },
-      { label: EventKindNames.practice, value: EventKind.practice },
-      { label: EventKindNames.lab, value: EventKind.lab },
-    ],
-    [],
-  );
+  const kindOptions: Option[] = [
+    { label: EventKindNames.exam, value: EventKind.exam },
+    { label: EventKindNames.lecture, value: EventKind.lecture },
+    { label: EventKindNames.practice, value: EventKind.practice },
+    { label: EventKindNames.lab, value: EventKind.lab },
+  ];
+
   const defaultKindOption = kindOptions.find((option) => {
     if (!defaultValues) {
       return;
@@ -249,12 +250,13 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
     return option.value === defaultValues.kind;
   });
 
-  const frequencyOption = [
-    { label: EventFrequencyLabels.DAILY, value: Frequency.DAILY.toString() },
-    { label: EventFrequencyLabels.WEEKLY, value: Frequency.WEEKLY.toString() },
-  ];
-
   const submitButtonText = defaultValues ? 'Зберегти' : 'Створити';
+
+  const isFrequencyInvalid =
+    (!!formik.errors.frequency &&
+      formik.errors.frequency?.length > 0 &&
+      formik.touched.frequency) ??
+    false;
 
   return (
     <div className={styles.container}>
@@ -295,6 +297,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.title}
             onChange={formik.handleChange}
             errors={formik.errors.title}
+            fullWidth
           />
 
           <Input
@@ -306,6 +309,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.mainLecturerFullName}
             onChange={formik.handleChange}
             errors={formik.errors.mainLecturerFullName}
+            fullWidth
           />
         </div>
 
@@ -319,6 +323,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.classroomName}
             onChange={formik.handleChange}
             errors={formik.errors.classroomName}
+            fullWidth
           />
 
           <Input
@@ -330,6 +335,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.link}
             onChange={formik.handleChange}
             errors={formik.errors.link}
+            fullWidth
           />
         </div>
 
@@ -343,6 +349,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.date}
             onChange={formik.handleChange}
             errors={formik.errors.date}
+            fullWidth
           />
 
           <Input
@@ -354,6 +361,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.start}
             onChange={handleStartTimeChange}
             errors={formik.errors.start}
+            fullWidth
           />
 
           <Input
@@ -365,6 +373,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.end}
             onChange={formik.handleChange}
             errors={formik.errors.end}
+            fullWidth
           />
         </div>
 
@@ -378,21 +387,23 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.interval}
             onChange={formik.handleChange}
             errors={formik.errors.interval}
+            fullWidth
           />
 
-          <Dropdown
-            id="frequency"
-            label="Частота"
-            placeholder=""
-            options={frequencyOption}
-            defaultValue={frequencyOption.find((item) => {
-              const defaultFrequency = defaultValues?.repeatGroup?.rrule?.freq.toString();
-              return item?.value.toString() === defaultFrequency;
-            })}
-            onChange={handleFrequencyDropdownChange}
-            touched
-            errors={formik.errors.frequency}
-          />
+          <FormControl fullWidth>
+            <InputLabel id="frequency-label">Частота</InputLabel>
+            <Select
+              id="frequency"
+              labelId="frequency-label"
+              onChange={handleFrequencyDropdownChange}
+              input={<OutlinedInput label="Частота" />}
+              error={isFrequencyInvalid}
+            >
+              <MenuItem value={Frequency.DAILY.toString()}>{EventFrequencyLabels.DAILY}</MenuItem>
+              <MenuItem value={Frequency.WEEKLY.toString()}>{EventFrequencyLabels.WEEKLY}</MenuItem>
+            </Select>
+            <FormHelperText error={isFrequencyInvalid}>{formik.errors.frequency}</FormHelperText>
+          </FormControl>
 
           <Input
             id="count"
@@ -403,6 +414,7 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
             touched={formik.touched.count}
             onChange={formik.handleChange}
             errors={formik.errors.count}
+            fullWidth
           />
         </div>
 

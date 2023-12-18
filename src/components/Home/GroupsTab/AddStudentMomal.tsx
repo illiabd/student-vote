@@ -25,7 +25,7 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
       return;
     }
 
-    setSelectedStudentId(option?.value);
+    setSelectedStudentId(option?.value ?? '');
   };
 
   const options = studentsData?.docs.reduce<Option[]>((result, student) => {

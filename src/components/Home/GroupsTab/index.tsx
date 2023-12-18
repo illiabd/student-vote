@@ -86,7 +86,6 @@ export const GroupTab: FC<GroupsTabProps> = ({ selectedOrganisationId, hasOrgani
           endIcon={<Search24Regular />}
           onChange={handleSearchInputChange}
           placeholder="Введіть назву групи "
-          noLabel
         />
 
         <Button endIcon={<Add24Regular />} size="md" onClick={handleCreateGroupButtonClick}>

@@ -11,6 +11,7 @@ import styles from './VerificationForm.module.scss';
 export const VerificationForm: FC<VerificationFormProps> = ({
   className,
   onSubmit,
+  onBackButtonClick,
   onResendCode,
 }) => {
   const isLoading = useAppSelector((state) => state.auth.isLoading);
@@ -78,15 +79,15 @@ export const VerificationForm: FC<VerificationFormProps> = ({
           {`Я не отримав код ${isTimerCountdown ? timer : ''}`}
         </Button>
 
-        <Button
-          type="submit"
-          size="lg"
-          variant="contained"
-          loading={isLoading}
-          className={styles.button}
-        >
-          <h3>Продовжити</h3>
-        </Button>
+        <div className={styles['navigation-container']}>
+          <Button size="md" variant="outlined" onClick={onBackButtonClick}>
+            Повернутися
+          </Button>
+
+          <Button type="submit" size="md" variant="contained" loading={isLoading}>
+            Продовжити
+          </Button>
+        </div>
       </div>
     </form>
   );

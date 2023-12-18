@@ -1,4 +1,4 @@
-import { NewPoll, NewQuestion, Poll } from '../../../store/polls/types';
+import { NewQuestion, Poll } from '../../../store/polls/types';
 
 export type CreateQuestion = NewQuestion & {
   questionId: string;
@@ -9,6 +9,6 @@ export type FormValues = {
 };
 
 export type PollFormProps = {
-  defaultValues?: Poll;
-  onSubmit: (poll: NewPoll) => void;
+  pollData: Poll;
+  fetchPollData: () => Promise<void>;
 };

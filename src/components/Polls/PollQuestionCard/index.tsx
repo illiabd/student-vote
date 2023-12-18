@@ -5,32 +5,57 @@ import {
   RadioButton24Regular,
 } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 
+import { useAppDispatch } from '../../../hooks';
 import { pollOptionSchema, pollQuestionSchema } from '../../../schemas';
+import { deleteQuestion, putQuestion } from '../../../store/polls/actions';
 import { Card, IconButton, Input } from '../../UI';
 import styles from './PollQuestionCard.module.scss';
 import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './type';
 
 export const PollQuestionCard: FC<PollQuestionCardProps> = ({
-  questionId,
   defaultQuestion,
-  onChange,
-  onDelete,
+  questionId,
+  pollId,
+  fetchPollData,
 }) => {
   const defaultOptions = defaultQuestion?.options.map((option) => option.name);
   const [options, setOptions] = useState<string[]>(defaultOptions ?? []);
 
+  const dispatch = useAppDispatch();
+
   const questionFormik = useFormik<QuestionFormValues>({
     initialValues: { questionName: defaultQuestion?.name ?? '' },
     validationSchema: pollQuestionSchema,
-    onSubmit: () => {},
+    onSubmit: async (values) => {
+      const isQuestionNameNotChanged = values.questionName === defaultQuestion?.name;
+      if (isQuestionNameNotChanged) {
+        return;
+      }
+
+      if (!pollId) {
+        return;
+      }
+
+      const optionsBody = options.map((value) => ({
+        name: value,
+      }));
+
+      const body = {
+        name: values.questionName,
+        options: optionsBody,
+      };
+
+      await dispatch(putQuestion(pollId, questionId, body));
+      await fetchPollData();
+    },
   });
 
   const optionFormik = useFormik<OptionFormValues>({
     initialValues: { optionName: '' },
     validationSchema: pollOptionSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       setOptions((prev) => {
         return [...prev, values.optionName];
       });
@@ -39,34 +64,39 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
     },
   });
 
-  useEffect(() => {
-    const question = {
-      questionId,
-      name: questionFormik.values.questionName,
-      options: options.map((optionName) => ({
-        name: optionName,
-      })),
+  const updateQuestion = useCallback(async () => {
+    if (!pollId) {
+      return;
+    }
+
+    const optionsBody = options.map((value) => ({
+      name: value,
+    }));
+
+    const body = {
+      name: defaultQuestion?.name ?? '',
+      options: optionsBody,
     };
 
-    onChange(questionId, question);
+    await dispatch(putQuestion(pollId, questionId, body));
+    await fetchPollData();
   }, [options]);
 
-  const handleNameInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const name = event.target.value;
-    questionFormik.setFieldValue('questionName', name);
+  useEffect(() => {
+    updateQuestion();
+  }, [options, updateQuestion]);
 
-    const question = {
-      questionId,
-      name,
-      options: options.map((optionName) => ({
-        name: optionName,
-      })),
-    };
-    onChange(questionId, question);
+  const handleNameInputBlur = () => {
+    questionFormik.submitForm();
   };
 
-  const handleDeleteButtonClick = () => {
-    onDelete(questionId);
+  const handleDeleteButtonClick = async () => {
+    if (!pollId) {
+      return;
+    }
+
+    await dispatch(deleteQuestion(pollId, questionId));
+    await fetchPollData();
   };
 
   const optionsElement = options.map((value, index) => {
@@ -78,14 +108,16 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       });
     };
 
+    const hasLastOption = options.length === 1;
+
     return (
       <div key={index} className={styles.option}>
         <div className={styles['option-content']}>
           <RadioButton24Regular color="#1784cc" />
           {value}
         </div>
-        <IconButton onClick={handleDeleteOptionButton}>
-          <Dismiss24Regular />
+        <IconButton onClick={handleDeleteOptionButton} disabled={hasLastOption}>
+          <Dismiss24Regular color={hasLastOption ? '#e1e1e1' : ''} />
         </IconButton>
       </div>
     );
@@ -94,41 +126,31 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   const hasOptions = optionsElement.length > 0;
   return (
     <Card className={styles.card}>
-      <div className={styles.name}>
-        <Input
-          id="questionName"
-          type="text"
-          noLabel
-          value={questionFormik.values.questionName}
-          errors={questionFormik.errors.questionName}
-          touched={questionFormik.touched.questionName}
-          onChange={handleNameInputChange}
-          placeholder="Ваше питання"
-          onKeyDown={(e) => {
-            e.key === 'Enter' && e.preventDefault();
-          }}
-        />
-      </div>
+      <Input
+        id="questionName"
+        type="text"
+        value={questionFormik.values.questionName}
+        errors={questionFormik.errors.questionName}
+        touched={questionFormik.touched.questionName}
+        onChange={questionFormik.handleChange}
+        onBlur={handleNameInputBlur}
+        label="Ваше питання"
+      />
 
       {hasOptions && <div className={styles.options}>{optionsElement}</div>}
 
       <div className={styles['add-section']}>
-        <form style={{ width: '100%' }}>
-          <Input
-            id="optionName"
-            type="text"
-            noLabel
-            disabled={questionFormik.values.questionName.trim().length === 0}
-            value={optionFormik.values.optionName}
-            errors={optionFormik.errors.optionName}
-            touched={optionFormik.touched.optionName}
-            onChange={optionFormik.handleChange}
-            placeholder="Додати варіант"
-            onKeyDown={(e) => {
-              e.key === 'Enter' && e.preventDefault();
-            }}
-          />
-        </form>
+        <Input
+          id="optionName"
+          type="text"
+          disabled={questionFormik.values.questionName.trim().length === 0}
+          value={optionFormik.values.optionName}
+          errors={optionFormik.errors.optionName}
+          touched={optionFormik.touched.optionName}
+          onChange={optionFormik.handleChange}
+          fullWidth
+          label="Додати варіант"
+        />
 
         <IconButton>
           <Add24Regular onClick={optionFormik.submitForm} />

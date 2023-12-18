@@ -148,21 +148,24 @@ export const SideBar: FC<SideBarProps> = ({
       ) : undefined}
       {organisationInfo}
 
-      <div className={styles.navigation}>
-        <Button
-          variant="text"
-          size="md"
-          startIcon={<Home24Regular />}
-          onClick={handleHomeButtonClick}
-        >
-          Додому
+      <div className={styles['navigation-container']}>
+        <div className={styles.navigation}>
+          <Button
+            variant="text"
+            size="md"
+            startIcon={<Home24Regular />}
+            onClick={handleHomeButtonClick}
+          >
+            Додому
+          </Button>
+          {links?.sort()}
+          {isSuperadmin && createNewOrganisationButton}
+        </div>
+
+        <Button size="sm" onClick={handleLogoutButtonClick}>
+          Вийти
         </Button>
-        {links?.sort()}
-        {isSuperadmin && createNewOrganisationButton}
       </div>
-      <Button size="sm" onClick={handleLogoutButtonClick}>
-        Вийти
-      </Button>
     </div>
   );
 };

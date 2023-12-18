@@ -1,6 +1,21 @@
 .form {
   width: 100%;
   margin-top: 124px;
+
+  button[type="submit"] {
+    margin-top: 88px;
+    margin-bottom: 88px;
+  }
+}
+
+@media (max-width: 768px) {
+  .form {
+    button[type="submit"] {
+      box-sizing: border-box;
+      margin-top: 59px;
+      margin-bottom: 0;
+    }
+  }
 }
 
 @media (max-width: 768px) {

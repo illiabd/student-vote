@@ -64,6 +64,7 @@
 }
 @media (max-width: 1025px) {
   .info-container {
+    margin-top: 0;
     padding: 12px;
     gap: 12px;
   }
@@ -134,4 +135,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.polls-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 22px;
+  overflow-y: auto;
+  margin-bottom: 23px;
 }

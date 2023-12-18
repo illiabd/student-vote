@@ -1,108 +1,65 @@
-import { Add24Regular, ArrowLeft24Regular, Checkmark24Regular } from '@fluentui/react-icons';
+import { Add24Regular, ArrowLeft24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 
-import { useAppSelector } from '../../../hooks';
-import { NewOption } from '../../../store/polls/types';
-import { Button, IconButton, Input } from '../../UI';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { pollNameSchema } from '../../../schemas';
+import { createQuestion, updatePollName } from '../../../store/polls/actions';
+import { Button, Card, IconButton, Input } from '../../UI';
 import { PollQuestionCard } from '../PollQuestionCard';
 import styles from './PollForm.module.scss';
-import { CreateQuestion, FormValues, PollFormProps } from './type';
+import { FormValues, PollFormProps } from './type';
 
-export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
-  const defaultQuestions =
-    defaultValues &&
-    defaultValues.questions.map((question) => {
-      const options = question.options.map<NewOption>((option) => ({ name: option.name }));
-      const newId = uuidv4();
-      return { key: newId, value: { questionId: newId, name: question.name, options } };
-    });
-
-  const [pollQuestionMap, setPollQuestionMap] = useState<Map<string, CreateQuestion>>(
-    defaultQuestions ? new Map(defaultQuestions.map((item) => [item.key, item.value])) : new Map(),
-  );
+export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
-
+  const { isLoading } = useAppSelector((state) => state.polls);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const formik = useFormik<FormValues>({
-    initialValues: { name: defaultValues?.name ?? '' },
-    validationSchema: '',
+    initialValues: { name: pollData?.name ?? '' },
+    validationSchema: pollNameSchema,
     onSubmit: (values) => {
       if (!selectedOrganisationId) {
         return;
       }
 
-      const questionsMapValues = Array.from(pollQuestionMap.values());
-
-      const questions = questionsMapValues.map((value) => {
-        return {
-          name: value.name,
-          options: value.options,
-        };
-      });
-
-      const body = {
-        name: values.name,
-        organisationId: selectedOrganisationId,
-        questions,
-      };
-
-      onSubmit(body);
+      dispatch(updatePollName(pollData.id, values.name));
     },
   });
+
+  const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
+    formik.handleChange(e);
+    formik.submitForm();
+  };
 
   const handleBackButtonClick = () => {
     navigate('/polls');
   };
 
-  const handleAddQuestionButtonClick = () => {
-    setPollQuestionMap((prev) => {
-      const prevCopy = new Map(prev);
-      const newId = uuidv4();
-      const initialQuestion = {
-        questionId: newId,
-        name: '',
-        options: [] as NewOption[],
-      };
-
-      prevCopy.set(newId, initialQuestion);
-
-      return prevCopy;
-    });
-  };
-
-  const handleCreatePollButtonCLick = () => {
-    formik.submitForm();
-  };
-
-  const questionsMapValues = Array.from(pollQuestionMap.values());
-  const questionsComponents = questionsMapValues.map((question) => {
-    const handleChange = (id: string, value: CreateQuestion) => {
-      setPollQuestionMap((prev) => {
-        const prevCopy = new Map(prev);
-        prevCopy.set(id, value);
-        return prevCopy;
-      });
+  const handleAddQuestionButtonClick = async () => {
+    const initialQuestion = {
+      name: 'Нове питання',
+      options: [
+        {
+          name: 'Нова відповідь',
+        },
+      ],
     };
 
-    const handleDelete = (id: string) => {
-      setPollQuestionMap((prev) => {
-        const prevCopy = new Map(prev);
-        prevCopy.delete(id);
-        return prevCopy;
-      });
-    };
+    await dispatch(createQuestion(pollData.id, initialQuestion));
+    await fetchPollData();
+  };
 
+  const questionsComponents = pollData.questions.map((question) => {
     return (
       <PollQuestionCard
-        key={question.questionId}
-        questionId={question.questionId}
+        key={question.id}
+        pollId={pollData.id}
+        questionId={question.id}
         defaultQuestion={question}
-        onChange={handleChange}
-        onDelete={handleDelete}
+        fetchPollData={fetchPollData}
       />
     );
   });
@@ -113,35 +70,28 @@ export const PollForm: FC<PollFormProps> = ({ defaultValues, onSubmit }) => {
         <ArrowLeft24Regular />
       </IconButton>
 
-      <div className={styles.name}>
-        <Input
-          id="name"
-          type="text"
-          noLabel
-          value={formik.values.name}
-          errors={formik.errors.name}
-          touched={formik.touched.name}
-          onChange={formik.handleChange}
-          placeholder="Назва голосування"
-          onKeyDown={(e) => {
-            e.key === 'Enter' && e.preventDefault();
-          }}
-        />
-      </div>
-
       <div className={styles.questions}>
+        <Card className={styles['name-card']}>
+          <Input
+            id="name"
+            type="text"
+            value={formik.values.name}
+            errors={formik.errors.name}
+            touched={formik.touched.name}
+            onChange={formik.handleChange}
+            onBlur={handleBlur}
+            label="Назва голосування"
+          />
+        </Card>
         {questionsComponents.length > 0 && questionsComponents}
         <div className={styles.buttons}>
           <Button
             variant="outlined"
             endIcon={<Add24Regular />}
             onClick={handleAddQuestionButtonClick}
+            loading={isLoading}
           >
             Додати питання
-          </Button>
-
-          <Button onClick={handleCreatePollButtonCLick} endIcon={<Checkmark24Regular />}>
-            {defaultValues ? 'Зберегти' : 'Опублікувати'}
           </Button>
         </div>
       </div>

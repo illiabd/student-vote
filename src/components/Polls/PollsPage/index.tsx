@@ -1,11 +1,13 @@
 import { Add24Regular, ArrowSort24Regular, ErrorCircle20Regular } from '@fluentui/react-icons';
 import clsx from 'clsx';
 import { FC, useEffect } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
 
 import { AllowedFeatures } from '../../../constants';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { findPolls } from '../../../store/polls/actions';
+import { useAppDispatch, useAppSelector, useWindowWidth } from '../../../hooks';
+import { createPoll, findPolls, loadPolls } from '../../../store/polls/actions';
+import { CreatePollRequest } from '../../../store/polls/types';
 import { Button, Card, IconButton, MessageBox } from '../../UI';
 import { PollCard } from '../PollCard';
 import styles from './PollsPage.module.scss';
@@ -14,9 +16,11 @@ export const PollsPage: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const { pollsData, isNextPageLoading, isLoading } = useAppSelector((state) => state.polls);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const { organisationsData } = useAppSelector((state) => state.organisations);
-  const { pollsData } = useAppSelector((state) => state.polls);
+
+  const width = useWindowWidth();
 
   useEffect(() => {
     const hasOrganisations = organisationsData && organisationsData?.docs?.length > 0;
@@ -25,8 +29,42 @@ export const PollsPage: FC = () => {
     }
   }, [dispatch, organisationsData, selectedOrganisationId]);
 
-  const handleCreatePollButtonClick = () => {
-    navigate('/polls/create');
+  const handleCreatePollButtonClick = async () => {
+    if (!selectedOrganisationId) {
+      return;
+    }
+
+    const newPollData: CreatePollRequest = {
+      name: 'Нове голосування',
+      questions: [
+        {
+          name: 'Питання 1',
+          options: [
+            {
+              name: 'Відповідь 1',
+            },
+          ],
+        },
+      ],
+      organisationId: selectedOrganisationId,
+    };
+
+    const response = await dispatch(createPoll(newPollData));
+    if (!response) {
+      return;
+    }
+
+    navigate(`/polls/${response.id}`);
+  };
+
+  const handleInfiniteScrollLoader = () => {
+    if (!selectedOrganisationId) {
+      return;
+    }
+
+    if (!isNextPageLoading) {
+      dispatch(loadPolls(selectedOrganisationId));
+    }
   };
 
   const selectedOrganisation = organisationsData?.docs?.find(
@@ -67,7 +105,11 @@ export const PollsPage: FC = () => {
           <div className={styles['badge-container']}>{statusBadge}</div>
         )}
         <div className={styles['buttons-container']}>
-          <Button onClick={handleCreatePollButtonClick} endIcon={<Add24Regular />}>
+          <Button
+            loading={isLoading}
+            onClick={handleCreatePollButtonClick}
+            endIcon={<Add24Regular />}
+          >
             Нове голосування
           </Button>
           <div>
@@ -77,11 +119,27 @@ export const PollsPage: FC = () => {
           </div>
         </div>
       </Card>
-      {pollsData ? pollsData.docs.map((data) => <PollCard key={data.id} data={data} />) : undefined}
+      {pollsData ? (
+        <InfiniteScroll
+          dataLength={pollsData?.docs?.length ?? 0}
+          next={handleInfiniteScrollLoader}
+          hasMore={pollsData.hasNextPage}
+          loader={<>Loading...</>}
+          scrollableTarget="scrollableDiv"
+        >
+          <div className={styles['polls-container']}>
+            {pollsData.docs.map((data) => (
+              <PollCard key={data.id} data={data} />
+            ))}
+          </div>
+        </InfiniteScroll>
+      ) : undefined}
     </>
   );
 
   return (
-    <div className={styles.container}>{isPollsAllowed ? content : pollsNotAllowedContent}</div>
+    <div className={styles.container} id={width >= 1025 ? 'scrollableDiv' : ''}>
+      {isPollsAllowed ? content : pollsNotAllowedContent}
+    </div>
   );
 };

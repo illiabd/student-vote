@@ -9,14 +9,14 @@ import { AuthPage } from './components/Auth';
 import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
-import { CreatePollPage, PollsPage } from './components/Polls/';
+import { PollsPage } from './components/Polls/';
 import { EditPollPage } from './components/Polls/EditPollPage';
 import { SchedulePage } from './components/Schedule';
 import { Button, LoadingAnimation, MessageBox } from './components/UI';
 import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
 import { VacancyEditPage } from './components/Vacancies/VacancyEditPage';
 import { SELECTED_ORGANISATION_ID } from './constants';
-import { useAppDispatch, useAppSelector, useOrganisations, useUser } from './hooks';
+import { useAppDispatch, useAppSelector, useOrganisations, useUser, useWindowWidth } from './hooks';
 import { currentActions } from './store/current/slice';
 
 const Home: FC = () => {
@@ -28,6 +28,8 @@ const Home: FC = () => {
   const lottieRef = useRef<LottieRefCurrentProps>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const width = useWindowWidth();
 
   const handleDropdownChange = (option: string) => {
     dispatch(currentActions.setSelectedOrganisationId(option));
@@ -78,7 +80,7 @@ const Home: FC = () => {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} id={width < 1025 ? 'scrollableDiv' : ''}>
       <SideBar
         selectedOrganisationId={selectedOrganisationId}
         organisations={organisationsData?.docs ?? []}
@@ -92,8 +94,7 @@ const Home: FC = () => {
           <Route path="/vacancies/*" Component={VacanciesPage} />
           <Route path="/timetable" Component={SchedulePage} />
           <Route path="/polls/*" Component={PollsPage} />
-          <Route path="/polls/create" Component={CreatePollPage} />
-          <Route path="/polls/edit/:pollId" Component={EditPollPage} />
+          <Route path="/polls/:pollId" Component={EditPollPage} />
         </Routes>
       </div>
     </div>

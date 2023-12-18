@@ -12,8 +12,8 @@ export type PollQuestion = {
 
 export enum PollStatus {
   created = 'created',
-  active = 'active',
-  finished = 'finished',
+  open = 'open',
+  closed = 'closed',
 }
 
 export type Poll = {
@@ -21,6 +21,8 @@ export type Poll = {
   name: string;
   userIds: string[];
   status: PollStatus;
+  closedAt: string;
+  openedAt: string;
   organisationId: string;
   questions: PollQuestion[];
 };
@@ -46,6 +48,8 @@ export type CreatePollRequest = {
   organisationId: string;
 };
 
+export type CreatePollResponse = Poll;
+
 export type PollData = {
   docs: Poll[];
   totalDocs: number;
@@ -63,12 +67,5 @@ export type PollData = {
 export type State = {
   pollsData: PollData | undefined;
   isLoading: boolean;
-};
-
-export type EditPollRequest = {
-  id: string;
-  name: string;
-  status: PollStatus;
-  organisationId: string;
-  questions: NewQuestion[];
+  isNextPageLoading: boolean;
 };
