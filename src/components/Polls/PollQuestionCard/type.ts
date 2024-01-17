@@ -3,6 +3,7 @@ import { NewQuestion } from '../../../store/polls/types';
 export type PollQuestionCardProps = {
   questionId: string;
   pollId?: string;
+  disabled?: boolean;
   defaultQuestion?: NewQuestion;
   fetchPollData: () => Promise<void>;
 };

@@ -1,33 +1,66 @@
 import { Add24Regular, ArrowLeft24Regular } from '@fluentui/react-icons';
 import { useFormik } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import api from '../../../axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
-import { createQuestion, updatePollName } from '../../../store/polls/actions';
-import { Button, Card, IconButton, Input } from '../../UI';
+import { createQuestion, updatePollData } from '../../../store/polls/actions';
+import { Button, Card, Dropdown, IconButton, Input } from '../../UI';
+import { Option } from '../../UI/Dropdown/types';
 import { PollQuestionCard } from '../PollQuestionCard';
 import styles from './PollForm.module.scss';
 import { FormValues, PollFormProps } from './type';
 
+type University = {
+  data: {
+    university: {
+      id: string;
+      name: string;
+      shortName: string;
+      roles: [];
+      faculties: string[];
+      kind: string;
+    };
+  };
+};
+
 export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
+  const [faculties, setFaculties] = useState<string[]>([]);
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
   const { isLoading } = useAppSelector((state) => state.polls);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const isPollStarted = pollData.status !== 'created';
+
   const formik = useFormik<FormValues>({
-    initialValues: { name: pollData?.name ?? '' },
+    initialValues: { name: pollData?.name ?? '', facultyName: pollData?.facultyName },
     validationSchema: pollNameSchema,
     onSubmit: (values) => {
       if (!selectedOrganisationId) {
         return;
       }
-
-      dispatch(updatePollName(pollData.id, values.name));
+      dispatch(updatePollData(pollData.id, values.name, values.facultyName));
     },
   });
+
+  const getFaculties = useCallback(async () => {
+    const response = await api.get<University>(`/university/v1/${selectedOrganisationId}`);
+    setFaculties(response?.data?.data?.university?.faculties ?? []);
+  }, [selectedOrganisationId]);
+
+  useEffect(() => {
+    getFaculties();
+  }, [getFaculties]);
+
+  const handleFacultyDropdownChange = async (value: Option | Option[]) => {
+    const option = value as Option;
+    const isFacultySelected = option?.value.length > 0;
+    await formik.setFieldValue('facultyName', isFacultySelected ? option.value : undefined);
+    await formik.submitForm();
+  };
 
   const handleBlur = (e: React.ChangeEvent<HTMLInputElement>) => {
     formik.handleChange(e);
@@ -52,6 +85,11 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
     await fetchPollData();
   };
 
+  const facultiesOptions = faculties?.map<Option>((faculty) => ({
+    label: faculty,
+    value: faculty,
+  }));
+
   const questionsComponents = pollData.questions.map((question) => {
     return (
       <PollQuestionCard
@@ -60,6 +98,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
         questionId={question.id}
         defaultQuestion={question}
         fetchPollData={fetchPollData}
+        disabled={isPollStarted}
       />
     );
   });
@@ -75,21 +114,37 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
           <Input
             id="name"
             type="text"
+            label="Назва голосування"
             value={formik.values.name}
             errors={formik.errors.name}
             touched={formik.touched.name}
+            disabled={isPollStarted}
             onChange={formik.handleChange}
             onBlur={handleBlur}
-            label="Назва голосування"
+          />
+
+          <Dropdown
+            id="facultyName"
+            label="Факультет (опціонально)"
+            placeholder=""
+            defaultValue={{ value: pollData.facultyName, label: pollData.facultyName } as Option}
+            options={facultiesOptions}
+            onChange={handleFacultyDropdownChange}
+            disabled={isPollStarted}
+            touched
+            errors={formik.errors.facultyName}
           />
         </Card>
+
         {questionsComponents.length > 0 && questionsComponents}
+
         <div className={styles.buttons}>
           <Button
             variant="outlined"
             endIcon={<Add24Regular />}
             onClick={handleAddQuestionButtonClick}
             loading={isLoading}
+            disabled={isPollStarted}
           >
             Додати питання
           </Button>
