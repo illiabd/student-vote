@@ -19,6 +19,7 @@ export enum PollStatus {
 export type Poll = {
   id: string;
   name: string;
+  facultyName?: string;
   userIds: string[];
   status: PollStatus;
   closedAt: string;
