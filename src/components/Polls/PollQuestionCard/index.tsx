@@ -17,6 +17,7 @@ import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './t
 export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   defaultQuestion,
   questionId,
+  disabled = false,
   pollId,
   fetchPollData,
 }) => {
@@ -116,7 +117,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
           <RadioButton24Regular color="#1784cc" />
           {value}
         </div>
-        <IconButton onClick={handleDeleteOptionButton} disabled={hasLastOption}>
+        <IconButton onClick={handleDeleteOptionButton} disabled={hasLastOption || disabled}>
           <Dismiss24Regular color={hasLastOption ? '#e1e1e1' : ''} />
         </IconButton>
       </div>
@@ -135,6 +136,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         onChange={questionFormik.handleChange}
         onBlur={handleNameInputBlur}
         label="Ваше питання"
+        disabled={disabled}
       />
 
       {hasOptions && <div className={styles.options}>{optionsElement}</div>}
@@ -143,7 +145,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         <Input
           id="optionName"
           type="text"
-          disabled={questionFormik.values.questionName.trim().length === 0}
+          disabled={questionFormik.values.questionName.trim().length === 0 || disabled}
           value={optionFormik.values.optionName}
           errors={optionFormik.errors.optionName}
           touched={optionFormik.touched.optionName}
@@ -152,13 +154,13 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
           label="Додати варіант"
         />
 
-        <IconButton>
+        <IconButton disabled={disabled}>
           <Add24Regular onClick={optionFormik.submitForm} />
         </IconButton>
       </div>
 
       <div style={{ margin: '0 auto' }}>
-        <IconButton onClick={handleDeleteButtonClick}>
+        <IconButton onClick={handleDeleteButtonClick} disabled={disabled}>
           <Delete24Regular />
         </IconButton>
       </div>

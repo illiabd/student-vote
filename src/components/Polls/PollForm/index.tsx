@@ -33,6 +33,8 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const isPollStarted = pollData.status !== 'created';
+
   const formik = useFormik<FormValues>({
     initialValues: { name: pollData?.name ?? '', facultyName: pollData?.facultyName },
     validationSchema: pollNameSchema,
@@ -96,6 +98,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
         questionId={question.id}
         defaultQuestion={question}
         fetchPollData={fetchPollData}
+        disabled={isPollStarted}
       />
     );
   });
@@ -111,12 +114,13 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
           <Input
             id="name"
             type="text"
+            label="Назва голосування"
             value={formik.values.name}
             errors={formik.errors.name}
             touched={formik.touched.name}
+            disabled={isPollStarted}
             onChange={formik.handleChange}
             onBlur={handleBlur}
-            label="Назва голосування"
           />
 
           <Dropdown
@@ -126,6 +130,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
             defaultValue={{ value: pollData.facultyName, label: pollData.facultyName } as Option}
             options={facultiesOptions}
             onChange={handleFacultyDropdownChange}
+            disabled={isPollStarted}
             touched
             errors={formik.errors.facultyName}
           />
@@ -139,6 +144,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
             endIcon={<Add24Regular />}
             onClick={handleAddQuestionButtonClick}
             loading={isLoading}
+            disabled={isPollStarted}
           >
             Додати питання
           </Button>

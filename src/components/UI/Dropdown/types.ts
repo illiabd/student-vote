@@ -14,6 +14,7 @@ export type DropdownProps = {
   placeholder?: string;
   isLoading?: boolean;
   noLabel?: boolean;
+  disabled?: boolean;
   onInputChange?: (newValue: string) => void;
   onChange: (value: Option | Option[]) => void;
 };
