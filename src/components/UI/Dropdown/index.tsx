@@ -13,6 +13,7 @@ export const Dropdown: FC<DropdownProps> = ({
   touched,
   multi,
   noLabel = false,
+  disabled = false,
   ...props
 }) => {
   const hasErrors = errors && touched;
@@ -96,6 +97,7 @@ export const Dropdown: FC<DropdownProps> = ({
         onChange={handleChange}
         isMulti={multi}
         isClearable
+        isDisabled={disabled}
         {...props}
       />
 
