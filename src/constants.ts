@@ -245,3 +245,9 @@ export enum EventFrequencyLabels {
   DAILY = 'Днів',
   WEEKLY = 'Тижнів',
 }
+
+export enum PollStatusNames {
+  created = 'Створено',
+  open = 'Відкрито',
+  closed = 'Завершено',
+}

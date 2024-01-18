@@ -1,7 +1,9 @@
 import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
+import clsx from 'clsx';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { PollStatusNames } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { closePoll, findPolls, publishPoll } from '../../../store/polls/actions';
 import { PollStatus } from '../../../store/polls/types';
@@ -52,6 +54,9 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
   const isModalShown = showDeleteModal || showEditModal;
   const modalContent = <DeleteModal data={data} onClose={handleModalClose} />;
 
+  const status = PollStatusNames[data.status as keyof typeof PollStatus];
+  const statusClasses = clsx(styles['poll-status'], styles[data.status]);
+
   return (
     <>
       <Modal onClose={undefined} isShown={isModalShown}>
@@ -63,9 +68,7 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
             {data.name}
           </Link>
 
-          {data.status === PollStatus.created && (
-            <span className={styles.isActive}>(неактивне)</span>
-          )}
+          <div className={statusClasses}>{status}</div>
         </div>
 
         <div className={styles['tools-container']}>

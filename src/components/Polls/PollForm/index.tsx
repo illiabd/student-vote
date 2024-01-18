@@ -7,24 +7,12 @@ import api from '../../../axios';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { pollNameSchema } from '../../../schemas';
 import { createQuestion, updatePollData } from '../../../store/polls/actions';
+import { PollStatus } from '../../../store/polls/types';
 import { Button, Card, Dropdown, IconButton, Input } from '../../UI';
 import { Option } from '../../UI/Dropdown/types';
 import { PollQuestionCard } from '../PollQuestionCard';
 import styles from './PollForm.module.scss';
-import { FormValues, PollFormProps } from './type';
-
-type University = {
-  data: {
-    university: {
-      id: string;
-      name: string;
-      shortName: string;
-      roles: [];
-      faculties: string[];
-      kind: string;
-    };
-  };
-};
+import { FormValues, GetUniversityResponse, PollFormProps } from './type';
 
 export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const [faculties, setFaculties] = useState<string[]>([]);
@@ -33,7 +21,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const isPollStarted = pollData.status !== 'created';
+  const isPollStarted = pollData?.status !== PollStatus.created;
 
   const formik = useFormik<FormValues>({
     initialValues: { name: pollData?.name ?? '', facultyName: pollData?.facultyName },
@@ -42,12 +30,19 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
       if (!selectedOrganisationId) {
         return;
       }
+
+      if (isPollStarted) {
+        return;
+      }
+
       dispatch(updatePollData(pollData.id, values.name, values.facultyName));
     },
   });
 
   const getFaculties = useCallback(async () => {
-    const response = await api.get<University>(`/university/v1/${selectedOrganisationId}`);
+    const response = await api.get<GetUniversityResponse>(
+      `/university/v1/${selectedOrganisationId}`,
+    );
     setFaculties(response?.data?.data?.university?.faculties ?? []);
   }, [selectedOrganisationId]);
 
