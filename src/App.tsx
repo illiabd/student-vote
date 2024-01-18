@@ -10,7 +10,7 @@ import { CreateProfilePage } from './components/Auth/CreateProfilePage';
 import { HomePage, WelcomePage } from './components/Home';
 import { NewsPage } from './components/News';
 import { PollsPage } from './components/Polls/';
-import { EditPollPage } from './components/Polls/EditPollPage';
+import { PollPage } from './components/Polls/PollPage';
 import { SchedulePage } from './components/Schedule';
 import { Button, LoadingAnimation, MessageBox } from './components/UI';
 import { VacanciesPage, VacancyCreatePage, VacancyPage } from './components/Vacancies';
@@ -94,7 +94,7 @@ const Home: FC = () => {
           <Route path="/vacancies/*" Component={VacanciesPage} />
           <Route path="/timetable" Component={SchedulePage} />
           <Route path="/polls/*" Component={PollsPage} />
-          <Route path="/polls/:pollId" Component={EditPollPage} />
+          <Route path="/polls/:pollId" Component={PollPage} />
         </Routes>
       </div>
     </div>

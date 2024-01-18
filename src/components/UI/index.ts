@@ -4,6 +4,7 @@ export { Dropdown } from './Dropdown';
 export { IconButton } from './IconButton';
 export { ImageUpload } from './ImageUpload';
 export { Input } from './Input';
+export { LinearProgressWithLabel } from './LinearProgressWithLabel';
 export { LinksInput } from './LinksInput';
 export { LoadingAnimation } from './LoadingAnimation';
 export { MessageBox } from './MessageBox';

@@ -13,3 +13,18 @@ export type PollFormProps = {
   pollData: Poll;
   fetchPollData: () => Promise<void>;
 };
+
+export type University = {
+  id: string;
+  name: string;
+  shortName: string;
+  roles: [];
+  faculties: string[];
+  kind: string;
+};
+
+export type GetUniversityResponse = {
+  data: {
+    university: University;
+  };
+};
