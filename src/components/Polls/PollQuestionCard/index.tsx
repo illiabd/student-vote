@@ -17,7 +17,7 @@ import { OptionFormValues, PollQuestionCardProps, QuestionFormValues } from './t
 export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   defaultQuestion,
   questionId,
-  disabled = false,
+  disabled,
   pollId,
   fetchPollData,
 }) => {
