@@ -1,4 +1,4 @@
-import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
+import { Archive24Regular, Checkmark24Filled } from '@fluentui/react-icons';
 import clsx from 'clsx';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { PollStatusNames } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { closePoll, findPolls, publishPoll } from '../../../store/polls/actions';
 import { PollStatus } from '../../../store/polls/types';
-import { Card, IconButton, Modal } from '../../UI';
+import { Button, Card, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
 import styles from './PollCard.module.scss';
 import { VoteCardProps } from './types';
@@ -25,9 +25,9 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
     setShowEditModal(false);
   };
 
-  const handleDeleteButtonClick = () => {
-    setShowDeleteModal(true);
-  };
+  // const handleDeleteButtonClick = () => {
+  //   setShowDeleteModal(true);
+  // };
 
   const handlePublishButtonClick = async () => {
     await dispatch(publishPoll(data.id));
@@ -73,20 +73,24 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
 
         <div className={styles['tools-container']}>
           {data.status === PollStatus.created && (
-            <IconButton onClick={handlePublishButtonClick}>
-              <Checkmark24Filled primaryFill="#1784cc" />
-            </IconButton>
+            <Button
+              variant="outlined"
+              onClick={handlePublishButtonClick}
+              endIcon={<Checkmark24Filled />}
+            >
+              Розпочати
+            </Button>
           )}
 
           {data.status === PollStatus.open && (
-            <IconButton onClick={handleArchiveButtonClick}>
-              <Archive24Regular />
-            </IconButton>
+            <Button important onClick={handleArchiveButtonClick} endIcon={<Archive24Regular />}>
+              Завершити
+            </Button>
           )}
 
-          <IconButton>
+          {/* <IconButton>
             <Delete24Regular onClick={handleDeleteButtonClick} />
-          </IconButton>
+          </IconButton> */}
         </div>
       </Card>
     </>
