@@ -49,25 +49,22 @@ module.exports = {
       },
     ],
 
-    "semi": "off",
-    "react/jsx-filename-extension": [
-      "error",
-      { "extensions": [".tsx"] }
-    ],
-    "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": [
+    semi: 'off',
+    'react/jsx-filename-extension': ['error', { extensions: ['.tsx'] }],
+    'react/jsx-props-no-spreading': 'off',
+    'react/function-component-definition': [
       2,
       {
-        "namedComponents": "arrow-function",
-        "unnamedComponents": "arrow-function"
-      }
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'arrow-function',
+      },
     ],
-    "no-console": 0,
-    "linebreak-style": 0,
-    "import/no-named-as-default": 0,
-    "import/no-named-as-default-member": 0,
-    "jsx-a11y/label-has-associated-control": 0,
-    "import/prefer-default-export": "off",
-    "object-curly-newline": "off"
+    'no-console': 0,
+    'linebreak-style': 0,
+    'import/no-named-as-default': 0,
+    'import/no-named-as-default-member': 0,
+    'jsx-a11y/label-has-associated-control': 0,
+    'import/prefer-default-export': 'off',
+    'object-curly-newline': 'off',
   },
 };

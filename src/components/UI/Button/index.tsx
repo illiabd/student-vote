@@ -16,6 +16,7 @@ export const Button: FC<ButtonProps> = ({
   loading = false,
   size = 'sm',
   type = 'button',
+  important = false,
   href,
   onClick,
 }) => {
@@ -42,6 +43,7 @@ export const Button: FC<ButtonProps> = ({
     styles[variant],
     rounded && styles.rounded,
     disabled && styles.disabled,
+    important && styles.important,
     className,
     loading && styles.action,
   );

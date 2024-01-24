@@ -36,11 +36,13 @@ export const PollPage: FC = () => {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
-  const isPollStarted = currentPoll?.status !== PollStatus.created;
-
-  if (isPollStarted) {
-    return <PollResultsPage pollData={currentPoll} />;
+  switch (currentPoll?.status) {
+    case PollStatus.created:
+      return <PollForm pollData={currentPoll} fetchPollData={fetchPollsData} />;
+    case PollStatus.closed:
+    case PollStatus.open:
+      return <PollResultsPage pollData={currentPoll} />;
+    default:
+      return <PollForm pollData={currentPoll} fetchPollData={fetchPollsData} />;
   }
-
-  return <PollForm pollData={currentPoll} fetchPollData={fetchPollsData} />;
 };
