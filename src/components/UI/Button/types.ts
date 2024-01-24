@@ -10,6 +10,7 @@ export type ButtonProps = {
   endIcon?: ReactNode;
   rounded?: boolean;
   loading?: boolean;
+  important?: boolean;
   variant?: 'text' | 'contained' | 'outlined' | 'underlined';
   size?: 'sm' | 'md' | 'lg';
   type?: ButtonType;
