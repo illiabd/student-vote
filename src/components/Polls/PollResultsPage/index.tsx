@@ -20,8 +20,10 @@ export const PollResultsPage: FC<PollResultsPageProps> = ({ pollData }) => {
   const navigate = useNavigate();
 
   const fetchPollResults = useCallback(async () => {
-    const response = await api.get<PollResults>(`vote/v1/polls/results/${pollData?.id}`);
-    setPollResults(response.data);
+    if (pollData.status === PollStatus.closed) {
+      const response = await api.get<PollResults>(`vote/v1/polls/results/${pollData?.id}`);
+      setPollResults(response.data);
+    }
   }, []);
 
   const fetchUniversity = useCallback(async () => {
@@ -50,6 +52,13 @@ export const PollResultsPage: FC<PollResultsPageProps> = ({ pollData }) => {
 
   const isHaveAnswers = pollData?.answersAmount >= 0;
 
+  const content =
+    pollData.status !== PollStatus.open
+      ? pollResults?.questions.map((question) => (
+          <PollResultsQuestion key={question.id} question={question} />
+        ))
+      : undefined;
+
   return (
     <div className={styles.container}>
       <IconButton onClick={handleBackButtonClick}>
@@ -68,11 +77,21 @@ export const PollResultsPage: FC<PollResultsPageProps> = ({ pollData }) => {
           {pollData.openedAt && <span> {'Відкрито: ' + formattedPollOpenDate} </span>}
           {pollData.closedAt && <span> {'Закрито: ' + formattedPollCloseDate} </span>}
           {isHaveAnswers && <span>{'Кількість відповідей: ' + pollData.answersAmount} </span>}
+
+          {pollData.status === PollStatus.open && (
+            <div
+              style={{
+                padding: '4px 8px',
+                backgroundColor: '#ffeeaa',
+                borderRadius: '4px',
+              }}
+            >
+              Результати будуть доступні після завершення голосування!
+            </div>
+          )}
         </Card>
 
-        {pollResults?.questions.map((question) => (
-          <PollResultsQuestion key={question.id} question={question} />
-        ))}
+        {content}
       </div>
     </div>
   );
