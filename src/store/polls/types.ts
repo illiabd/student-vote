@@ -8,6 +8,9 @@ export type PollQuestion = {
   id: string;
   name: string;
   options: PollOptions[];
+  isSingleChoice: boolean;
+  minOptions: number | undefined;
+  maxOptions: number | undefined;
 };
 
 export enum PollStatus {
@@ -36,6 +39,9 @@ export type NewOption = {
 export type NewQuestion = {
   name: string;
   options: NewOption[];
+  isSingleChoice: boolean;
+  minOptions: number | undefined;
+  maxOptions: number | undefined;
 };
 
 export type NewPoll = {

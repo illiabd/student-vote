@@ -74,6 +74,9 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
           name: 'Нова відповідь',
         },
       ],
+      isSingleChoice: true,
+      minOptions: undefined,
+      maxOptions: undefined,
     };
 
     await dispatch(createQuestion(pollData.id, initialQuestion));
