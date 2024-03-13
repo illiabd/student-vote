@@ -1,5 +1,9 @@
-import { PollQuestion } from '../../../store/polls/types';
+import { PollOptions } from '../../../store/polls/types';
 
 export type PollResultsQuestionProps = {
-  question: PollQuestion;
+  question: {
+    id: string;
+    name: string;
+    options: PollOptions[];
+  };
 };

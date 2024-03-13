@@ -4,6 +4,8 @@ import {
   Dismiss24Regular,
   RadioButton24Regular,
 } from '@fluentui/react-icons';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import { useFormik } from 'formik';
 import { FC, useCallback, useEffect, useState } from 'react';
 
@@ -27,14 +29,15 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   const dispatch = useAppDispatch();
 
   const questionFormik = useFormik<QuestionFormValues>({
-    initialValues: { questionName: defaultQuestion?.name ?? '' },
+    initialValues: {
+      questionName: defaultQuestion?.name ?? '',
+      isSingleChoice: defaultQuestion?.isSingleChoice ?? true,
+      minOptions: defaultQuestion?.minOptions ?? null,
+      maxOptions: defaultQuestion?.maxOptions ?? null,
+    },
+
     validationSchema: pollQuestionSchema,
     onSubmit: async (values) => {
-      const isQuestionNameNotChanged = values.questionName === defaultQuestion?.name;
-      if (isQuestionNameNotChanged) {
-        return;
-      }
-
       if (!pollId) {
         return;
       }
@@ -46,6 +49,9 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       const body = {
         name: values.questionName,
         options: optionsBody,
+        isSingleChoice: values.isSingleChoice,
+        minOptions: values.minOptions,
+        maxOptions: values.maxOptions,
       };
 
       await dispatch(putQuestion(pollId, questionId, body));
@@ -77,6 +83,9 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
     const body = {
       name: defaultQuestion?.name ?? '',
       options: optionsBody,
+      isSingleChoice: defaultQuestion?.isSingleChoice ?? true,
+      minOptions: defaultQuestion?.minOptions ?? null,
+      maxOptions: defaultQuestion?.maxOptions ?? null,
     };
 
     await dispatch(putQuestion(pollId, questionId, body));
@@ -89,6 +98,12 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
 
   const handleNameInputBlur = () => {
     questionFormik.submitForm();
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleSwitchInput = async (_event: any, checked: boolean) => {
+    await questionFormik.setFieldValue('isSingleChoice', !checked);
+    await questionFormik.submitForm();
   };
 
   const handleDeleteButtonClick = async () => {
@@ -125,6 +140,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
   });
 
   const hasOptions = optionsElement.length > 0;
+
   return (
     <Card className={styles.card}>
       <Input
@@ -138,6 +154,48 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         label="Ваше питання"
         disabled={disabled}
       />
+
+      <div className={styles['switch-box']}>
+        <FormControlLabel
+          id="isSingleChoice"
+          control={<Switch checked={!questionFormik.values.isSingleChoice} />}
+          label="Декілька відповідей"
+          onChange={handleSwitchInput}
+        />
+
+        {!questionFormik.values.isSingleChoice && (
+          <>
+            <span>Кількість відповідей:</span>
+            <div className={styles['multi-inputs']}>
+              <Input
+                id="minOptions"
+                type="number"
+                disabled={questionFormik.values.isSingleChoice}
+                value={`${questionFormik.values.minOptions}`}
+                errors={questionFormik.errors.minOptions}
+                touched={questionFormik.touched.minOptions}
+                onChange={questionFormik.handleChange}
+                onBlur={handleNameInputBlur}
+                fullWidth
+                label="Від"
+              />
+
+              <Input
+                id="maxOptions"
+                type="number"
+                disabled={questionFormik.values.isSingleChoice}
+                value={`${questionFormik.values.maxOptions}`}
+                errors={questionFormik.errors.maxOptions}
+                touched={questionFormik.touched.maxOptions}
+                onChange={questionFormik.handleChange}
+                onBlur={handleNameInputBlur}
+                fullWidth
+                label="До"
+              />
+            </div>
+          </>
+        )}
+      </div>
 
       {hasOptions && <div className={styles.options}>{optionsElement}</div>}
 
