@@ -130,7 +130,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
             onChange={handleFacultyDropdownChange}
             disabled={isPollStarted}
             touched
-            errors={formik.errors.facultyName}
+            errors={formik.errors.facultyNames}
           />
         </Card>
 
