@@ -6,7 +6,7 @@ export type CreateQuestion = NewQuestion & {
 
 export type FormValues = {
   name: string;
-  facultyName?: string;
+  facultyNames?: string[];
 };
 
 export type PollFormProps = {

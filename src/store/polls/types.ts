@@ -22,7 +22,7 @@ export enum PollStatus {
 export type Poll = {
   id: string;
   name: string;
-  facultyName: string;
+  facultyNames: string[];
   answersAmount: number;
   userIds: string[];
   status: PollStatus;
