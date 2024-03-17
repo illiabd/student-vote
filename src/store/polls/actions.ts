@@ -263,13 +263,13 @@ export const loadPolls = (organisationId: string) => async (dispatch: Dispatch) 
 };
 
 export const updatePollData =
-  (pollId: string, name: string, facultyName?: string) => async (dispatch: Dispatch) => {
+  (pollId: string, name: string, facultyNames?: string[]) => async (dispatch: Dispatch) => {
     const fetchData = () => {
       dispatch(pollsActions.setIsLoading(true));
-      console.log({ name, facultyName: facultyName });
+      console.log({ name, facultyName: facultyNames });
       return api.patch<Poll>(`/vote/v1/polls/${pollId}`, {
         name,
-        facultyName: facultyName ?? null,
+        facultyNames: facultyNames ?? [],
       });
     };
 

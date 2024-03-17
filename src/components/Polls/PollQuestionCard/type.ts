@@ -10,6 +10,9 @@ export type PollQuestionCardProps = {
 
 export type QuestionFormValues = {
   questionName: string;
+  isSingleChoice: boolean;
+  minOptions: number | null;
+  maxOptions: number | null;
 };
 
 export type OptionFormValues = {

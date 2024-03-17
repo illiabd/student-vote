@@ -24,7 +24,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const isPollStarted = pollData?.status !== PollStatus.created;
 
   const formik = useFormik<FormValues>({
-    initialValues: { name: pollData?.name ?? '', facultyName: pollData?.facultyName },
+    initialValues: { name: pollData?.name ?? '', facultyNames: pollData?.facultyNames },
     validationSchema: pollNameSchema,
     onSubmit: (values) => {
       if (!selectedOrganisationId) {
@@ -35,7 +35,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
         return;
       }
 
-      dispatch(updatePollData(pollData.id, values.name, values.facultyName));
+      dispatch(updatePollData(pollData.id, values.name, values.facultyNames));
     },
   });
 
@@ -53,7 +53,7 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   const handleFacultyDropdownChange = async (value: Option | Option[]) => {
     const option = value as Option;
     const isFacultySelected = option?.value.length > 0;
-    await formik.setFieldValue('facultyName', isFacultySelected ? option.value : undefined);
+    await formik.setFieldValue('facultyNames', isFacultySelected ? [option.value] : undefined);
     await formik.submitForm();
   };
 
@@ -74,6 +74,9 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
           name: 'Нова відповідь',
         },
       ],
+      isSingleChoice: true,
+      minOptions: null,
+      maxOptions: null,
     };
 
     await dispatch(createQuestion(pollData.id, initialQuestion));
@@ -122,12 +125,12 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
             id="facultyName"
             label="Факультет (опціонально)"
             placeholder=""
-            defaultValue={{ value: pollData.facultyName, label: pollData.facultyName } as Option}
+            defaultValue={{ value: pollData.facultyNames[0], label: pollData.facultyNames[0] } as Option}
             options={facultiesOptions}
             onChange={handleFacultyDropdownChange}
             disabled={isPollStarted}
             touched
-            errors={formik.errors.facultyName}
+            errors={formik.errors.facultyNames}
           />
         </Card>
 

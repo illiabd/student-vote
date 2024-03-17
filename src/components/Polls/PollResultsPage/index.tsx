@@ -45,7 +45,7 @@ export const PollResultsPage: FC<PollResultsPageProps> = ({ pollData }) => {
   const pollStatusClasses = clsx(styles['poll-status'], styles[pollData.status]);
   const pollStatus = PollStatusNames[pollData?.status as keyof typeof PollStatus];
 
-  const pollFor = pollData.facultyName ?? university?.shortName;
+  const pollFor = pollData.facultyNames[0] ?? university?.shortName;
 
   const formattedPollOpenDate = dayjs(pollData.openedAt).format('MMMM D, о H:mm YYYY року');
   const formattedPollCloseDate = dayjs(pollData.closedAt).format('MMMM D, о H:mm YYYY року');

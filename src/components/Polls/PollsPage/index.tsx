@@ -39,6 +39,9 @@ export const PollsPage: FC = () => {
       questions: [
         {
           name: 'Питання 1',
+          isSingleChoice: true,
+          maxOptions: null,
+          minOptions: null,
           options: [
             {
               name: 'Відповідь 1',
