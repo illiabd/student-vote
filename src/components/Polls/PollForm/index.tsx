@@ -51,9 +51,10 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
   }, [getFaculties]);
 
   const handleFacultyDropdownChange = async (value: Option | Option[]) => {
-    const option = value as Option;
-    const isFacultySelected = option?.value.length > 0;
-    await formik.setFieldValue('facultyNames', isFacultySelected ? [option.value] : undefined);
+    const options = value as Option[];
+    const isFacultySelected = options?.length > 0;
+    const values = options.map((option) => option.value);
+    await formik.setFieldValue('facultyNames', isFacultySelected ? values : undefined);
     await formik.submitForm();
   };
 
@@ -125,12 +126,14 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
             id="facultyName"
             label="Факультет (опціонально)"
             placeholder=""
-            defaultValue={{ value: pollData.facultyNames[0], label: pollData.facultyNames[0] } as Option}
+            defaultValue={facultiesOptions}
             options={facultiesOptions}
             onChange={handleFacultyDropdownChange}
             disabled={isPollStarted}
-            touched
             errors={formik.errors.facultyNames}
+            creatable
+            touched
+            multi
           />
         </Card>
 
