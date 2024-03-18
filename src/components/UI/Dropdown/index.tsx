@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 
 import styles from './Dropdown.module.scss';
 import { DropdownProps, Option } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({
-  options,
   label,
   errors,
   onChange,
@@ -14,6 +14,7 @@ export const Dropdown: FC<DropdownProps> = ({
   multi,
   noLabel = false,
   disabled = false,
+  creatable = false,
   ...props
 }) => {
   const hasErrors = errors && touched;
@@ -72,17 +73,28 @@ export const Dropdown: FC<DropdownProps> = ({
     onChange(newValue as Option);
   };
 
+  const select = creatable ? (
+    <CreatableSelect
+      styles={dropdownStyles}
+      onChange={handleChange}
+      isMulti={multi}
+      isClearable
+      isDisabled={disabled}
+      {...props}
+    />
+  ) : (
+    <Select
+      styles={dropdownStyles}
+      onChange={handleChange}
+      isMulti={multi}
+      isClearable
+      isDisabled={disabled}
+      {...props}
+    />
+  );
+
   if (noLabel) {
-    return (
-      <Select
-        styles={dropdownStyles}
-        options={options}
-        onChange={handleChange}
-        isMulti={multi}
-        isClearable
-        {...props}
-      />
-    );
+    return select;
   }
 
   return (
@@ -91,15 +103,7 @@ export const Dropdown: FC<DropdownProps> = ({
         <h4>{label}</h4>
       </div>
 
-      <Select
-        styles={dropdownStyles}
-        options={options}
-        onChange={handleChange}
-        isMulti={multi}
-        isClearable
-        isDisabled={disabled}
-        {...props}
-      />
+      {select}
 
       <div className={hintsClasses}>
         <p>{errors}</p>

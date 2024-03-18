@@ -10,6 +10,7 @@ export type DropdownProps = {
   label?: string;
   options: (string | Option)[];
   multi?: boolean;
+  creatable?: boolean;
   errors?: string | string[];
   placeholder?: string;
   isLoading?: boolean;
