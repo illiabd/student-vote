@@ -43,7 +43,6 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
   return (
     <div className={styles['create-modal']}>
       <Dropdown
-        label="Оберіть студента"
         onChange={handleDropdownChange}
         options={options ?? []}
         placeholder="Надія Дія Володимирівна"

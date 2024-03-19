@@ -100,7 +100,6 @@ export const VacancyForm: FC<VacancyFormProps> = ({ defaultValues, onSubmit }) =
 
             <Dropdown
               id="remoteType"
-              label="Офіс / віддалено*"
               options={remoteTypeOptions}
               touched={formik.touched.remoteType}
               defaultValue={remoteTypeOptions.find(

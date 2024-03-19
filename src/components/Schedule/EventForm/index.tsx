@@ -264,7 +264,6 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
         <div className={styles['input-block']}>
           <Dropdown
             id="divisions"
-            label="Оберіть групу"
             placeholder="Введіть назву групи"
             options={defaultDivisionOptions}
             defaultValue={defaultSelectedDivisions}
@@ -277,7 +276,6 @@ export const EventForm: FC<EventFormProps> = ({ onSubmit, defaultValues }) => {
 
           <Dropdown
             id="kind"
-            label="Тип"
             placeholder="Пара/Екзамен"
             defaultValue={defaultKindOption}
             options={kindOptions}
