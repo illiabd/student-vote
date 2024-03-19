@@ -42,6 +42,7 @@ export const Dropdown: FC<DropdownProps> = ({
         height: '50px',
       };
     },
+
     input: (baseStyles) => ({ ...baseStyles, padding: '0 !important' }),
     valueContainer: (baseStyles) => ({ ...baseStyles, padding: '0 !important' }),
     clearIndicator: (baseStyles) => ({
@@ -63,9 +64,9 @@ export const Dropdown: FC<DropdownProps> = ({
       },
     }),
 
-    menu: (provided) => ({
-      ...provided,
-      zIndex: '5',
+    menuPortal: (baseStyles) => ({
+      ...baseStyles,
+      zIndex: 999,
     }),
   };
 
@@ -80,6 +81,7 @@ export const Dropdown: FC<DropdownProps> = ({
       isMulti={multi}
       isClearable
       isDisabled={disabled}
+      menuPortalTarget={document.body}
       {...props}
     />
   ) : (
@@ -89,6 +91,7 @@ export const Dropdown: FC<DropdownProps> = ({
       isMulti={multi}
       isClearable
       isDisabled={disabled}
+      menuPortalTarget={document.body}
       {...props}
     />
   );
