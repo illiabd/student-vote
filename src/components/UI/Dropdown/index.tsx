@@ -39,7 +39,7 @@ export const Dropdown: FC<DropdownProps> = ({
         fontSize: '14px',
         cursor: 'pointer',
         boxShadow: 'none',
-        height: '50px',
+        minHeight: '50px',
       };
     },
 
