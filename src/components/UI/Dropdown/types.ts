@@ -7,7 +7,6 @@ export type DropdownProps = {
   id?: string;
   defaultValue?: string | Option | Option[];
   touched?: boolean;
-  label?: string;
   options: (string | Option)[];
   multi?: boolean;
   creatable?: boolean;

@@ -33,7 +33,7 @@ export const EditModal: FC<EditModalProps> = ({ currentRole, userId, organisatio
 
   return (
     <div className={styles['edit-modal']}>
-      <Dropdown label="Роль:" placeholder="Адмін" options={options} onChange={handleDropdown} />
+      <Dropdown placeholder="Адмін" options={options} onChange={handleDropdown} />
       <Button
         disabled={currentRole === selectedRole}
         size="sm"

@@ -124,7 +124,6 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
 
           <Dropdown
             id="facultyName"
-            label="Факультет (опціонально)"
             placeholder=""
             defaultValue={facultiesOptions}
             options={facultiesOptions}
