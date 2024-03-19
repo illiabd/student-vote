@@ -12,11 +12,12 @@ export const PollResultsQuestion: FC<PollResultsQuestionProps> = ({ question }) 
 
   const options = question.options.map((option) => {
     const percentage = (option.amount * 100) / questionAnswersSum;
-    const roundedPercentage = Math.round(percentage * 100) / 100;
+    const roundedPercentage = percentage.toFixed(2);
+
     return (
       <div key={option.id}>
         {option.name}
-        <LinearProgressWithLabel value={isNaN(roundedPercentage) ? 0 : percentage} />
+        <LinearProgressWithLabel value={isNaN(+roundedPercentage) ? 0 : +roundedPercentage} />
         <div className={styles['answers-amount']}>
           <Vote24Regular />
           {option.amount}
