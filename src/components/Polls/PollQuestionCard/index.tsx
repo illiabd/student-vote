@@ -50,8 +50,8 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
         name: values.questionName,
         options: optionsBody,
         isSingleChoice: values.isSingleChoice,
-        minOptions: values.minOptions,
-        maxOptions: values.maxOptions,
+        minOptions: values.isSingleChoice ? null : values.minOptions,
+        maxOptions: values.isSingleChoice ? null : values.maxOptions,
       };
 
       await dispatch(putQuestion(pollId, questionId, body));
