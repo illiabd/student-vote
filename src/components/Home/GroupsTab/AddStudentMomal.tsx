@@ -45,7 +45,7 @@ export const AddStudentModal: FC<AddUserModalProps> = ({ organisationId, groupId
       <Dropdown
         onChange={handleDropdownChange}
         options={options ?? []}
-        placeholder="Надія Дія Володимирівна"
+        placeholder="Надія Дія Володимирівна :)"
       />
       <div className={styles['buttons-container']}>
         <Button onClick={onClose} variant="outlined">
