@@ -65,7 +65,7 @@ export const CreateGroupModal: FC<CreateGroupModalProps> = ({ organisationId, on
         onChange={formik.handleChange}
       />
 
-      <Dropdown label="Курс" onChange={handleDropdown} options={options} placeholder="Від 1 до 5" />
+      <Dropdown onChange={handleDropdown} options={options} placeholder="Від 1 до 5" />
 
       <div className={styles['buttons-container']}>
         <Button onClick={onClose} variant="outlined">

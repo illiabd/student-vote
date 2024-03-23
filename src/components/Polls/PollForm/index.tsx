@@ -84,9 +84,14 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
     await fetchPollData();
   };
 
-  const facultiesOptions = faculties?.map<Option>((faculty) => ({
-    label: faculty,
-    value: faculty,
+  const facultiesOptions = faculties?.map<Option>((facultyName) => ({
+    label: facultyName,
+    value: facultyName,
+  }));
+
+  const facultiesDefaultValues = pollData.facultyNames.map<Option>((facultyName) => ({
+    label: facultyName,
+    value: facultyName,
   }));
 
   const questionsComponents = pollData.questions.map((question) => {
@@ -124,9 +129,8 @@ export const PollForm: FC<PollFormProps> = ({ pollData, fetchPollData }) => {
 
           <Dropdown
             id="facultyName"
-            label="Факультет (опціонально)"
             placeholder=""
-            defaultValue={facultiesOptions}
+            defaultValue={facultiesDefaultValues}
             options={facultiesOptions}
             onChange={handleFacultyDropdownChange}
             disabled={isPollStarted}

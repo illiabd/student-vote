@@ -1,13 +1,12 @@
-import clsx from 'clsx';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
 import { FC } from 'react';
 import Select, { StylesConfig } from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
-import styles from './Dropdown.module.scss';
 import { DropdownProps, Option } from './types';
 
 export const Dropdown: FC<DropdownProps> = ({
-  label,
   errors,
   onChange,
   touched,
@@ -18,9 +17,6 @@ export const Dropdown: FC<DropdownProps> = ({
   ...props
 }) => {
   const hasErrors = errors && touched;
-
-  const labelClasses = clsx(styles.label, hasErrors && styles.error);
-  const hintsClasses = clsx(styles.hints, hasErrors && styles.error);
 
   const dropdownStyles: StylesConfig = {
     control: (baseStyles, state) => {
@@ -39,9 +35,10 @@ export const Dropdown: FC<DropdownProps> = ({
         fontSize: '14px',
         cursor: 'pointer',
         boxShadow: 'none',
-        height: '50px',
+        minHeight: '50px',
       };
     },
+
     input: (baseStyles) => ({ ...baseStyles, padding: '0 !important' }),
     valueContainer: (baseStyles) => ({ ...baseStyles, padding: '0 !important' }),
     clearIndicator: (baseStyles) => ({
@@ -63,9 +60,9 @@ export const Dropdown: FC<DropdownProps> = ({
       },
     }),
 
-    menu: (provided) => ({
-      ...provided,
-      zIndex: '5',
+    menuPortal: (baseStyles) => ({
+      ...baseStyles,
+      zIndex: 999,
     }),
   };
 
@@ -80,6 +77,7 @@ export const Dropdown: FC<DropdownProps> = ({
       isMulti={multi}
       isClearable
       isDisabled={disabled}
+      menuPortalTarget={document.body}
       {...props}
     />
   ) : (
@@ -89,6 +87,7 @@ export const Dropdown: FC<DropdownProps> = ({
       isMulti={multi}
       isClearable
       isDisabled={disabled}
+      menuPortalTarget={document.body}
       {...props}
     />
   );
@@ -98,16 +97,11 @@ export const Dropdown: FC<DropdownProps> = ({
   }
 
   return (
-    <div className={styles.container}>
-      <div className={labelClasses}>
-        <h4>{label}</h4>
-      </div>
-
-      {select}
-
-      <div className={hintsClasses}>
-        <p>{errors}</p>
-      </div>
-    </div>
+    <>
+      <FormControl fullWidth>
+        {select}
+        <FormHelperText>{errors}</FormHelperText>
+      </FormControl>
+    </>
   );
 };
