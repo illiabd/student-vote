@@ -1,4 +1,4 @@
-import { Archive24Regular, Checkmark24Filled } from '@fluentui/react-icons';
+import { Archive24Regular, Checkmark24Filled, Delete24Regular } from '@fluentui/react-icons';
 import clsx from 'clsx';
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { PollStatusNames } from '../../../constants';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { closePoll, findPolls, publishPoll } from '../../../store/polls/actions';
 import { PollStatus } from '../../../store/polls/types';
-import { Button, Card, Modal } from '../../UI';
+import { Button, Card, IconButton, Modal } from '../../UI';
 import { DeleteModal } from './DeleteModal';
 import styles from './PollCard.module.scss';
 import { VoteCardProps } from './types';
@@ -25,9 +25,9 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
     setShowEditModal(false);
   };
 
-  // const handleDeleteButtonClick = () => {
-  //   setShowDeleteModal(true);
-  // };
+  const handleDeleteButtonClick = () => {
+    setShowDeleteModal(true);
+  };
 
   const handlePublishButtonClick = async () => {
     await dispatch(publishPoll(data.id));
@@ -57,6 +57,35 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
   const status = PollStatusNames[data.status as keyof typeof PollStatus];
   const statusClasses = clsx(styles['poll-status'], styles[data.status]);
 
+  const renderButton = (pollStatus: PollStatus) => {
+    switch (pollStatus) {
+      case PollStatus.closed:
+        return (
+          <IconButton onClick={handleDeleteButtonClick}>
+            <Delete24Regular />
+          </IconButton>
+        );
+
+      case PollStatus.created:
+        return (
+          <Button
+            variant="outlined"
+            onClick={handlePublishButtonClick}
+            endIcon={<Checkmark24Filled />}
+          >
+            Розпочати
+          </Button>
+        );
+
+      case PollStatus.open:
+        return (
+          <Button important onClick={handleArchiveButtonClick} endIcon={<Archive24Regular />}>
+            Завершити
+          </Button>
+        );
+    }
+  };
+
   return (
     <>
       <Modal onClose={undefined} isShown={isModalShown}>
@@ -71,27 +100,7 @@ export const PollCard: FC<VoteCardProps> = ({ data }) => {
           <div className={statusClasses}>{status}</div>
         </div>
 
-        <div className={styles['tools-container']}>
-          {data.status === PollStatus.created && (
-            <Button
-              variant="outlined"
-              onClick={handlePublishButtonClick}
-              endIcon={<Checkmark24Filled />}
-            >
-              Розпочати
-            </Button>
-          )}
-
-          {data.status === PollStatus.open && (
-            <Button important onClick={handleArchiveButtonClick} endIcon={<Archive24Regular />}>
-              Завершити
-            </Button>
-          )}
-
-          {/* <IconButton>
-            <Delete24Regular onClick={handleDeleteButtonClick} />
-          </IconButton> */}
-        </div>
+        <div className={styles['tools-container']}>{renderButton(data.status)}</div>
       </Card>
     </>
   );
