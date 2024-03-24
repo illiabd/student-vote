@@ -158,7 +158,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
       <div className={styles['switch-box']}>
         <FormControlLabel
           id="isSingleChoice"
-          control={<Switch checked={!questionFormik.values.isSingleChoice} />}
+          control={<Switch id="isSingleChoice" checked={!questionFormik.values.isSingleChoice} />}
           label="Декілька відповідей"
           onChange={handleSwitchInput}
         />
@@ -171,7 +171,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
                 id="minOptions"
                 type="number"
                 disabled={questionFormik.values.isSingleChoice}
-                value={`${questionFormik.values.minOptions}`}
+                value={`${questionFormik.values.minOptions ?? ''}`}
                 errors={questionFormik.errors.minOptions}
                 touched={questionFormik.touched.minOptions}
                 onChange={questionFormik.handleChange}
@@ -184,7 +184,7 @@ export const PollQuestionCard: FC<PollQuestionCardProps> = ({
                 id="maxOptions"
                 type="number"
                 disabled={questionFormik.values.isSingleChoice}
-                value={`${questionFormik.values.maxOptions}`}
+                value={`${questionFormik.values.maxOptions ?? ''}`}
                 errors={questionFormik.errors.maxOptions}
                 touched={questionFormik.touched.maxOptions}
                 onChange={questionFormik.handleChange}
