@@ -6,11 +6,27 @@ const questionName = Yup.string()
   .required(QUESTION_NAME_NOT_PROVIDED)
   .min(5, QUESTION_NAME_MIN_LENGTH);
 
-const minOptions = Yup.number()
-  .required('Введіть мінімальну кількість відповідей')
-  .min(1, 'Не може бути менше 1');
-const maxOptions = Yup.number()
-  .required('Введіть максимальну кількість відповідей')
-  .min(Yup.ref('minOptions'), ({ min }) => `Не може бути менше ${min}`);
+const isSingleChoice = Yup.boolean();
 
-export const pollQuestionSchema = Yup.object().shape({ questionName, minOptions, maxOptions });
+const minOptions = Yup.number().when('isSingleChoice', {
+  is: false,
+  then: (schema) =>
+    schema.required('Введіть мінімальну кількість відповідей').min(1, 'Не може бути менше 1'),
+  otherwise: (schema) => schema.notRequired(),
+});
+
+const maxOptions = Yup.number().when('isSingleChoice', {
+  is: false,
+  then: (schema) =>
+    schema
+      .required('Введіть максимальну кількість відповідей')
+      .min(Yup.ref('minOptions'), ({ min }) => `Не може бути менше ${min}`),
+  otherwise: (schema) => schema.notRequired(),
+});
+
+export const pollQuestionSchema = Yup.object().shape({
+  isSingleChoice,
+  questionName,
+  minOptions,
+  maxOptions,
+});
