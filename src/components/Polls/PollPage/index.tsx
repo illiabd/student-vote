@@ -1,16 +1,16 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { findPolls } from '../../../store/polls/actions';
-import { PollStatus } from '../../../store/polls/types';
+import { findPollById } from '../../../store/polls/actions';
+import { Poll, PollStatus } from '../../../store/polls/types';
 import { MessageBox } from '../../UI';
 import { PollResultsPage } from '..';
 import { PollForm } from '../PollForm';
 
 export const PollPage: FC = () => {
   const { selectedOrganisationId } = useAppSelector((state) => state.current);
-  const { pollsData } = useAppSelector((state) => state.polls);
+  const [pollData, setPollData] = useState<Poll>();
 
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -23,26 +23,25 @@ export const PollPage: FC = () => {
       return;
     }
 
-    await dispatch(findPolls(selectedOrganisationId));
+    const response = await dispatch(findPollById(params.pollId));
+    setPollData(response);
   }, [selectedOrganisationId, params]);
 
   useEffect(() => {
     fetchPollsData();
   }, [fetchPollsData]);
 
-  const currentPoll = pollsData?.docs.find((poll) => poll.id === params.pollId);
-
-  if (!currentPoll) {
+  if (!pollData) {
     return <MessageBox>Голосування не знайдено</MessageBox>;
   }
 
-  switch (currentPoll?.status) {
+  switch (pollData?.status) {
     case PollStatus.created:
-      return <PollForm pollData={currentPoll} fetchPollData={fetchPollsData} />;
+      return <PollForm pollData={pollData} fetchPollData={fetchPollsData} />;
     case PollStatus.closed:
     case PollStatus.open:
-      return <PollResultsPage pollData={currentPoll} />;
+      return <PollResultsPage pollData={pollData} />;
     default:
-      return <PollForm pollData={currentPoll} fetchPollData={fetchPollsData} />;
+      return <PollForm pollData={pollData} fetchPollData={fetchPollsData} />;
   }
 };
