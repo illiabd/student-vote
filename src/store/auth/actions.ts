@@ -6,9 +6,7 @@ import api from '../../axios';
 import * as constants from '../../constants';
 import { handleResponseError } from '../../tools/api-error-handler';
 import { currentActions } from '../current/slice';
-import { newsActions } from '../news/slice';
 import { organisationsActions } from '../organisations/slice';
-import { scheduleActions } from '../schedule/slice';
 import { authActions } from './slice';
 import { GetUserResponse, LoginResponse, VerifyResponse } from './types';
 
@@ -16,7 +14,7 @@ export const loginUser = (phoneNumber: string, password: string) => async (dispa
   const fetchData = () => {
     dispatch(authActions.setIsLoading(true));
     const requestData = { phoneNumber, password };
-    return api.post<LoginResponse>('/admin/v1/login', requestData);
+    return api.post<LoginResponse>('/admin/login', requestData);
   };
 
   try {
@@ -56,7 +54,7 @@ export const verifyCode = (code: string) => async (dispatch: Dispatch) => {
       oneTimeToken,
     };
 
-    return api.post<VerifyResponse>('/user/v1/verify', requestData);
+    return api.post<VerifyResponse>('/user/verify', requestData);
   };
 
   try {
@@ -95,7 +93,7 @@ export const verifyCode = (code: string) => async (dispatch: Dispatch) => {
 export const getUser = () => async (dispatch: Dispatch) => {
   const fetchData = async () => {
     dispatch(authActions.setIsLoading(true));
-    return api.get<GetUserResponse>('/user/v1/');
+    return api.get<GetUserResponse>('/user/');
   };
 
   try {
@@ -127,7 +125,7 @@ export const getUser = () => async (dispatch: Dispatch) => {
 export const logout = () => async (dispatch: Dispatch) => {
   const fetchData = async () => {
     dispatch(authActions.setIsLoading(true));
-    return api.post<GetUserResponse>('/user/v1/logout');
+    return api.post<GetUserResponse>('/user/logout');
   };
 
   try {
@@ -147,9 +145,7 @@ export const logout = () => async (dispatch: Dispatch) => {
 
     dispatch(authActions.resetState());
     dispatch(currentActions.resetState());
-    dispatch(newsActions.resetState());
     dispatch(organisationsActions.resetState());
-    dispatch(scheduleActions.resetState());
 
     localStorage.clear();
 

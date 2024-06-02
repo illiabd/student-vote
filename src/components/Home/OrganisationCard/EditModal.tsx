@@ -76,7 +76,7 @@ export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => 
           id="name"
           type="text"
           label="Назва компанії"
-          placeholder="Univera LLC"
+          placeholder="Student Vote"
           className={styles.input}
           value={formik.values.name}
           errors={formik.errors.name}
@@ -87,7 +87,6 @@ export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => 
           id="email"
           type="email"
           label="E-mail"
-          placeholder="ceo@univera.app"
           className={styles.input}
           value={formik.values.email}
           errors={formik.errors.email}
@@ -98,7 +97,6 @@ export const EditModal: FC<EditModalProps> = ({ organisationData, onClose }) => 
           id="link"
           type="text"
           label="Сайт компанії"
-          placeholder="univera.app"
           className={styles.input}
           value={formik.values.link}
           errors={formik.errors.link}

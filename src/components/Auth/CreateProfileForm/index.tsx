@@ -78,7 +78,7 @@ export const CreateProfileForm: FC = () => {
       <div className={styles['progress-container']}>
         <div className={styles['image-container']}>
           <Link to="/">
-            <img alt="univera-logo" src="/images/univera-logo-full.svg" />
+            <img alt="logo" src="/images/logo-full.svg" />
           </Link>
         </div>
         <div className={styles['progressbar-container']}>

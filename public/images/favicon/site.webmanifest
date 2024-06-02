@@ -1,9 +1,9 @@
 {
-    "name": "Univera",
+    "name": "Student Vote",
     "id": "/",
     "start_url": "/",
     "scope": "/",
-    "short_name": "Univera",
+    "short_name": "Student Vote",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone",
