@@ -10,7 +10,7 @@ export const findOrganisations =
   (requestData?: FindOrganisationRequest) => async (dispatch: Dispatch) => {
     const fetchData = () => {
       dispatch(organisationsActions.setIsLoading(true));
-      return api.post<FindOrganisationResponse>('organisation/v1/find', requestData);
+      return api.post<FindOrganisationResponse>('organisation/find', requestData);
     };
 
     try {

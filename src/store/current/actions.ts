@@ -30,7 +30,7 @@ export const createOrganisation =
         link: requestData.link === '' ? undefined : requestData.link,
         douLink: requestData.douLink === '' ? undefined : requestData.douLink,
       };
-      return api.post('organisation/v1/company', body);
+      return api.post('organisation/company', body);
     };
 
     try {

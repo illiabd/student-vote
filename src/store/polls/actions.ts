@@ -18,7 +18,7 @@ export const findPolls = (organisationId: string) => async (dispatch: Dispatch) 
   const fetchData = () => {
     dispatch(pollsActions.setIsLoading(true));
 
-    return api.get<PollData>(`vote/v1/polls/organisation/${organisationId}`);
+    return api.get<PollData>(`vote/polls/${organisationId}`);
   };
 
   try {
@@ -52,7 +52,7 @@ export const findPollById = (pollId: string) => async (dispatch: Dispatch) => {
   const fetchData = () => {
     dispatch(pollsActions.setIsLoading(true));
 
-    return api.get<Poll>(`/vote/v1/polls/${pollId}`);
+    return api.get<Poll>(`/vote/polls/${pollId}`);
   };
 
   try {

@@ -1,7 +1,7 @@
 import Lottie from 'lottie-react';
 import { FC, useEffect } from 'react';
 
-import univeraLoadingAnimation from '../../../static/lottie/univera-loading.json';
+import loadingAnimation from '../../../static/lottie/loading.json';
 import styles from './LoadingAnimation.module.scss';
 import { LoadingAnimationProps } from './types';
 
@@ -19,7 +19,7 @@ export const LoadingAnimation: FC<LoadingAnimationProps> = ({
       <Lottie
         className={styles.lottie}
         lottieRef={lottieRef}
-        animationData={univeraLoadingAnimation}
+        animationData={loadingAnimation}
         onLoopComplete={onAnimationEnd}
       />
     </div>

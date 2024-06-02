@@ -28,8 +28,8 @@ export const OrganisationCard: FC<OrganisationCardProps> = ({ organisationData }
     <div className={statusBadgeClasses}>
       <span>
         {statusBadgeText}
-        <a href="https://t.me/univera_bot" className={styles['telegram-link']}>
-          @univera_bot
+        <a href="https://t.me/" className={styles['telegram-link']}>
+          @bot
         </a>
       </span>
       <div className={styles.icon}>{statusBadgeIcon}</div>

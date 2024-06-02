@@ -137,7 +137,6 @@ export const SideBar: FC<SideBarProps> = ({
 
   return (
     <div className={styles.sidebar}>
-      <img alt="univera-logo" src="/images/univera-logo-full.svg" width={177} height={60} />
       {windowWidth > 1025 ? (
         <ProfilePicture
           source={selectedOrganisation?.profilePictureLink}
